@@ -25,6 +25,13 @@
   margin-right: 20px; /* Ajusta el espacio entre el icono y el logo */
   cursor: pointer;
   color: #131735;
+  transition: color 0.3s ease;
+}
+
+/* Cambiar el color en hover y cuando está activo (cuando el sidebar está abierto) */
+.menu-icon.active,
+.menu-icon:hover {
+  color: #fbbd08; /* Color amarillo en hover o cuando el sidebar está activo */
 }
 
 .logo {

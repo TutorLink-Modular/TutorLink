@@ -1,0 +1,71 @@
+/* src/components/Header.css */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #cfd1d9;
+  width: 100%;
+  height: 60px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+}
+
+.menu-icon {
+  font-size: 24px;
+  margin-right: 20px; /* Ajusta el espacio entre el icono y el logo */
+  cursor: pointer;
+  color: #131735;
+}
+
+.logo {
+  height: 50px;
+  margin-right: 10px;
+}
+
+.logo-text {
+  font-size: 30px;
+  font-weight: bold;
+  color: #131735;
+}
+
+.highlight {
+  color: #fbbd08; /* Color amarillo */
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  margin-right: 40px; /* Ajusta esto si es necesario para agregar espacio al ícono */
+}
+
+.user-icon,
+.logout-icon {
+  font-size: 30px;
+  color: #131735;
+  margin-left: 15px;
+  cursor: pointer;
+}
+
+.logout-icon {
+  margin-right: 10px; /* Ajusta esto para que no quede muy cerca del borde */
+}
+
+/* Ajustar el contenido principal para que no se solape con el header */
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.main-content {
+  padding-top: 70px; /* Ajusta el espacio para que el contenido no quede oculto detrás del header */
+}

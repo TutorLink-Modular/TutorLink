@@ -1,7 +1,7 @@
 /* src/components/Sidebar.css */
 .sidebar {
   position: fixed;
-  top: 60px; /* Justo debajo del header */
+  top: 70px; /* Justo debajo del header */
   left: -250px; /* Escondido inicialmente */
   width: 250px;
   height: 100%;
@@ -18,12 +18,12 @@
 .sidebar ul {
   list-style: none;
   padding: 0;
-  margin: 20px;
+  margin: 20px 0px 20px 0px;
 }
 
 .sidebar ul li {
   padding: 10px 20px;
-  background-color: #cfd1d9; /* Fondo gris por defecto */
+  background-color: #cfd1d9;
   margin-bottom: 10px;
   color: #131735;
   cursor: pointer;
@@ -34,10 +34,12 @@
 }
 
 .sidebar ul li:hover {
-  background-color: #fbbd08; /* Cambia a amarillo SOLO al hacer hover */
+  background-color: #fbbd08;
+  padding-top: 15px; /* Aumenta el área hacia arriba */
+  padding-bottom: 15px; /* Aumenta el área hacia abajo */
 }
 
 .sidebar ul li i {
-  margin-left: 10px; /* Espacio entre el texto y la flechita */
+  margin-left: 10px;
   font-size: 12px;
 }

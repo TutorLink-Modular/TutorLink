@@ -1,14 +1,14 @@
-/* src/components/Sidebar.css */
 .sidebar {
   position: fixed;
-  top: 70px; /* Justo debajo del header */
+  top: 60px; /* El sidebar empieza justo debajo del header */
   left: -250px; /* Escondido inicialmente */
   width: 250px;
-  height: 100%;
+  height: calc(100% - 60px); /* Altura total de la pantalla menos el header */
   background-color: #cfd1d9; /* Fondo gris del sidebar */
   transition: left 0.3s ease;
   z-index: 999;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  overflow-y: auto; /* Habilitar el scroll en todo el sidebar */
 }
 
 .sidebar.open {
@@ -19,13 +19,13 @@
   list-style: none;
   padding: 0;
   margin: 20px 0px 20px 0px;
+  background-color: #cfd1d9;
+  color: #131735;
 }
 
 .sidebar ul li {
   padding: 10px 20px;
-  background-color: #cfd1d9;
   margin-bottom: 10px;
-  color: #131735;
   cursor: pointer;
   display: flex;
   justify-content: space-between;
@@ -33,13 +33,41 @@
   transition: background-color 0.3s ease;
 }
 
-.sidebar ul li:hover {
+.sidebar ul li:hover,
+.sidebar ul li.active {
   background-color: #fbbd08;
-  padding-top: 15px; /* Aumenta el área hacia arriba */
-  padding-bottom: 15px; /* Aumenta el área hacia abajo */
+  padding-top: 15px;
+  padding-bottom: 15px;
 }
 
 .sidebar ul li i {
   margin-left: 10px;
   font-size: 12px;
+}
+
+/* Responsiveness for Sidebar */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 200px;
+  }
+
+  .sidebar ul li {
+    padding: 10px 15px;
+  }
+}
+
+@media (max-width: 576px) {
+  .sidebar {
+    top: 60px;
+    width: 180px;
+    height: calc(100% - 60px);
+  }
+
+  .sidebar ul li {
+    padding: 10px 15px;
+  }
+
+  .sidebar.open {
+    left: 0;
+  }
 }

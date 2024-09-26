@@ -1,4 +1,3 @@
-/* src/components/Header.css */
 .header {
   position: fixed;
   top: 0;
@@ -28,7 +27,6 @@
   transition: color 0.3s ease;
 }
 
-/* Cambiar el color en hover y cuando está activo (cuando el sidebar está abierto) */
 .menu-icon.active,
 .menu-icon:hover {
   color: #fbbd08; /* Color amarillo en hover o cuando el sidebar está activo */
@@ -75,4 +73,31 @@ body {
 
 .main-content {
   padding-top: 70px; /* Ajusta el espacio para que el contenido no quede oculto detrás del header */
+}
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 768px) {
+  .header-left .logo-text {
+    font-size: 24px; /* Reducir tamaño del texto en pantallas más pequeñas */
+  }
+
+  .header-right {
+    margin-right: 20px;
+  }
+
+  .user-icon,
+  .logout-icon {
+    font-size: 24px; /* Reducir tamaño de iconos en pantallas más pequeñas */
+  }
+}
+
+@media (max-width: 576px) {
+  .header-left .logo-text {
+    font-size: 20px; /* Reducir aún más el tamaño del logo en pantallas pequeñas */
+  }
+
+  .user-icon,
+  .logout-icon {
+    font-size: 20px; /* Reducir tamaño de los íconos aún más en pantallas pequeñas */
+  }
 }

@@ -1,20 +1,26 @@
-// src/components/Sidebar.jsx
 import React from "react";
-import "@fortawesome/fontawesome-free/css/all.min.css"; // Asegúrate de que Font Awesome esté cargado
-import "../styles/Sidebar.css";
+import "../styles/Sidebar.css"; // Importar los estilos del Sidebar
+import Panel from "./Panel";
 
 const Sidebar = ({ isOpen, toggleSidebar }) => {
+  const tutorDisciplinarItems = [
+    "Menu item 1",
+    "Menu item 2",
+    "Menu item 3",
+    "Menu item 4",
+  ];
+  const tutorOrientacionItems = [
+    "Menu item 1",
+    "Menu item 2",
+    "Menu item 3",
+    "Menu item 4",
+  ];
+
   return (
     <div className={`sidebar ${isOpen ? "open" : ""}`}>
       <ul>
-        <li>
-          Tutoría Disciplinar
-          <i className="fas fa-chevron-down"></i> {/* Flecha hacia abajo */}
-        </li>
-        <li>
-          Tutoría de Orientación
-          <i className="fas fa-chevron-down"></i> {/* Flecha hacia abajo */}
-        </li>
+        <Panel title="Tutoría Disciplinar" items={tutorDisciplinarItems} />
+        <Panel title="Tutoría de Orientación" items={tutorOrientacionItems} />
       </ul>
     </div>
   );

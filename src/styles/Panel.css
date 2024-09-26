@@ -1,0 +1,25 @@
+.panel {
+  padding: 0;
+  background-color: #eceef1; /* Fondo solo del contenedor del panel */
+  color: #131735;
+  margin-bottom: 10px;
+}
+
+.panel-items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.panel-item {
+  padding: 10px 20px;
+  background-color: #131735; /* Color de fondo de los ítems del panel */
+  color: #eceef1;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.panel-item:hover {
+  background-color: #fbbd08; /* Color de fondo en hover */
+  color: #131735;
+}

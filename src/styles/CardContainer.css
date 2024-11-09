@@ -1,0 +1,29 @@
+.card-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 70px; /* Espacio entre las cartas */
+  min-height: calc(
+    100vh - 70px
+  ); /* Resta la altura del header si es necesario */
+  /*background-color: #1b1b3a;*/
+  padding: 20px;
+  box-sizing: border-box;
+  margin-top: 70px; /* Ajusta este valor a la altura de tu header */
+}
+
+/* Media query para ajustar el espaciado en pantallas pequeñas */
+@media (max-width: 768px) {
+  .card-container {
+    gap: 15px; /* Reduce el espacio entre las cartas */
+    padding: 10px; /* Reduce el relleno del contenedor */
+  }
+}
+
+@media (max-width: 480px) {
+  .card-container {
+    gap: 10px; /* Reduce aún más el espacio entre las cartas */
+    padding: 5px; /* Reduce más el relleno del contenedor */
+  }
+}

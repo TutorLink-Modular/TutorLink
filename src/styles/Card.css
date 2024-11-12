@@ -48,7 +48,7 @@
 }
 
 .card-button {
-  background-color: #3b0266;
+  background-color: #1d245a;
   color: white;
   border: none;
   border-radius: 5px;
@@ -58,7 +58,7 @@
 }
 
 .card-button:hover {
-  background-color: #2a014b;
+  background-color: #131735;
 }
 
 /* Media query para pantallas más pequeñas */

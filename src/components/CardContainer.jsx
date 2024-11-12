@@ -14,7 +14,7 @@ const CardContainer = () => {
       imageUrl: image1,
     },
     {
-      title: "Tutoría Disciplinar",
+      title: "Tutoría De Orientación",
       subtitle: "Title",
       description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor",

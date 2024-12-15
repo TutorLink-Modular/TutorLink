@@ -1,0 +1,128 @@
+/* Contenedor principal */
+.login-container {
+  height: 100vh; /* Ocupa toda la altura de la ventana */
+  width: 100vw; /* Ocupa toda la anchura de la ventana */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #131735; /* Fondo azul general */
+  position: relative;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.login-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* Oscurece el fondo ligeramente */
+  z-index: 1;
+}
+
+.login-box {
+  position: relative;
+  z-index: 2;
+  background: #202437; /* Fondo azul más oscuro para el formulario */
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  color: #cfd1d9; /* Gris sidebar para el texto */
+  width: 100%;
+  max-width: 400px;
+}
+
+/* Títulos */
+.login-title {
+  font-size: 32px;
+  font-weight: bold;
+  color: #fbbd08; /* Amarillo para destacar el título */
+}
+
+.login-version {
+  font-size: 14px;
+  margin-bottom: 20px;
+  color: #cfd1d9; /* Gris sidebar */
+}
+
+.login-welcome {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #fbbd08; /* Amarillo */
+}
+
+.login-instruction {
+  font-size: 16px;
+  margin-bottom: 20px;
+  color: #cfd1d9; /* Gris sidebar */
+}
+
+/* Formulario */
+.login-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-input {
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #fbbd08; /* Amarillo para los bordes */
+  border-radius: 5px;
+  font-size: 16px;
+  color: #202437; /* Azul más oscuro para el texto */
+  background-color: #cfd1d9; /* Gris sidebar para el fondo */
+}
+
+.login-input:focus {
+  outline: none;
+  border-color: #fbbd08; /* Amarillo */
+  box-shadow: 0 0 5px rgba(251, 189, 8, 0.5);
+}
+
+.forgot-password {
+  font-size: 14px;
+  color: #fbbd08; /* Amarillo */
+  text-decoration: none;
+  margin-bottom: 20px;
+}
+
+.forgot-password:hover {
+  text-decoration: underline;
+}
+
+/* Botón */
+.login-button {
+  background-color: #fbbd08; /* Amarillo */
+  color: #202437; /* Azul más oscuro */
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.login-button:hover {
+  background-color: #202437; /* Azul más oscuro */
+  color: #fbbd08; /* Amarillo */
+}
+
+/* Footer */
+.login-footer {
+  font-size: 12px;
+  margin-top: 20px;
+  color: #cfd1d9; /* Gris sidebar */
+}
+
+.privacy-policy {
+  color: #fbbd08; /* Amarillo */
+  text-decoration: none;
+}
+
+.privacy-policy:hover {
+  text-decoration: underline;
+}

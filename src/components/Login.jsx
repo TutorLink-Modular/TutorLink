@@ -1,7 +1,43 @@
-import React from "react";
-import "../styles/Login.css"; // Importar estilos
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "../styles/Login.css";
 
 const Login = () => {
+  const [email, setEmail] = useState(""); // Cambiar a email
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    if (!email || !password) {
+      setError("Por favor, completa todos los campos.");
+      return;
+    }
+
+    try {
+      const response = await fetch("http://localhost:3000/user/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }), // Cambiar a email
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        localStorage.setItem("authToken", data.jwt); // Guardar el token JWT
+        navigate("/");
+      } else {
+        const errorData = await response.json();
+        setError(errorData.errors[0] || "Error al iniciar sesión");
+      }
+    } catch (err) {
+      setError("Hubo un problema con el servidor");
+    }
+  };
+
   return (
     <div className="login-container">
       <div className="login-box">
@@ -9,12 +45,20 @@ const Login = () => {
         <p className="login-version">v0.1.1</p>
         <h2 className="login-welcome">Bienvenido</h2>
         <p className="login-instruction">Ingresa con tus credenciales:</p>
-        <form className="login-form">
-          <input type="text" placeholder="Código" className="login-input" />
+        <form className="login-form" onSubmit={handleLogin}>
+          <input
+            type="email"
+            placeholder="Correo electrónico"
+            className="login-input"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)} // Cambiar a email
+          />
           <input
             type="password"
             placeholder="Contraseña"
             className="login-input"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
           <a href="#" className="forgot-password">
             ¿Olvidaste tu contraseña?
@@ -23,9 +67,9 @@ const Login = () => {
             Iniciar sesión
           </button>
         </form>
+        {error && <p className="login-error">{error}</p>}
         <p className="login-footer">
-          Al iniciar sesión con tu código y NIP para consultar tu información
-          académica aceptas nuestra{" "}
+          Al iniciar sesión con tu correo y contraseña, aceptas nuestra{" "}
           <a href="#" className="privacy-policy">
             política de uso y privacidad.
           </a>

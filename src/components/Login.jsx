@@ -6,6 +6,7 @@ const Login = () => {
   const [email, setEmail] = useState(""); // Campo para el correo electrónico
   const [password, setPassword] = useState(""); // Campo para la contraseña
   const [error, setError] = useState(null); // Mensaje de error en caso de fallos
+  const [isLoading, setIsLoading] = useState(false); // Estado para controlar si está cargando
   const navigate = useNavigate(); // Para redirigir a otras rutas
 
   const handleLogin = async (e) => {
@@ -17,8 +18,9 @@ const Login = () => {
       return;
     }
 
+    setIsLoading(true); // Activar el indicador de carga
+
     try {
-      // Usar la URL base de la API desde las variables de entorno
       const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:3000";
       const response = await fetch(`${apiUrl}/user/login`, {
         method: "POST",
@@ -41,6 +43,8 @@ const Login = () => {
     } catch (err) {
       // Manejar errores de red (por ejemplo, el servidor está caído)
       setError("Hubo un problema con el servidor.");
+    } finally {
+      setIsLoading(false); // Desactivar el indicador de carga cuando termina el proceso
     }
   };
 
@@ -52,6 +56,9 @@ const Login = () => {
 
   return (
     <div className="login-container">
+      {/* Fondo opaco durante la carga */}
+      {isLoading && <div className="overlay"></div>}
+
       <div className="login-box">
         <h1 className="login-title">TutorLink</h1>
         <p className="login-version">v0.1.1</p>
@@ -75,12 +82,22 @@ const Login = () => {
           <a href="#" className="forgot-password">
             ¿Olvidaste tu contraseña?
           </a>
-          <button type="submit" className="login-button">
-            Iniciar sesión
+          <button type="submit" className="login-button" disabled={isLoading}>
+            {isLoading ? "Cargando..." : "Iniciar sesión"}{" "}
+            {/* Cambiar el texto cuando está cargando */}
           </button>
         </form>
+
+        {/* Mostrar un spinner o mensaje mientras se carga */}
+        {isLoading && (
+          <div className="spinner">
+            <div className="circle"></div>
+          </div>
+        )}
+
         {/* Mostrar error en caso de que exista */}
         {error && <p className="login-error">{error}</p>}
+
         <p className="login-footer">
           Al iniciar sesión con tu correo y contraseña, aceptas nuestra{" "}
           <a href="#" className="privacy-policy">

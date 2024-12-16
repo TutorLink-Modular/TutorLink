@@ -20,8 +20,6 @@ const Login = () => {
     try {
       // Usar la URL base de la API desde las variables de entorno
       const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:3000";
-      console.log("Usando API URL:", apiUrl);
-
       const response = await fetch(`${apiUrl}/user/login`, {
         method: "POST",
         headers: {
@@ -46,6 +44,12 @@ const Login = () => {
     }
   };
 
+  // Función para manejar el cambio en los campos de entrada
+  const handleInputChange = (e, setter) => {
+    setter(e.target.value);
+    setError(null); // Limpiar el error cuando el usuario empieza a escribir
+  };
+
   return (
     <div className="login-container">
       <div className="login-box">
@@ -57,16 +61,16 @@ const Login = () => {
           <input
             type="email"
             placeholder="Correo electrónico"
-            className="login-input"
+            className={`login-input ${error ? "error" : ""}`} // Añadir clase 'error' si hay un error
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => handleInputChange(e, setEmail)} // Limpiar error cuando cambia el correo
           />
           <input
             type="password"
             placeholder="Contraseña"
-            className="login-input"
+            className={`login-input ${error ? "error" : ""}`} // Añadir clase 'error' si hay un error
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => handleInputChange(e, setPassword)} // Limpiar error cuando cambia la contraseña
           />
           <a href="#" className="forgot-password">
             ¿Olvidaste tu contraseña?

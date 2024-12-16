@@ -83,15 +83,23 @@
   box-shadow: 0 0 5px rgba(251, 189, 8, 0.5);
 }
 
-.forgot-password {
-  font-size: 14px;
-  color: #fbbd08; /* Amarillo */
-  text-decoration: none;
-  margin-bottom: 20px;
+/* Cambios para cuando hay error */
+.login-input.error {
+  border-color: #e74c3c; /* Rojo para indicar error */
+  background-color: #f8d7da; /* Fondo más claro para indicar error */
+  color: #e74c3c; /* Texto en rojo */
 }
 
-.forgot-password:hover {
-  text-decoration: underline;
+.login-input.error:focus {
+  border-color: #e74c3c; /* Rojo */
+  box-shadow: 0 0 5px rgba(231, 76, 60, 0.5); /* Sombra roja */
+}
+
+/* Mensaje de error */
+.login-error {
+  color: #e74c3c; /* Rojo para los mensajes de error */
+  font-size: 14px;
+  margin-top: 10px;
 }
 
 /* Botón */

@@ -3,38 +3,46 @@ import { useNavigate } from "react-router-dom";
 import "../styles/Login.css";
 
 const Login = () => {
-  const [email, setEmail] = useState(""); // Cambiar a email
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState(null);
-  const navigate = useNavigate();
+  const [email, setEmail] = useState(""); // Campo para el correo electrónico
+  const [password, setPassword] = useState(""); // Campo para la contraseña
+  const [error, setError] = useState(null); // Mensaje de error en caso de fallos
+  const navigate = useNavigate(); // Para redirigir a otras rutas
 
   const handleLogin = async (e) => {
     e.preventDefault();
 
+    // Validar que los campos no estén vacíos
     if (!email || !password) {
       setError("Por favor, completa todos los campos.");
       return;
     }
 
     try {
-      const response = await fetch("http://localhost:3000/user/login", {
+      // Usar la URL base de la API desde las variables de entorno
+      const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:3000";
+      console.log("Usando API URL:", apiUrl);
+
+      const response = await fetch(`${apiUrl}/user/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password }), // Cambiar a email
+        body: JSON.stringify({ email, password }), // Enviar las credenciales
       });
 
       if (response.ok) {
+        // Si la respuesta es exitosa, guardar el token y redirigir
         const data = await response.json();
-        localStorage.setItem("authToken", data.jwt); // Guardar el token JWT
-        navigate("/");
+        localStorage.setItem("authToken", data.jwt); // Guardar el token JWT en localStorage
+        navigate("/"); // Redirigir a la página principal
       } else {
+        // Manejar errores del servidor
         const errorData = await response.json();
         setError(errorData.errors[0] || "Error al iniciar sesión");
       }
     } catch (err) {
-      setError("Hubo un problema con el servidor");
+      // Manejar errores de red (por ejemplo, el servidor está caído)
+      setError("Hubo un problema con el servidor.");
     }
   };
 
@@ -51,7 +59,7 @@ const Login = () => {
             placeholder="Correo electrónico"
             className="login-input"
             value={email}
-            onChange={(e) => setEmail(e.target.value)} // Cambiar a email
+            onChange={(e) => setEmail(e.target.value)}
           />
           <input
             type="password"
@@ -67,6 +75,7 @@ const Login = () => {
             Iniciar sesión
           </button>
         </form>
+        {/* Mostrar error en caso de que exista */}
         {error && <p className="login-error">{error}</p>}
         <p className="login-footer">
           Al iniciar sesión con tu correo y contraseña, aceptas nuestra{" "}

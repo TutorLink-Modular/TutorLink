@@ -104,6 +104,17 @@ const Login = () => {
             política de uso y privacidad.
           </a>
         </p>
+
+        {/* Botón para ir al registro */}
+        <div className="register-link">
+          <p>¿No tienes cuenta?</p>
+          <button
+            className="register-button"
+            onClick={() => navigate("/register")} // Navegar a la página de registro
+          >
+            Regístrate aquí
+          </button>
+        </div>
       </div>
     </div>
   );

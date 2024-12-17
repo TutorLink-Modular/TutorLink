@@ -180,3 +180,25 @@
   cursor: not-allowed;
   color: #888;
 }
+
+/* Estilos para el botón de registro */
+.register-link {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.register-button {
+  background-color: #fbbd08; /* Amarillo */
+  color: #202437; /* Azul oscuro */
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.register-button:hover {
+  background-color: #202437; /* Azul más oscuro */
+  color: #fbbd08; /* Amarillo */
+}

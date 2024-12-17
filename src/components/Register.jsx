@@ -29,6 +29,15 @@ const Register = () => {
       return;
     }
 
+    // Validar el formato del correo electrónico
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@alumnos\.udg\.mx$/;
+    if (!emailRegex.test(email)) {
+      setError(
+        "El correo electrónico debe ser de la institución @alumnos.udg.mx."
+      );
+      return;
+    }
+
     setIsLoading(true); // Activar el indicador de carga
 
     try {
@@ -112,7 +121,7 @@ const Register = () => {
           />
           <input
             type="password"
-            placeholder="Confirma tu contraseña"
+            placeholder="Confirmar contraseña"
             className={`login-input ${error ? "error" : ""}`} // Añadir clase 'error' si hay un error
             value={confirmPassword}
             onChange={(e) => handleInputChange(e, setConfirmPassword)} // Limpiar error cuando cambia la confirmación

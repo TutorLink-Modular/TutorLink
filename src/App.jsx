@@ -4,6 +4,7 @@ import Header from "./components/Header";
 import CardContainer from "./components/CardContainer";
 import OtherPage from "./components/OtherPage";
 import Login from "./components/Login";
+import Register from "./components/Register"; // Importamos el componente Register
 import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
@@ -13,7 +14,8 @@ function App() {
         <Routes>
           {/* Ruta pública para el login */}
           <Route path="/login" element={<Login />} />
-
+          {/* Ruta pública para el registro */}
+          <Route path="/register" element={<Register />} /> {/* Nueva ruta */}
           {/* Rutas protegidas */}
           <Route
             path="/"

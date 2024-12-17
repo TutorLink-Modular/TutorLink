@@ -8,6 +8,7 @@ const Register = () => {
   const [surname, setSurname] = useState(""); // Campo para el apellido
   const [email, setEmail] = useState(""); // Campo para el correo electrónico
   const [password, setPassword] = useState(""); // Campo para la contraseña
+  const [confirmPassword, setConfirmPassword] = useState(""); // Campo para confirmar la contraseña
   const [error, setError] = useState(null); // Mensaje de error
   const [isLoading, setIsLoading] = useState(false); // Estado para controlar si está cargando
   const navigate = useNavigate(); // Para redirigir a otras rutas
@@ -17,8 +18,14 @@ const Register = () => {
     e.preventDefault();
 
     // Validar que los campos no estén vacíos
-    if (!name || !surname || !email || !password) {
+    if (!name || !surname || !email || !password || !confirmPassword) {
       setError("Por favor, completa todos los campos.");
+      return;
+    }
+
+    // Validar que las contraseñas coincidan
+    if (password !== confirmPassword) {
+      setError("Las contraseñas no coinciden.");
       return;
     }
 
@@ -72,7 +79,6 @@ const Register = () => {
 
       <div className="login-box">
         <h1 className="login-title">TutorLink</h1>
-        <p className="login-version">v0.1.1</p>
         <h2 className="login-welcome">Regístrate</h2>
         <p className="login-instruction">Crea tu cuenta para continuar:</p>
         <form className="login-form" onSubmit={handleRegister}>
@@ -103,6 +109,13 @@ const Register = () => {
             className={`login-input ${error ? "error" : ""}`} // Añadir clase 'error' si hay un error
             value={password}
             onChange={(e) => handleInputChange(e, setPassword)} // Limpiar error cuando cambia la contraseña
+          />
+          <input
+            type="password"
+            placeholder="Confirma tu contraseña"
+            className={`login-input ${error ? "error" : ""}`} // Añadir clase 'error' si hay un error
+            value={confirmPassword}
+            onChange={(e) => handleInputChange(e, setConfirmPassword)} // Limpiar error cuando cambia la confirmación
           />
           <button type="submit" className="login-button" disabled={isLoading}>
             {isLoading ? "Cargando..." : "Registrarse"}

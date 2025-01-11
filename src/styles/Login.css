@@ -202,3 +202,49 @@
   background-color: #202437; /* Azul más oscuro */
   color: #fbbd08; /* Amarillo */
 }
+
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.popup-content {
+  background: white;
+  color: black; /* Asegúrate de que el texto sea negro */
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  max-width: 400px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.popup h2 {
+  margin-bottom: 10px;
+  color: #333; /* Un gris oscuro para el título */
+}
+
+.popup p {
+  margin-bottom: 20px;
+  color: #555; /* Un gris claro para el texto del cuerpo */
+}
+
+.popup-button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.popup-button:hover {
+  background-color: #45a049;
+}

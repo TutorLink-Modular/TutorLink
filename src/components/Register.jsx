@@ -4,32 +4,29 @@ import { v4 as uuidv4 } from "uuid"; // Para generar un UUID4
 import "../styles/Login.css";
 
 const Register = () => {
-  const [name, setName] = useState(""); // Campo para el nombre
-  const [surname, setSurname] = useState(""); // Campo para el apellido
-  const [email, setEmail] = useState(""); // Campo para el correo electrónico
-  const [password, setPassword] = useState(""); // Campo para la contraseña
-  const [confirmPassword, setConfirmPassword] = useState(""); // Campo para confirmar la contraseña
-  const [error, setError] = useState(null); // Mensaje de error
-  const [isLoading, setIsLoading] = useState(false); // Estado para controlar si está cargando
-  const navigate = useNavigate(); // Para redirigir a otras rutas
+  const [name, setName] = useState("");
+  const [surname, setSurname] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [showPopup, setShowPopup] = useState(false); // Estado para mostrar el popup
+  const navigate = useNavigate();
 
-  // Función para manejar el registro
   const handleRegister = async (e) => {
     e.preventDefault();
 
-    // Validar que los campos no estén vacíos
     if (!name || !surname || !email || !password || !confirmPassword) {
       setError("Por favor, completa todos los campos.");
       return;
     }
 
-    // Validar que las contraseñas coincidan
     if (password !== confirmPassword) {
       setError("Las contraseñas no coinciden.");
       return;
     }
 
-    // Validar el formato del correo electrónico
     const emailRegex = /^[a-zA-Z0-9._%+-]+@alumnos\.udg\.mx$/;
     if (!emailRegex.test(email)) {
       setError(
@@ -38,10 +35,9 @@ const Register = () => {
       return;
     }
 
-    setIsLoading(true); // Activar el indicador de carga
+    setIsLoading(true);
 
     try {
-      // Generar un nuevo UUID para el _id
       const newUserId = uuidv4();
 
       const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:3000";
@@ -56,34 +52,30 @@ const Register = () => {
           surname,
           email,
           password,
-        }), // Enviar los datos del nuevo usuario
+        }),
       });
 
       if (response.ok) {
-        // Si la respuesta es exitosa, redirigir al login
-        navigate("/login");
+        // Mostrar popup en lugar de redirigir inmediatamente
+        setShowPopup(true);
       } else {
-        // Manejar errores del servidor
         const errorData = await response.json();
         setError(errorData.errors[0] || "Error al registrar el usuario");
       }
     } catch (err) {
-      // Manejar errores de red (por ejemplo, el servidor está caído)
       setError("Hubo un problema con el servidor.");
     } finally {
-      setIsLoading(false); // Desactivar el indicador de carga
+      setIsLoading(false);
     }
   };
 
-  // Función para manejar el cambio en los campos de entrada
   const handleInputChange = (e, setter) => {
     setter(e.target.value);
-    setError(null); // Limpiar el error cuando el usuario empieza a escribir
+    setError(null);
   };
 
   return (
     <div className="login-container">
-      {/* Fondo opaco durante la carga */}
       {isLoading && <div className="overlay"></div>}
 
       <div className="login-box">
@@ -94,51 +86,49 @@ const Register = () => {
           <input
             type="text"
             placeholder="Nombre"
-            className={`login-input ${error ? "error" : ""}`} // Añadir clase 'error' si hay un error
+            className={`login-input ${error ? "error" : ""}`}
             value={name}
-            onChange={(e) => handleInputChange(e, setName)} // Limpiar error cuando cambia el nombre
+            onChange={(e) => handleInputChange(e, setName)}
           />
           <input
             type="text"
             placeholder="Apellido"
-            className={`login-input ${error ? "error" : ""}`} // Añadir clase 'error' si hay un error
+            className={`login-input ${error ? "error" : ""}`}
             value={surname}
-            onChange={(e) => handleInputChange(e, setSurname)} // Limpiar error cuando cambia el apellido
+            onChange={(e) => handleInputChange(e, setSurname)}
           />
           <input
             type="email"
             placeholder="Correo electrónico"
-            className={`login-input ${error ? "error" : ""}`} // Añadir clase 'error' si hay un error
+            className={`login-input ${error ? "error" : ""}`}
             value={email}
-            onChange={(e) => handleInputChange(e, setEmail)} // Limpiar error cuando cambia el correo
+            onChange={(e) => handleInputChange(e, setEmail)}
           />
           <input
             type="password"
             placeholder="Contraseña"
-            className={`login-input ${error ? "error" : ""}`} // Añadir clase 'error' si hay un error
+            className={`login-input ${error ? "error" : ""}`}
             value={password}
-            onChange={(e) => handleInputChange(e, setPassword)} // Limpiar error cuando cambia la contraseña
+            onChange={(e) => handleInputChange(e, setPassword)}
           />
           <input
             type="password"
             placeholder="Confirmar contraseña"
-            className={`login-input ${error ? "error" : ""}`} // Añadir clase 'error' si hay un error
+            className={`login-input ${error ? "error" : ""}`}
             value={confirmPassword}
-            onChange={(e) => handleInputChange(e, setConfirmPassword)} // Limpiar error cuando cambia la confirmación
+            onChange={(e) => handleInputChange(e, setConfirmPassword)}
           />
           <button type="submit" className="login-button" disabled={isLoading}>
             {isLoading ? "Cargando..." : "Registrarse"}
           </button>
         </form>
 
-        {/* Mostrar un spinner o mensaje mientras se carga */}
         {isLoading && (
           <div className="spinner">
             <div className="circle"></div>
           </div>
         )}
 
-        {/* Mostrar error en caso de que exista */}
         {error && <p className="login-error">{error}</p>}
 
         <p className="login-footer">
@@ -148,6 +138,28 @@ const Register = () => {
           </a>
         </p>
       </div>
+
+      {/* Popup de éxito */}
+      {showPopup && (
+        <div className="popup">
+          <div className="popup-content">
+            <h2>¡Registro exitoso!</h2>
+            <p>
+              Para completar tu registro, revisa tu correo electrónico y sigue
+              el enlace de validación enviado.
+            </p>
+            <button
+              className="popup-button"
+              onClick={() => {
+                setShowPopup(false);
+                navigate("/login");
+              }}
+            >
+              Entendido
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

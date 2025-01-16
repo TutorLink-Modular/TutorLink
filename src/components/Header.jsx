@@ -13,7 +13,7 @@ const Header = () => {
 
   const handleLogout = () => {
     localStorage.removeItem('authToken');
-    window.location.reload();
+    window.location.reload(); 
   }
 
   return (

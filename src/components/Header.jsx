@@ -3,12 +3,18 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import Sidebar from "./Sidebar";
 import "../styles/Header.css";
 
+
 const Header = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
 
   const toggleSidebar = () => {
     setSidebarOpen(!isSidebarOpen);
   };
+
+  const handleLogout = () => {
+    localStorage.removeItem('authToken');
+    window.location.reload(); 
+  }
 
   return (
     <>
@@ -25,7 +31,10 @@ const Header = () => {
         </div>
         <div className="header-right">
           <i className="fas fa-user-circle user-icon"></i>
-          <i className="fas fa-sign-out-alt logout-icon"></i>
+          <i 
+            className="fas fa-sign-out-alt logout-icon"
+            onClick={handleLogout}
+          ></i>
         </div>
       </header>
       <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />

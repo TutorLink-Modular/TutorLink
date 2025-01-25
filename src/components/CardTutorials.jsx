@@ -1,17 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "../styles/Card.css";
+import "../styles/CardTutorials.css";
 
 const Card = ({ title, subtitle, description, imageUrl }) => {
 
-  const modifyLinkTutorials = (title) => {
-    let link = "";
-    if(title == "Tutoría Disciplinar"){
-      link = "/TutoriaDisciplinar";
-    }
-    else if(title == "Tutoría De Orientación"){
-      link = "/TutoriaOrientacion";
-    }
+  const modifyLinkTutorials = () => {
+    let link = "/other";
     return link;
   }
 
@@ -25,7 +19,7 @@ const Card = ({ title, subtitle, description, imageUrl }) => {
         <h3 className="card-title">{title}</h3>
         <h4 className="card-subtitle">{subtitle}</h4>
         <p className="card-description">{description}</p>
-        <Link to={modifyLinkTutorials(title)}>
+        <Link to={modifyLinkTutorials()}>
           <button className="card-button">Enter</button>
         </Link>
       </div>

@@ -3,10 +3,11 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Header from "./components/Header";
 import CardContainer from "./components/CardContainer";
 import OtherPage from "./components/OtherPage";
-import TutoriaDisciplinar from "./components/TutoriaDisciplinar";
 import Login from "./components/Login";
 import Register from "./components/Register"; // Importamos el componente Register
 import ProtectedRoute from "./components/ProtectedRoute";
+import TutoriaDisciplinar from "./components/TutoriaDisciplinar";
+import TutoriaOrientacion from "./components/TutoriaOrientacion";
 
 
 function App() {
@@ -37,6 +38,17 @@ function App() {
                 <>
                   <Header />
                   <TutoriaDisciplinar />
+                </>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/TutoriaOrientacion"
+            element={
+              <ProtectedRoute>
+                <>
+                  <Header />
+                  <TutoriaOrientacion />
                 </>
               </ProtectedRoute>
             }

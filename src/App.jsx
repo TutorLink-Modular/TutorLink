@@ -3,9 +3,11 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Header from "./components/Header";
 import CardContainer from "./components/CardContainer";
 import OtherPage from "./components/OtherPage";
+import TutoriaDisciplinar from "./components/TutoriaDisciplinar";
 import Login from "./components/Login";
 import Register from "./components/Register"; // Importamos el componente Register
 import ProtectedRoute from "./components/ProtectedRoute";
+
 
 function App() {
   return (
@@ -24,6 +26,17 @@ function App() {
                 <>
                   <Header />
                   <CardContainer />
+                </>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/TutoriaDisciplinar"
+            element={
+              <ProtectedRoute>
+                <>
+                  <Header />
+                  <TutoriaDisciplinar />
                 </>
               </ProtectedRoute>
             }

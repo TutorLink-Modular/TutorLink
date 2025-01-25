@@ -142,6 +142,14 @@ const Login = () => {
           </button>
         )}
 
+        {/* Enlace para recuperación de contraseña */}
+        <p
+          className="forgot-password-link"
+          onClick={() => navigate("/forgot-password")}
+        >
+          ¿Olvidaste tu contraseña?
+        </p>
+
         <p className="login-footer">
           Al iniciar sesión con tu correo y contraseña, aceptas nuestra{" "}
           <a href="#" className="privacy-policy">

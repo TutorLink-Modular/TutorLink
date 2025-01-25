@@ -248,3 +248,15 @@
 .popup-button:hover {
   background-color: #45a049;
 }
+
+.forgot-password-link {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #fbbd08; /* Amarillo */
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.forgot-password-link:hover {
+  color: #ffcc33;
+}

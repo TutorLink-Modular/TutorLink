@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
+import "../styles/ResetPassword.css"; // Archivo CSS para los estilos
 
 const ResetPassword = () => {
   const [searchParams] = useSearchParams();
@@ -56,26 +57,37 @@ const ResetPassword = () => {
 
   return (
     <div className="reset-password-container">
-      <h2>Restablecer contraseña</h2>
-      <form onSubmit={handleResetPassword}>
-        <input
-          type="password"
-          placeholder="Nueva contraseña"
-          value={newPassword}
-          onChange={(e) => setNewPassword(e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="Confirmar nueva contraseña"
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-        />
-        <button type="submit" disabled={isLoading}>
-          {isLoading ? "Enviando..." : "Restablecer contraseña"}
-        </button>
-      </form>
-      {error && <p className="error-message">{error}</p>}
-      {message && <p className="success-message">{message}</p>}
+      <div className="reset-password-box">
+        <h1 className="reset-password-title">Restablecer contraseña</h1>
+        <p className="reset-password-instruction">
+          Ingresa tu nueva contraseña y confírmala:
+        </p>
+        <form className="reset-password-form" onSubmit={handleResetPassword}>
+          <input
+            type="password"
+            placeholder="Nueva contraseña"
+            value={newPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
+            className={`reset-password-input ${error ? "error" : ""}`}
+          />
+          <input
+            type="password"
+            placeholder="Confirmar contraseña"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            className={`reset-password-input ${error ? "error" : ""}`}
+          />
+          <button
+            type="submit"
+            className="reset-password-button"
+            disabled={isLoading}
+          >
+            {isLoading ? "Enviando..." : "Restablecer contraseña"}
+          </button>
+        </form>
+        {error && <p className="reset-password-error">{error}</p>}
+        {message && <p className="reset-password-success">{message}</p>}
+      </div>
     </div>
   );
 };

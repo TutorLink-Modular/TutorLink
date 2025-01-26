@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import "../styles/ForgotPassword.css"; // Crea un archivo CSS si es necesario
+import { useNavigate } from "react-router-dom"; // Para la navegación
+import "../styles/ForgotPassword.css"; // Archivo CSS específico para ForgotPassword
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState(null);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate(); // Hook de navegación
 
   const handleForgotPassword = async (e) => {
     e.preventDefault();
@@ -44,24 +46,38 @@ const ForgotPassword = () => {
 
   return (
     <div className="forgot-password-container">
-      <h2>Recuperar contraseña</h2>
-      <p>
-        Ingresa tu correo electrónico para recibir un enlace de recuperación:
-      </p>
-      <form onSubmit={handleForgotPassword}>
-        <input
-          type="email"
-          placeholder="Correo electrónico"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className={`forgot-password-input ${error ? "error" : ""}`}
-        />
-        <button type="submit" disabled={isLoading}>
-          {isLoading ? "Enviando..." : "Enviar enlace"}
+      <div className="forgot-password-box">
+        <h1 className="forgot-password-title">Recuperar contraseña</h1>
+        <p className="forgot-password-instruction">
+          Ingresa tu correo electrónico para recibir un enlace de recuperación:
+        </p>
+        <form className="forgot-password-form" onSubmit={handleForgotPassword}>
+          <input
+            type="email"
+            placeholder="Correo electrónico"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className={`forgot-password-input ${error ? "error" : ""}`}
+          />
+          <button
+            type="submit"
+            className="forgot-password-button"
+            disabled={isLoading}
+          >
+            {isLoading ? "Enviando..." : "Enviar enlace"}
+          </button>
+        </form>
+        {error && <p className="forgot-password-error">{error}</p>}
+        {message && <p className="forgot-password-success">{message}</p>}
+
+        {/* Botón para regresar al login */}
+        <button
+          className="forgot-password-back-button"
+          onClick={() => navigate("/login")}
+        >
+          Regresar al inicio de sesión
         </button>
-      </form>
-      {error && <p className="error-message">{error}</p>}
-      {message && <p className="success-message">{message}</p>}
+      </div>
     </div>
   );
 };

@@ -1,0 +1,101 @@
+/* Contenedor principal */
+.profile-container {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #131735;
+  position: relative;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+/* Tarjeta de perfil con color original */
+.profile-box {
+  position: relative;
+  z-index: 2;
+  background: #cfd1d9; /* Color original */
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* Sombra suave */
+  text-align: center;
+  color: #000; /* Texto negro */
+  width: 100%;
+  max-width: 400px;
+}
+
+/* Imagen de perfil (redonda) */
+.profile-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-bottom: 15px;
+  object-fit: cover;
+  background-color: #e0e0e0;
+}
+
+/* Nombre */
+.profile-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #000; /* Texto negro */
+}
+/* Contenedor principal */
+.profile-container {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #131735;
+  position: relative;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+/* Tarjeta de perfil con color original */
+.profile-box {
+  position: relative;
+  z-index: 2;
+  background: #cfd1d9; /* Color original */
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* Sombra suave */
+  text-align: center;
+  color: #000; /* Texto negro */
+  width: 100%;
+  max-width: 400px;
+}
+
+/* Ícono de usuario en lugar de imagen */
+.profile-icon {
+  font-size: 100px; /* Tamaño grande */
+  color: #202437; /* Azul oscuro */
+  margin-bottom: 15px;
+}
+
+/* Nombre */
+.profile-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #000; /* Texto negro */
+}
+
+/* Correo electrónico */
+.profile-email {
+  font-size: 16px;
+  color: #000; /* Texto negro */
+  margin-bottom: 20px;
+}
+
+/* Correo electrónico */
+.profile-email {
+  font-size: 16px;
+  color: #000; /* Texto negro */
+  margin-bottom: 20px;
+}

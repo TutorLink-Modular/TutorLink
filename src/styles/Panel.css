@@ -1,25 +1,65 @@
 .panel {
-  padding: 0;
-  background-color: #eceef1; /* Fondo solo del contenedor del panel */
   color: #131735;
-  margin-bottom: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+}
+
+/* ✅ Cuando el panel está abierto, cambia de color */
+.panel.open {
+  background-color: #cfd1d9; /* Color cuando está abierto */
+}
+
+/* ✅ Cambia el color del título cuando el panel está activo */
+.title-panel {
+  cursor: pointer;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #131735;
+  font-weight: 400;
+  transition: background-color 0.3s ease;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.title-panel:hover {
+  background-color: #fbbd08;
+  color: #131735;
+  transform: scale(1.02);
+}
+
+/* ✅ Cuando el panel está abierto, el título también cambia de color */
+.panel.open .title-panel {
+  background-color: #fbbd08;
+  color: #131735;
+}
+
+.toggle-icon {
+  font-size: 14px;
 }
 
 .panel-items {
   list-style: none;
   padding: 0;
   margin: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
 }
 
-.panel-item {
-  padding: 10px 20px;
-  background-color: #131735; /* Color de fondo de los ítems del panel */
+.panel-items li {
+  font-weight: 100;
+  padding: 12px 20px;
+  background-color: #131735;
   color: #eceef1;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.panel-item:hover {
-  background-color: #fbbd08; /* Color de fondo en hover */
+/* ✅ Se mantiene el hover, pero más suave */
+.panel-items li:hover {
+  background-color: #fbbd08;
   color: #131735;
+  transform: scale(1.02);
 }

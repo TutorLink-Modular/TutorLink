@@ -1,28 +1,28 @@
-.card {
+.cardTutorials {
   background-color: white;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  width: 300px;
+  width: 200px;
   margin: 20px;
   transition: transform 0.3s;
   display: flex;
   flex-direction: column; /* Asegura que los elementos se apilen verticalmente */
-  height: auto; /* Permite que la altura se ajuste según el contenido */
+  height: 400px; /* Permite que la altura se ajuste según el contenido */
 }
 
-.card:hover {
+.cardTutorials:hover {
   transform: translateY(-10px);
 }
 
-.card-image {
+.cardTutorials-image {
   height: 250px;
   background-size: cover;
   background-position: center;
   flex-shrink: 0; /* Evita que la imagen se reduzca demasiado */
 }
 
-.card-content {
+.cardTutorials-content {
   padding: 20px;
   flex: 1; /* Permite que el contenido ocupe espacio disponible */
   display: flex;
@@ -30,24 +30,24 @@
   justify-content: space-between; /* Distribuye el contenido, dejando espacio para el botón */
 }
 
-.card-title {
+.cardTutorials-title {
   font-size: 18px;
   margin: 0;
   color: rgb(0, 0, 0);
 }
 
-.card-subtitle {
+.cardTutorials-subtitle {
   font-size: 14px;
   color: gray;
 }
 
-.card-description {
+.cardTutorials-description {
   font-size: 12px;
   margin: 10px 0;
   color: rgb(0, 0, 0);
 }
 
-.card-button {
+.cardTutorials-button {
   background-color: #1d245a;
   color: white;
   border: none;
@@ -57,29 +57,29 @@
   align-self: flex-start; /* Asegura que el botón no ocupe todo el ancho */
 }
 
-.card-button:hover {
+.cardTutorials-button:hover {
   background-color: #131735;
 }
 
 /* Media query para pantallas más pequeñas */
 @media (max-width: 768px) {
-  .card {
+  .cardTutorials {
     width: 250px; /* Ancho más pequeño para pantallas medianas */
     height: auto; /* Ajusta la altura automáticamente */
   }
 
-  .card-image {
+  .cardTutorials-image {
     height: 200px; /* Reduce la altura de la imagen */
   }
 }
 
 @media (max-width: 480px) {
-  .card {
+  .cardTutorials {
     width: 200px; /* Ancho más pequeño para pantallas muy pequeñas */
     height: auto; /* Ajusta la altura automáticamente */
   }
 
-  .card-image {
+  .cardTutorials-image {
     height: 150px; /* Reduce aún más la altura de la imagen */
   }
 }

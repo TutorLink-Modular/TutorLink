@@ -2,12 +2,13 @@ import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Header from "./components/Header";
 import CardContainer from "./components/CardContainer";
-import OtherPage from "./components/OtherPage";
 import Login from "./components/Login";
 import Register from "./components/Register"; // Importamos el componente Register
 import ProtectedRoute from "./components/ProtectedRoute";
 import TutoriaDisciplinar from "./components/TutoriaDisciplinar";
-import TutoriaOrientacion from "./components/TutoriaOrientacion";
+import TutoriaOrientacional from "./components/TutoriaOrientacional";
+import TopicOrientacional from "./components/TopicOrientacional";
+import TopicDisciplinar from "./components/TopicDisciplinar";
 
 
 function App() {
@@ -32,7 +33,7 @@ function App() {
             }
           />
           <Route
-            path="/TutoriaDisciplinar"
+            path="/tutoria-disciplinar"
             element={
               <ProtectedRoute>
                 <>
@@ -43,23 +44,34 @@ function App() {
             }
           />
           <Route
-            path="/TutoriaOrientacion"
+            path="/tutoria-disciplinar/topic/:topicId"
             element={
               <ProtectedRoute>
                 <>
                   <Header />
-                  <TutoriaOrientacion />
+                  <TopicDisciplinar />
                 </>
               </ProtectedRoute>
             }
           />
           <Route
-            path="/other"
+            path="/tutoria-orientacional"
             element={
               <ProtectedRoute>
                 <>
                   <Header />
-                  <OtherPage />
+                  <TutoriaOrientacional />
+                </>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/tutoria-orientacional/topic/:topicId"
+            element={
+              <ProtectedRoute>
+                <>
+                  <Header />
+                  <TopicOrientacional />
                 </>
               </ProtectedRoute>
             }

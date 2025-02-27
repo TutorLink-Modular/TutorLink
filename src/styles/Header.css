@@ -32,9 +32,16 @@
   color: #fbbd08; /* Color amarillo en hover o cuando el sidebar está activo */
 }
 
+.header-logo {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
 .logo {
   height: 50px;
   margin-right: 10px;
+  
 }
 
 .logo-text {

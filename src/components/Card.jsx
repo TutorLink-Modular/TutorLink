@@ -3,15 +3,16 @@ import { Link } from "react-router-dom";
 import "../styles/Card.css";
 
 const Card = ({ title, subtitle, description, imageUrl }) => {
-
+  // Creamos nuestra funcion para detectar si el usuario selecciono Tutoria Disciplinar o Tutoria de Orientacion
   const modifyLinkTutorials = (title) => {
     let link = "";
-    if(title == "Tutoría Disciplinar"){
-      link = "/TutoriaDisciplinar";
+    if(title == "Tutoría disciplinar"){
+      link = "/tutoria-disciplinar";
     }
-    else if(title == "Tutoría De Orientación"){
-      link = "/TutoriaOrientacion";
+    else if(title == "Tutoría de orientación"){
+      link = "/tutoria-orientacional";
     }
+    // Retornamos el link correspondiente para que el usuario sea redirigido
     return link;
   }
 

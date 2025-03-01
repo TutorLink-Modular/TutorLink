@@ -9,6 +9,7 @@ import TutoriaDisciplinar from "./components/TutoriaDisciplinar";
 import TutoriaOrientacional from "./components/TutoriaOrientacional";
 import TopicOrientacional from "./components/TopicOrientacional";
 import TopicDisciplinar from "./components/TopicDisciplinar";
+import Chatbot from "./components/Chatbot";
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
                 <>
                   <Header />
                   <CardContainer />
+                  <Chatbot />
                 </>
               </ProtectedRoute>
             }
@@ -39,6 +41,7 @@ function App() {
                 <>
                   <Header />
                   <TutoriaDisciplinar />
+                  <Chatbot />
                 </>
               </ProtectedRoute>
             }
@@ -50,6 +53,7 @@ function App() {
                 <>
                   <Header />
                   <TopicDisciplinar />
+                  <Chatbot />
                 </>
               </ProtectedRoute>
             }
@@ -61,6 +65,7 @@ function App() {
                 <>
                   <Header />
                   <TutoriaOrientacional />
+                  <Chatbot />
                 </>
               </ProtectedRoute>
             }
@@ -72,6 +77,7 @@ function App() {
                 <>
                   <Header />
                   <TopicOrientacional />
+                  <Chatbot />
                 </>
               </ProtectedRoute>
             }

@@ -7,7 +7,7 @@ const GOOGLE_AI_KEY = import.meta.env.VITE_GOOGLEAI_API_KEY;
 const Chatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
-    { text: "Hola! Soy un chatbot conectado con Google Gemini AI. Pregúntame lo que quieras!", sender: "bot" }
+    { text: "Hola! Soy un chatbot conectado con Google Gemini AI para ayudarte en lo que necesites. Pregúntame lo que quieras!", sender: "bot" }
   ]);
   const [input, setInput] = useState("");
   const [error, setError] = useState(null);
@@ -40,7 +40,7 @@ const Chatbot = () => {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            contents: [{ parts: [{ text: input }] }],
+            contents: [{ parts: [{ text: `${input}` }] }], //Puedes añadir texto al prompt que envia el usuario
           }),
         }
       );

@@ -74,7 +74,6 @@ const Chatbot = () => {
               </div>
             ))}
             {isLoading && <div className="message bot">Cargando...</div>}
-            {error && <div className="error-message">{error}</div>}
             <div ref={messagesEndRef} />
           </div>
           <div className="chatbot-input">

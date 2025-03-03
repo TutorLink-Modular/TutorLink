@@ -82,6 +82,16 @@ body {
   padding-top: 70px; /* Ajusta el espacio para que el contenido no quede oculto detrás del header */
 }
 
+.logo-container {
+  display: flex;
+  align-items: center;
+  cursor: pointer; /* Hace que el puntero cambie a una mano */
+}
+
+.logo-container:hover {
+  opacity: 0.8; /* Efecto visual al pasar el mouse */
+}
+
 /* RESPONSIVE DESIGN */
 @media (max-width: 768px) {
   .header-left .logo-text {

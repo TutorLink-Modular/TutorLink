@@ -1,13 +1,12 @@
 import React, { useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom"; // Importar para navegación
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import Sidebar from "./Sidebar";
 import "../styles/Header.css";
 
-
 const Header = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
-  const navigate = useNavigate(); // Hook para navegación
+  const navigate = useNavigate(); // Hook para redirigir
 
   const toggleSidebar = () => {
     setSidebarOpen(!isSidebarOpen);
@@ -16,9 +15,9 @@ const Header = () => {
   //Creamos una funcion cuando el usuario quiera salir de su cuenta, simplemente eliminamos el token 
   //que le permite acceso y recargamos la pagina
   const handleLogout = () => {
-    localStorage.removeItem('authToken');
-    window.location.reload(); 
-  }
+    localStorage.removeItem("authToken");
+    window.location.reload();
+  };
 
   const handleMain = () => { 
       navigate("/");
@@ -32,16 +31,20 @@ const Header = () => {
             className={`fas fa-bars menu-icon ${isSidebarOpen ? "active" : ""}`}
             onClick={toggleSidebar}
           ></i>
-          <div className="header-logo">
-            <img src="/logo.svg" alt="TutorLink Logo" className="logo" onClick={handleMain}/>
-            <span className="logo-text" onClick={handleMain}>
+          {/* Logo y Texto con evento de clic para redirigir a la página principal */}
+          <div className="logo-container" onClick={() => navigate("/")}>
+            <img src="/logo.svg" alt="TutorLink Logo" className="logo" />
+            <span className="logo-text">
               Tutor<span className="highlight">Link</span>
             </span>
           </div>
         </div>
         <div className="header-right">
-          <i className="fas fa-user-circle user-icon"></i>
-          <i 
+          <i
+            className="fas fa-user-circle user-icon"
+            onClick={() => navigate("/profile")} // Redirigir al perfil
+          ></i>
+          <i
             className="fas fa-sign-out-alt logout-icon"
             onClick={handleLogout}
           ></i>

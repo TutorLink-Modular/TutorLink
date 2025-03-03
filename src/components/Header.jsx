@@ -12,10 +12,16 @@ const Header = () => {
     setSidebarOpen(!isSidebarOpen);
   };
 
+  //Creamos una funcion cuando el usuario quiera salir de su cuenta, simplemente eliminamos el token 
+  //que le permite acceso y recargamos la pagina
   const handleLogout = () => {
     localStorage.removeItem("authToken");
     window.location.reload();
   };
+
+  const handleMain = () => { 
+      navigate("/");
+  }
 
   return (
     <>
@@ -25,7 +31,6 @@ const Header = () => {
             className={`fas fa-bars menu-icon ${isSidebarOpen ? "active" : ""}`}
             onClick={toggleSidebar}
           ></i>
-
           {/* Logo y Texto con evento de clic para redirigir a la página principal */}
           <div className="logo-container" onClick={() => navigate("/")}>
             <img src="/logo.svg" alt="TutorLink Logo" className="logo" />

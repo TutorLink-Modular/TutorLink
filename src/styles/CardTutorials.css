@@ -1,0 +1,85 @@
+.cardTutorials {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  width: 200px;
+  margin: 20px;
+  transition: transform 0.3s;
+  display: flex;
+  flex-direction: column; /* Asegura que los elementos se apilen verticalmente */
+  height: 400px; /* Permite que la altura se ajuste según el contenido */
+}
+
+.cardTutorials:hover {
+  transform: translateY(-10px);
+}
+
+.cardTutorials-image {
+  height: 250px;
+  background-size: cover;
+  background-position: center;
+  flex-shrink: 0; /* Evita que la imagen se reduzca demasiado */
+}
+
+.cardTutorials-content {
+  padding: 20px;
+  flex: 1; /* Permite que el contenido ocupe espacio disponible */
+  display: flex;
+  flex-direction: column; /* Asegura que los elementos se organicen verticalmente */
+  justify-content: space-between; /* Distribuye el contenido, dejando espacio para el botón */
+}
+
+.cardTutorials-title {
+  font-size: 18px;
+  margin: 0;
+  color: rgb(0, 0, 0);
+}
+
+.cardTutorials-subtitle {
+  font-size: 14px;
+  color: gray;
+}
+
+.cardTutorials-description {
+  font-size: 12px;
+  margin: 10px 0;
+  color: rgb(0, 0, 0);
+}
+
+.cardTutorials-button {
+  background-color: #1d245a;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 16px;
+  cursor: pointer;
+  align-self: flex-start; /* Asegura que el botón no ocupe todo el ancho */
+}
+
+.cardTutorials-button:hover {
+  background-color: #131735;
+}
+
+/* Media query para pantallas más pequeñas */
+@media (max-width: 768px) {
+  .cardTutorials {
+    width: 250px; /* Ancho más pequeño para pantallas medianas */
+    height: auto; /* Ajusta la altura automáticamente */
+  }
+
+  .cardTutorials-image {
+    height: 200px; /* Reduce la altura de la imagen */
+  }
+}
+
+@media (max-width: 480px) {
+  .cardTutorials {
+    width: 200px; /* Ancho más pequeño para pantallas muy pequeñas */
+    height: auto; /* Ajusta la altura automáticamente */
+  }
+
+  .cardTutorials-image {
+    height: 150px; /* Reduce aún más la altura de la imagen */
+  }
+}

@@ -1,33 +1,21 @@
-import React, { useState } from "react";
-import "../styles/Panel.css"; // Importar los estilos del Panel
+import React from "react";
+import "../styles/Panel.css";
 
-const Panel = ({ title, items }) => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const togglePanel = () => {
-    setIsOpen(!isOpen);
-  };
-
+const Panel = ({ title, items, isOpen, togglePanel }) => {
   return (
-    <>
-      <li onClick={togglePanel} className={isOpen ? "active" : ""}>
+    <div className={`panel ${isOpen ? "open" : ""}`}>
+      <h3 onClick={togglePanel} className="title-panel">
         {title}
-        <i className={`fas fa-chevron-${isOpen ? "up" : "down"}`}></i>
-      </li>
-      {isOpen && (
-        <div className="panel">
-          {" "}
-          {/* Cambié ul a div */}
-          <ul className="panel-items">
-            {items.map((item, index) => (
-              <li key={index} className="panel-item">
-                {item}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-    </>
+        <span className="toggle-icon">{isOpen ? "▲" : "▼"}</span>
+      </h3>
+      <ul className="panel-items" style={{ maxHeight: isOpen ? "300px" : "0", overflow: "hidden", transition: "max-height 0.3s ease-out" }}>
+        {items.map((item, index) => (
+          <li key={index} onClick={item.onClick} className="panel-item">
+            {item.label}
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 };
 

@@ -7,14 +7,14 @@ import "../styles/CardContainer.css";
 const CardContainer = () => {
   const cardsData = [
     {
-      title: "Tutoría Disciplinar",
+      title: "Tutoría disciplinar",
       subtitle: "Title",
       description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor",
       imageUrl: image1,
     },
     {
-      title: "Tutoría De Orientación",
+      title: "Tutoría de orientación",
       subtitle: "Title",
       description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor",

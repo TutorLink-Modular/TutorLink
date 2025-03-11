@@ -43,7 +43,6 @@ const TopicDisciplinar = () => {
     fetchTopic();
   }, [topicId]);
 
-  // 🔽 Función para verificar si el tema ya está guardado en el perfil del usuario
   const checkIfSaved = async () => {
     try {
       const token = localStorage.getItem("authToken");
@@ -68,7 +67,7 @@ const TopicDisciplinar = () => {
 
   useEffect(() => {
     checkIfSaved();
-  }, [topicId, showPopup]); // 🔥 Se vuelve a ejecutar cuando cambia el popup
+  }, [topicId, showPopup]);
 
   const handleSaveTopic = async () => {
     try {
@@ -132,7 +131,6 @@ const TopicDisciplinar = () => {
 
   return (
     <div key={topicId} className="topic-container">
-      {/* 🔽 Botón dinámico que cambia entre "Guardar" y "Eliminar" */}
       <button
         className="save-topic-button"
         onClick={isSaved ? handleRemoveTopic : handleSaveTopic}
@@ -146,12 +144,20 @@ const TopicDisciplinar = () => {
         <p>{error}</p>
       ) : (
         <>
-          <h1>{topic.title}</h1>
-          <p>{topic.text}</p>
+          {/* 🔽 Envolver el título con un div especial para centrarlo */}
+          <div className="title-container">
+            <h1>{topic.title}</h1>
+          </div>
+
+          {/* 🔽 Formatear el texto en párrafos separados */}
+          <div className="formatted-text">
+            {topic.text.split("\n").map((paragraph, index) => (
+              <p key={index}>{paragraph}</p>
+            ))}
+          </div>
         </>
       )}
 
-      {/* 🔽 Popup de éxito con botón de cerrar (❌) */}
       {showPopup && (
         <div className="popup">
           <div className="popup-content">

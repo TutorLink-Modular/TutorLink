@@ -7,7 +7,7 @@ const GOOGLE_AI_KEY = import.meta.env.VITE_GOOGLEAI_API_KEY;
 const Chatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
-    { text: "Hola! Soy un chatbot conectado con Google Gemini AI para ayudarte en lo que necesites. Pregúntame lo que quieras!", sender: "bot" }
+    { text: "Hola! Soy tu AI tutor para ayudarte en lo que necesites. Pregúntame lo que quieras!", sender: "bot" }
   ]);
   const [input, setInput] = useState("");
   const [error, setError] = useState(null);
@@ -63,7 +63,9 @@ const Chatbot = () => {
 
   return (
     <div className={`chatbot-container ${isOpen ? "open" : ""}`}>
-      <button className="chatbot-toggle" onClick={toggleChat}>💬</button>
+      <button className="chatbot-toggle" onClick={toggleChat}>
+        {isOpen ? "❌" : "💬"}
+      </button>
       {isOpen && (
         <div className="chatbot-box">
           <div className="chatbot-messages">

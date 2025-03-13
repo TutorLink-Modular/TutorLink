@@ -8,7 +8,7 @@ const Panel = ({ title, items, isOpen, togglePanel }) => {
         {title}
         <span className="toggle-icon">{isOpen ? "▲" : "▼"}</span>
       </h3>
-      <ul className="panel-items" style={{ maxHeight: isOpen ? "300px" : "0", overflow: "hidden", transition: "max-height 0.3s ease-out" }}>
+      <ul className="panel-items" style={{ maxHeight: isOpen ? "max-content" : "0", overflow: "hidden", transition: "max-height 0.3s ease-out" }}>
         {items.map((item, index) => (
           <li key={index} onClick={item.onClick} className="panel-item">
             {item.label}

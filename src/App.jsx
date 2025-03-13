@@ -36,6 +36,7 @@ function App() {
                 <>
                   <Header />
                   <Profile />
+                  <Chatbot />
                 </>
               </ProtectedRoute>
             }

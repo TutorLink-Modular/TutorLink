@@ -6,10 +6,10 @@ const Card = ({ title, subtitle, description, imageUrl }) => {
   // Creamos nuestra funcion para detectar si el usuario selecciono Tutoria Disciplinar o Tutoria de Orientacion
   const modifyLinkTutorials = (title) => {
     let link = "";
-    if(title == "Tutoría disciplinar"){
+    if(title == "Tutoría Disciplinar"){
       link = "/tutoria-disciplinar";
     }
-    else if(title == "Tutoría de orientación"){
+    else if(title == "Tutoría de Orientación"){
       link = "/tutoria-orientacional";
     }
     // Retornamos el link correspondiente para que el usuario sea redirigido

@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
+import "../styles/TopicDisciplinar.css";
 
 const TopicDisciplinar = () => {
-  const { topicId } = useParams(); // ✅ Detectamos el ID del tema desde la URL
-  const location = useLocation(); // ✅ Recuperamos los datos pasados desde la otra página
+  const { topicId } = useParams();
+  const location = useLocation();
+  const navigate = useNavigate();
   const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
-  // ✅ Inicializamos el estado con los datos pasados desde la otra página (si existen)
   const [topic, setTopic] = useState({
     title: location.state?.title || "",
     text: location.state?.text || "",
@@ -14,17 +15,19 @@ const TopicDisciplinar = () => {
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [showPopup, setShowPopup] = useState(false);
+  const [popupMessage, setPopupMessage] = useState("");
+  const [isSaved, setIsSaved] = useState(false);
 
   useEffect(() => {
-    // ✅ Si ya tenemos datos del tema en `location.state`, evitamos hacer la petición
-    if (location.state?.title && location.state?.text) {
-      return;
-    }
+    if (location.state?.title && location.state?.text) return;
 
     setLoading(true);
     const fetchTopic = async () => {
       try {
-        const response = await fetch(`${apiUrl}/topics-disciplinary/topic/${topicId}`);
+        const response = await fetch(
+          `${apiUrl}/topics-disciplinary/topic/${topicId}`
+        );
         if (!response.ok) throw new Error("No se pudo obtener el tema.");
 
         const data = await response.json();
@@ -38,16 +41,138 @@ const TopicDisciplinar = () => {
     };
 
     fetchTopic();
-  }, [topicId]); // ✅ Se ejecuta cada vez que cambia el `topicId`
+  }, [topicId]);
 
-  // ✅ Forzar una recarga ligera cambiando la `key` del contenedor
+  const checkIfSaved = async () => {
+    try {
+      const token = localStorage.getItem("authToken");
+      if (!token) return;
+
+      const response = await fetch(`${apiUrl}/user/profile`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) throw new Error("Error al obtener datos del usuario");
+
+      const userData = await response.json();
+      setIsSaved(userData.savedTopics.includes(topicId));
+    } catch (err) {
+      console.error("❌ Error al verificar temas guardados:", err);
+    }
+  };
+
+  useEffect(() => {
+    checkIfSaved();
+  }, [topicId, showPopup]);
+
+  const handleSaveTopic = async () => {
+    try {
+      const token = localStorage.getItem("authToken");
+      if (!token) {
+        setError("Debes iniciar sesión para guardar temas.");
+        return;
+      }
+
+      const response = await fetch(`${apiUrl}/user/save-topic`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ topicId }),
+      });
+
+      if (response.ok) {
+        setPopupMessage("¡Tema guardado con éxito! Puedes verlo en tu perfil.");
+        setShowPopup(true);
+        await checkIfSaved();
+      } else {
+        const data = await response.json();
+        setError(data.errors[0]);
+      }
+    } catch (err) {
+      setError("Error al guardar el tema.");
+    }
+  };
+
+  const handleRemoveTopic = async () => {
+    try {
+      const token = localStorage.getItem("authToken");
+      if (!token) {
+        setError("Debes iniciar sesión para eliminar temas.");
+        return;
+      }
+
+      const response = await fetch(`${apiUrl}/user/remove-topic`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ topicId }),
+      });
+
+      if (response.ok) {
+        setPopupMessage("¡Tema eliminado! Ya no está en tu perfil.");
+        setShowPopup(true);
+        await checkIfSaved();
+      } else {
+        const data = await response.json();
+        setError(data.errors[0]);
+      }
+    } catch (err) {
+      setError("Error al eliminar el tema.");
+    }
+  };
+
   return (
-    <div key={topicId}>
-      {loading ? <p>Cargando tema...</p> : error ? <p>{error}</p> : (
+    <div key={topicId} className="topic-container">
+      <button
+        className="save-topic-button"
+        onClick={isSaved ? handleRemoveTopic : handleSaveTopic}
+      >
+        {isSaved ? "Eliminar Tema" : "Guardar Tema"}
+      </button>
+
+      {loading ? (
+        <p>Cargando tema...</p>
+      ) : error ? (
+        <p>{error}</p>
+      ) : (
         <>
-          <h1>{topic.title}</h1>
-          <p>{topic.text}</p>
+          {/* 🔽 Envolver el título con un div especial para centrarlo */}
+          <div className="title-container">
+            <h1>{topic.title}</h1>
+          </div>
+
+          {/* 🔽 Formatear el texto en párrafos separados */}
+          <div className="formatted-text">
+            {topic.text.split("\n").map((paragraph, index) => (
+              <p key={index}>{paragraph}</p>
+            ))}
+          </div>
         </>
+      )}
+
+      {showPopup && (
+        <div className="popup">
+          <div className="popup-content">
+            <button className="close-popup" onClick={() => setShowPopup(false)}>
+              ❌
+            </button>
+            <h2>{popupMessage}</h2>
+            <button
+              className="popup-button"
+              onClick={() => navigate("/profile")}
+            >
+              Ir al perfil
+            </button>
+          </div>
+        </div>
       )}
     </div>
   );

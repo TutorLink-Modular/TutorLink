@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom"; 
 import CardTutorials from "./CardTutorials";
+import HeaderDisciplinar from "./HeaderDisciplinar"; // ✅ Importamos el nuevo componente
 import image from "../assets/images/disciplinar.png";
 import "../styles/TutoriaDisciplinar.css";
 
@@ -13,7 +14,7 @@ const TutoriaDisciplinar = () => {
   useEffect(() => {
     const fetchTopicsDisciplinar = async () => {
       try {
-        //Hacemos nuestro GET para obtener la informacion de la BD
+        //Hacemos nuestro GET para obtener la información de la BD
         const response = await fetch(`${apiUrl}/topics-disciplinary/topicsDisciplinaryCards`, {
           method: "GET",
           headers: {
@@ -37,12 +38,13 @@ const TutoriaDisciplinar = () => {
     fetchTopicsDisciplinar();
   }, []);
 
-  // Redirige a OtherPage con texto y titulo
+  // Redirige a OtherPage con texto y título
   const handleCardClick = async (topicId) => {
-    // Volvemos a hacer otra consulta, ahora solo del texto y titulo del tema que el usuario selecciono
+    // Volvemos a hacer otra consulta, ahora solo del texto y título del tema que el usuario seleccionó
     try {
       const response = await fetch(`${apiUrl}/topics-disciplinary/topic/${topicId}`);
       if (!response.ok) throw new Error(`Error: ${response.statusText}`);
+      
       //Creamos la variable con el resultado
       const topicData = await response.json();
 
@@ -57,32 +59,31 @@ const TutoriaDisciplinar = () => {
 
   return (
     <div>
-      <div className="titleDisciplinar-container">
-        <h1 className="titleDisciplinar">Tutoría disciplinar</h1>
-        <h3 className="descriptionDisciplinar">
-            Explora temas disciplinares diseñados para tu crecimiento personal y académico.
-        </h3>
-      </div>
+      {/* ✅ Nuevo encabezado con imagen y descripción */}
+      <HeaderDisciplinar /> 
+  
+      {/* ✅ Contenedor con el mismo fondo del header */}
       <div className="cardDisciplinar-container">
-      {error && <p className="error-message">{error}</p>}
-
-      {topics.length > 0 ? (
-        topics.map((topic, index) => (
-          <CardTutorials
-            key={topic._id}
-            title={topic.title || "Sin título"} // Evita valores vacíos
-            description={topic.description || "Sin descripción"}
-            imageUrl={topic.image} // Usa imagen de BD 
-            defaultImage={image} // o una por defecto
-            onClick={() => handleCardClick(topic._id)}
-          />
-        ))
-      ) : (
-        !error && <p>Cargando temas disciplinares...</p>
-      )}
+        {error && <p className="error-message">{error}</p>}
+  
+        {topics.length > 0 ? (
+          topics.map((topic, index) => (
+            <CardTutorials
+              key={topic._id}
+              title={topic.title || "Sin título"} 
+              description={topic.description || "Sin descripción"}
+              imageUrl={topic.image} 
+              defaultImage={image} 
+              onClick={() => handleCardClick(topic._id)}
+            />
+          ))
+        ) : (
+          !error && <p>Cargando temas disciplinares...</p>
+        )}
       </div>
     </div>
   );
+  
 };
 
 export default TutoriaDisciplinar;

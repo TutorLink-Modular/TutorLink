@@ -1,0 +1,74 @@
+.header-disciplinar-container {
+    background-color: #757FA6;
+    padding: 20px;
+    border-radius: 15px;
+    margin: 100px auto 30px;
+    max-width: 88%;
+    text-align: center;
+}
+  
+.header-title {
+    font-size: 36px;
+    font-weight: bold;
+    color: #202437;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+/* 🔹 Contenedor flexible */
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding: 20px;
+    border-radius: 15px;
+}
+
+/* 🔹 Imagen */
+.header-image img {
+    width: 300px;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3); /* Sombra en la parte inferior y derecha */
+}
+
+/* 🔹 Texto */
+.header-text {
+    background-color: #C3C4AD;
+    padding: 15px;
+    border-radius: 10px;
+    max-width: 450px;
+    text-align: left;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3); /* Sombra en la parte inferior y derecha */
+}
+
+
+.header-text h2 {
+    font-size: 25px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-align: center; /* Centra el título */
+}
+
+.header-text p {
+    font-size: 16px;
+    color: #333;
+    text-align: justify; /* Justifica el texto del párrafo */
+}
+
+/* 🔹 Responsividad */
+@media (max-width: 768px) {
+    .header-content {
+        flex-direction: column;
+    }
+
+    .header-text {
+        text-align: center;
+    }
+
+    .header-text p {
+        text-align: justify; /* Mantiene la justificación en móviles */
+    }
+}

@@ -13,7 +13,11 @@ const HeaderDisciplinar = () => {
         <div className="header-text">
           <h2>¿Qué puedes encontrar aquí?</h2>
           <p>
-          Explora una variedad de temas disciplinares cuidadosamente diseñados para impulsar tu crecimiento personal y académico. A través de recursos especializados y enfoques innovadores, amplía tus conocimientos, desarrolla nuevas habilidades y fortalece tu formación en distintas áreas del saber.
+            Explora una variedad de temas disciplinares cuidadosamente diseñados
+            para impulsar tu crecimiento personal y académico. A través de
+            recursos especializados y enfoques innovadores, amplía tus
+            conocimientos, desarrolla nuevas habilidades y fortalece tu
+            formación en distintas áreas del saber.
           </p>
         </div>
       </div>

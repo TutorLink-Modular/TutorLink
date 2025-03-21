@@ -45,7 +45,7 @@ const TutoriaDisciplinar = () => {
   const handleCardClick = async (topicId) => {
     try {
       const response = await fetch(
-        `${apiUrl}/topics-disciplinary/topic/${topicId}`
+        `${apiUrl}/topics-disciplinary/main-topic/${topicId}`
       );
       if (!response.ok) throw new Error(`Error: ${response.statusText}`);
 
@@ -53,8 +53,8 @@ const TutoriaDisciplinar = () => {
       const topicData = await response.json();
 
       // Redirigir y pasar los datos directamente a OtherPage.jsx
-      navigate(`/tutoria-disciplinar/topic/${topicId}`, {
-        state: { title: topicData.title, text: topicData.text },
+      navigate(`/tutoria-disciplinar/main-topic/${topicId}`, {
+        state: { title: topicData.title },
       });
     } catch (error) {
       console.error("Error al obtener el tema:", error);

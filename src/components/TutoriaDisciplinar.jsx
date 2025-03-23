@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CardTutorials from "./CardTutorials";
-import HeaderDisciplinar from "./HeaderDisciplinar"; // ✅ Importamos el nuevo componente
+import HeaderDisciplinar from "./HeaderTopic";
 import image from "../assets/images/disciplinar.png";
+import imageHeader from "../assets/images/HeaderDisciplinar.png";
 import "../styles/TutoriaDisciplinar.css";
 
 const TutoriaDisciplinar = () => {
-  const [topics, setTopics] = useState([]); // Estado para almacenar los datos
-  const [error, setError] = useState(null); // Estado para manejar errores
-  const navigate = useNavigate(); // Hook para navegación
-  const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:3000"; // Nos conectamos a nuestra API
+  const [topics, setTopics] = useState([]);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
+  const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
   useEffect(() => {
     const fetchMainTopicsDisciplinar = async () => {
       try {
-        // 📌 Ahora hacemos el GET a los Main Topics Disciplinarios
         const response = await fetch(
           `${apiUrl}/topics-disciplinary/main-topics-disciplinary`,
           {
@@ -28,10 +28,8 @@ const TutoriaDisciplinar = () => {
         if (!response.ok) {
           throw new Error(`Error: ${response.statusText}`);
         }
-
-        // 📌 Creamos nuestra variable con los datos obtenidos de la base de datos
         const data = await response.json();
-        setTopics(data); // Guardar los datos en el estado
+        setTopics(data);
       } catch (error) {
         console.error("Error al obtener los datos:", error);
         setError("No se pudo obtener la información de la tutoría.");
@@ -41,7 +39,6 @@ const TutoriaDisciplinar = () => {
     fetchMainTopicsDisciplinar();
   }, []);
 
-  // Redirige a OtherPage con texto y título
   const handleCardClick = async (topicId) => {
     try {
       const response = await fetch(
@@ -49,10 +46,8 @@ const TutoriaDisciplinar = () => {
       );
       if (!response.ok) throw new Error(`Error: ${response.statusText}`);
 
-      // 📌 Creamos la variable con el resultado
       const topicData = await response.json();
 
-      // Redirigir y pasar los datos directamente a OtherPage.jsx
       navigate(`/tutoria-disciplinar/main-topic/${topicId}`, {
         state: { title: topicData.title },
       });
@@ -64,10 +59,12 @@ const TutoriaDisciplinar = () => {
 
   return (
     <div>
-      {/* ✅ Nuevo encabezado con imagen y descripción */}
-      <HeaderDisciplinar />
+      <HeaderDisciplinar
+        title="Tutoría Disciplinar"
+        subtitle="Explora una variedad de temas disciplinares cuidadosamente diseñados para impulsar tu crecimiento personal y académico. A través de recursos especializados y enfoques innovadores, amplía tus conocimientos, desarrolla nuevas habilidades y fortalece tu formación en distintas áreas del saber."
+        imageSrc={imageHeader}
+      />
 
-      {/* ✅ Contenedor con el mismo fondo del header */}
       <div className="cardDisciplinar-container">
         {error && <p className="error-message">{error}</p>}
 

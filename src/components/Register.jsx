@@ -2,17 +2,28 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid"; // Para generar un UUID4
 import "../styles/Login.css";
+import "@fortawesome/fontawesome-free/css/all.min.css";
 
 const Register = () => {
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [showPopup, setShowPopup] = useState(false); // Estado para mostrar el popup
   const navigate = useNavigate();
+
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const toggleShowConfirmPassword = () => {
+    setShowConfirmPassword(!showConfirmPassword);
+  };
 
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -27,13 +38,14 @@ const Register = () => {
       return;
     }
 
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@alumnos\.udg\.mx$/;
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@(alumnos\.udg\.mx|academicos\.udg\.mx)$/;
     if (!emailRegex.test(email)) {
       setError(
-        "El correo electrónico debe ser de la institución @alumnos.udg.mx."
+        "El correo electrónico debe ser de la institución @alumnos.udg.mx o @academicos.udg.mx"
       );
       return;
     }
+
 
     setIsLoading(true);
 
@@ -104,20 +116,38 @@ const Register = () => {
             value={email}
             onChange={(e) => handleInputChange(e, setEmail)}
           />
-          <input
-            type="password"
-            placeholder="Contraseña"
-            className={`login-input ${error ? "error" : ""}`}
-            value={password}
-            onChange={(e) => handleInputChange(e, setPassword)}
-          />
-          <input
-            type="password"
-            placeholder="Confirmar contraseña"
-            className={`login-input ${error ? "error" : ""}`}
-            value={confirmPassword}
-            onChange={(e) => handleInputChange(e, setConfirmPassword)}
-          />
+          <div className="password-container">
+            <input
+              type={showPassword ? "text" : "password"}
+              placeholder="Contraseña"
+              className={`login-input ${error ? "error" : ""}`}
+              value={password}
+              onChange={(e) => handleInputChange(e, setPassword)}
+            />
+            <button
+              type="button"
+              className="toggle-password"
+              onClick={toggleShowPassword}
+              >
+              <i className={`fas ${showPassword ? "fa-eye eye-icon" : "fa-eye-slash eyeSlash-icon"}`}></i>
+            </button>
+          </div>
+          <div className="password-container">
+            <input
+              type={showConfirmPassword ? "text" : "password"}
+              placeholder="Confirmar contraseña"
+              className={`login-input ${error ? "error" : ""}`}
+              value={confirmPassword}
+              onChange={(e) => handleInputChange(e, setConfirmPassword)}
+            />
+            <button
+              type="button"
+              className="toggle-password"
+              onClick={toggleShowConfirmPassword}
+              >
+              <i className={`fas ${showConfirmPassword ? "fa-eye eye-icon" : "fa-eye-slash eyeSlash-icon"}`}></i>
+            </button>
+          </div>
           <button type="submit" className="login-button" disabled={isLoading}>
             {isLoading ? "Cargando..." : "Registrarse"}
           </button>

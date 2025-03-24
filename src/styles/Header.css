@@ -24,12 +24,16 @@
   margin-right: 20px; /* Ajusta el espacio entre el icono y el logo */
   cursor: pointer;
   color: #131735;
-  transition: color 0.3s ease;
+  transition: color 0.3s ease, transform 0.3s ease, background-color 0.3s ease;
 }
 
-.menu-icon.active,
+.menu-icon.active {
+  color: #fbbd08;
+}
+
 .menu-icon:hover {
   color: #fbbd08; /* Color amarillo en hover o cuando el sidebar está activo */
+  transform: scale(1.1) translateY(-10%);
 }
 
 .header-logo {
@@ -60,12 +64,30 @@
   margin-right: 40px; /* Ajusta esto si es necesario para agregar espacio al ícono */
 }
 
-.user-icon,
-.logout-icon {
+.user-icon{
   font-size: 30px;
   color: #131735;
   margin-left: 15px;
   cursor: pointer;
+  transition: color 0.3s ease, transform 0.3s ease, background-color 0.3s ease;
+}
+
+.user-icon:hover {
+  color: #fbbd08; /* Color amarillo en hover o cuando el sidebar está activo */
+  transform: scale(1.1) translateY(-10%);
+}
+
+
+.logout-icon {
+  font-size: 30px;
+  color: #d93b3b;
+  margin-left: 15px;
+  cursor: pointer;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.logout-icon:hover {
+  transform: scale(1.1) translateY(-10%);
 }
 
 .logout-icon {
@@ -86,10 +108,12 @@ body {
   display: flex;
   align-items: center;
   cursor: pointer; /* Hace que el puntero cambie a una mano */
+  transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
 .logo-container:hover {
   opacity: 0.8; /* Efecto visual al pasar el mouse */
+  transform: scale(1.05) translateY(-5%);
 }
 
 /* RESPONSIVE DESIGN */

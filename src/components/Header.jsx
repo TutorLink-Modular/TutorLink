@@ -30,6 +30,7 @@ const Header = () => {
           <i
             className={`fas fa-bars menu-icon ${isSidebarOpen ? "active" : ""}`}
             onClick={toggleSidebar}
+            title="📋  Haz clic para abrir/cerrar el sidebar"
           ></i>
           {/* Logo y Texto con evento de clic para redirigir a la página principal */}
           <div className="logo-container" onClick={() => navigate("/")}>
@@ -43,10 +44,12 @@ const Header = () => {
           <i
             className="fas fa-user-circle user-icon"
             onClick={() => navigate("/profile")} // Redirigir al perfil
+            title="👤  Haz clic para abrir perfil"
           ></i>
           <i
             className="fas fa-sign-out-alt logout-icon"
             onClick={handleLogout}
+            title="❌ Haz clic para cerrar sesion"
           ></i>
         </div>
       </header>

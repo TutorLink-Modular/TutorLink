@@ -1,15 +1,21 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/Login.css";
+import "@fortawesome/fontawesome-free/css/all.min.css";
 
 const Login = () => {
   const [email, setEmail] = useState(""); // Campo para el correo electrónico
   const [password, setPassword] = useState(""); // Campo para la contraseña
+  const [showPassword, setShowPassword] = useState(false); // Estado para mostrar/ocultar la contraseña
   const [error, setError] = useState(null); // Mensaje de error en caso de fallos
   const [info, setInfo] = useState(null); // Mensaje informativo (por ejemplo, reenvío exitoso)
   const [isLoading, setIsLoading] = useState(false); // Estado para controlar si está cargando
   const [showResendButton, setShowResendButton] = useState(false); // Estado para mostrar el botón de reenvío
   const navigate = useNavigate(); // Para redirigir a otras rutas
+
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -115,13 +121,22 @@ const Login = () => {
             value={email}
             onChange={(e) => handleInputChange(e, setEmail)}
           />
-          <input
-            type="password"
-            placeholder="Contraseña"
-            className={`login-input ${error ? "error" : ""}`}
-            value={password}
-            onChange={(e) => handleInputChange(e, setPassword)}
-          />
+          <div className="password-container">
+            <input
+              type={showPassword ? "text" : "password"}
+              placeholder="Contraseña"
+              className={`login-input ${error ? "error" : ""}`}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <button
+              type="button"
+              className="toggle-password"
+              onClick={toggleShowPassword}
+              >
+              <i className={`fas ${showPassword ? "fa-eye eye-icon" : "fa-eye-slash eyeSlash-icon"}`}></i>
+            </button>
+          </div>
           <button type="submit" className="login-button" disabled={isLoading}>
             {isLoading ? "Cargando..." : "Iniciar sesión"}
           </button>
@@ -152,7 +167,7 @@ const Login = () => {
 
         <p className="login-footer">
           Al iniciar sesión con tu correo y contraseña, aceptas nuestra{" "}
-          <a href="#" className="privacy-policy">
+          <a href="https://udg.mx/politica-de-privacidad-y-manejo-de-datos" className="privacy-policy">
             política de uso y privacidad.
           </a>
         </p>

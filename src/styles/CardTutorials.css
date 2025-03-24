@@ -3,12 +3,12 @@
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  width: 200px;
+  width: 220px;
   margin: 20px;
   transition: transform 0.3s;
   display: flex;
   flex-direction: column; /* Asegura que los elementos se apilen verticalmente */
-  height: 400px; /* Permite que la altura se ajuste según el contenido */
+  height: 480px; /* Permite que la altura se ajuste según el contenido */
 }
 
 .cardTutorials:hover {

@@ -1,0 +1,97 @@
+.header-disciplinar-container {
+  background-color: #757fa6;
+  padding: 20px;
+  border-radius: 15px;
+  margin: 100px auto 20px;
+  max-width: 88%;
+  text-align: center;
+}
+
+/* 🔹 Título */
+.header-title {
+  font-size: 30px;
+  font-weight: bold;
+  color: #202437;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+/* 🔹 Contenedor flexible */
+.header-content {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  gap: 50px; /* 🔥 Aumenta la separación entre imagen y texto */
+  padding: 15px;
+  border-radius: 15px;
+}
+
+/* 🔹 Imagen */
+.header-image {
+  flex: 1;
+  max-width: 35%;
+  display: flex;
+  margin-right: 20px; /* 🔥 Añade más separación de la imagen */
+}
+
+.header-image img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* 🔹 Texto */
+.header-text {
+  flex: 1;
+  max-width: 35%;
+  background-color: #c3c4ad;
+  padding: 15px;
+  border-radius: 10px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
+  margin-left: 20px; /* 🔥 Añade más separación del texto */
+}
+
+.header-text h2 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-align: center;
+  color: #202437;
+}
+
+.header-text p {
+  font-size: 16px;
+  color: #333;
+  text-align: justify;
+  line-height: 1.4;
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+/* 🔹 Responsividad */
+@media (max-width: 768px) {
+  .header-content {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px; /* 🔥 Reduce el espacio entre elementos en móviles */
+  }
+
+  .header-image,
+  .header-text {
+    max-width: 90%;
+    margin: 0; /* 🔥 Evita márgenes adicionales en móviles */
+  }
+
+  .header-image img {
+    height: auto;
+  }
+
+  .header-text {
+    text-align: center;
+  }
+}

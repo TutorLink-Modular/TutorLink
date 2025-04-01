@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
-import "../styles/TopicDisciplinar.css";
+import "../styles/TopicOrientacional.css";
 
 const TopicOrientacional = () => {
   const { topicId } = useParams();
@@ -148,8 +148,17 @@ const TopicOrientacional = () => {
         <p>{error}</p>
       ) : (
         <>
-          <h1>{topic.title}</h1>
-          <p>{topic.text}</p>
+          {/* 🔽 Envolver el título con un div especial para centrarlo */}
+          <div className="title-container">
+            <h1>{topic.title}</h1>
+          </div>
+
+          {/* 🔽 Formatear el texto en párrafos separados */}
+          <div className="formatted-text">
+            {topic.text.split("\n").map((paragraph, index) => (
+              <p key={index}>{paragraph}</p>
+            ))}
+          </div>
         </>
       )}
 

@@ -96,6 +96,7 @@
   padding: 0 100px; /* 🔽 Agrega espacio extra a la derecha e izquierda */
   line-height: 1.8; /* Mejora la legibilidad */
   font-size: 18px; /* 🔽 Letra un poco más grande */
+  color: white;
   text-align: justify;
 }
 

@@ -97,6 +97,7 @@
   line-height: 1.8; /* Mejora la legibilidad */
   font-size: 18px; /* 🔽 Letra un poco más grande */
   text-align: justify;
+  color: white;
 }
 
 /* Espaciado entre párrafos */

@@ -20,13 +20,13 @@ function App() {
     <Router>
       <div className="App">
         <Routes>
-          {/* 🔹 Rutas Públicas */}
+          {/* Rutas Públicas */}
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password" element={<ResetPassword />} />
 
-          {/* 🔹 Rutas Protegidas */}
+          {/* Rutas Protegidas */}
           <Route
             path="/profile"
             element={
@@ -40,7 +40,7 @@ function App() {
             }
           />
 
-          {/* 🔹 Página Principal */}
+          {/* Página Principal */}
           <Route
             path="/"
             element={
@@ -54,7 +54,7 @@ function App() {
             }
           />
 
-          {/* 🔹 Tutoría Disciplinar */}
+          {/* Tutoría Disciplinar */}
           <Route
             path="/tutoria-disciplinar"
             element={
@@ -67,7 +67,7 @@ function App() {
               </ProtectedRoute>
             }
           />
-          {/* 🔥 Nueva Ruta: Ver temas de un Main Topic */}
+          {/* Nueva Ruta: Ver temas de un Main Topic */}
           <Route
             path="/tutoria-disciplinar/main-topic/:idMainTopic"
             element={
@@ -80,7 +80,7 @@ function App() {
               </ProtectedRoute>
             }
           />
-          {/* 🔹 Ver un tema individual */}
+          {/* Ver un tema individual */}
           <Route
             path="/tutoria-disciplinar/topic/:topicId"
             element={
@@ -94,7 +94,7 @@ function App() {
             }
           />
 
-          {/* 🔹 Tutoría Orientacional */}
+          {/* Tutoría Orientacional */}
           <Route
             path="/tutoria-orientacional"
             element={
@@ -107,7 +107,7 @@ function App() {
               </ProtectedRoute>
             }
           />
-          {/* 🔹 Ver un tema individual */}
+          {/* Ver un tema individual */}
           <Route
             path="/tutoria-orientacional/topic/:topicId"
             element={

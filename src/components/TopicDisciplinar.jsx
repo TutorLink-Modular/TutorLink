@@ -144,12 +144,12 @@ const TopicDisciplinar = () => {
         <p>{error}</p>
       ) : (
         <>
-          {/* 🔽 Envolver el título con un div especial para centrarlo */}
+          {/* Envolver el título con un div especial para centrarlo */}
           <div className="title-container">
             <h1>{topic.title}</h1>
           </div>
 
-          {/* 🔽 Formatear el texto en párrafos separados */}
+          {/*Formatear el texto en párrafos separados */}
           <div className="formatted-text">
             {topic.text.split("\n").map((paragraph, index) => (
               <p key={index}>{paragraph}</p>

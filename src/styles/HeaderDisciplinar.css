@@ -78,13 +78,13 @@
   .header-content {
     flex-direction: column;
     align-items: center;
-    gap: 20px; /* 🔥 Reduce el espacio entre elementos en móviles */
+    gap: 20px; /* Reduce el espacio entre elementos en móviles */
   }
 
   .header-image,
   .header-text {
     max-width: 90%;
-    margin: 0; /* 🔥 Evita márgenes adicionales en móviles */
+    margin: 0; /*Evita márgenes adicionales en móviles */
   }
 
   .header-image img {

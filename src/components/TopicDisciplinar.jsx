@@ -203,7 +203,6 @@ const TopicDisciplinar = () => {
           <div className="title-container">
             <h1>{topic.title}</h1>
           </div>
-
           <div className="formatted-text">
             {topic.text.split("\n").map((paragraph, index) => (
               <p key={index}>{paragraph}</p>

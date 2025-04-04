@@ -2,12 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CardTutorials from "./CardTutorials";
 import HeaderDisciplinar from "./HeaderTopic";
+import SearchBar from "./SearchBar";
 import image from "../assets/images/disciplinar.png";
 import imageHeader from "../assets/images/HeaderDisciplinar.png";
 import "../styles/TutoriaDisciplinar.css";
 
 const TutoriaDisciplinar = () => {
   const [topics, setTopics] = useState([]);
+  const [search, setSearch] = useState("");
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:3000";
@@ -19,15 +21,10 @@ const TutoriaDisciplinar = () => {
           `${apiUrl}/topics-disciplinary/main-topics-disciplinary`,
           {
             method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
+            headers: { "Content-Type": "application/json" },
           }
         );
-
-        if (!response.ok) {
-          throw new Error(`Error: ${response.statusText}`);
-        }
+        if (!response.ok) throw new Error(`Error: ${response.statusText}`);
         const data = await response.json();
         setTopics(data);
       } catch (error) {
@@ -45,9 +42,7 @@ const TutoriaDisciplinar = () => {
         `${apiUrl}/topics-disciplinary/main-topic/${topicId}`
       );
       if (!response.ok) throw new Error(`Error: ${response.statusText}`);
-
       const topicData = await response.json();
-
       navigate(`/tutoria-disciplinar/main-topic/${topicId}`, {
         state: { title: topicData.title },
       });
@@ -57,6 +52,10 @@ const TutoriaDisciplinar = () => {
     }
   };
 
+  const filteredTopics = topics.filter((topic) =>
+    topic.title.toLowerCase().includes(search.toLowerCase())
+  );
+
   return (
     <div>
       <HeaderDisciplinar
@@ -65,11 +64,17 @@ const TutoriaDisciplinar = () => {
         imageSrc={imageHeader}
       />
 
+      <SearchBar
+        placeholder="Buscar tema..."
+        value={search}
+        onChange={setSearch}
+      />
+
       <div className="cardDisciplinar-container">
         {error && <p className="error-message">{error}</p>}
 
-        {topics.length > 0
-          ? topics.map((topic, index) => (
+        {filteredTopics.length > 0
+          ? filteredTopics.map((topic) => (
               <CardTutorials
                 key={topic._id}
                 title={topic.title || "Sin título"}
@@ -79,7 +84,7 @@ const TutoriaDisciplinar = () => {
                 onClick={() => handleCardClick(topic._id)}
               />
             ))
-          : !error && <p>Cargando temas disciplinares...</p>}
+          : !error && <p>No se encontraron temas.</p>}
       </div>
     </div>
   );

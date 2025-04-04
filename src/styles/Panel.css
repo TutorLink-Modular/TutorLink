@@ -4,12 +4,12 @@
   transition: background-color 0.3s ease;
 }
 
-/* ✅ Cuando el panel está abierto, cambia de color */
+/* Cuando el panel está abierto, cambia de color */
 .panel.open {
   background-color: #cfd1d9; /* Color cuando está abierto */
 }
 
-/* ✅ Cambia el color del título cuando el panel está activo */
+/*Cambia el color del título cuando el panel está activo */
 .title-panel {
   cursor: pointer;
   padding: 15px;
@@ -29,7 +29,7 @@
   transform: scale(1.02);
 }
 
-/* ✅ Cuando el panel está abierto, el título también cambia de color */
+/* Cuando el panel está abierto, el título también cambia de color */
 .panel.open .title-panel {
   background-color: #fbbd08;
   color: #131735;
@@ -57,7 +57,7 @@
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-/* ✅ Se mantiene el hover, pero más suave */
+/*Se mantiene el hover, pero más suave */
 .panel-items li:hover {
   background-color: #fbbd08;
   color: #131735;

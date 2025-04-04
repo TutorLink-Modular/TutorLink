@@ -29,13 +29,13 @@
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-/* ✅ Se cambia el color cuando un panel está activo */
+/* Se cambia el color cuando un panel está activo */
 .sidebar ul li.active {
   background-color: #fbbd08;
   color: #131735;
 }
 
-/* ✅ Efecto hover */
+/*Efecto hover */
 .sidebar ul li:hover {
   background-color: #fbbd08;
   transform: scale(1.03);

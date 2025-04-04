@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
+import RecommendedTopics from "./RecommendedTopics";
 import "../styles/TopicOrientacional.css";
 
 const TopicOrientacional = () => {
@@ -43,7 +44,6 @@ const TopicOrientacional = () => {
     fetchTopic();
   }, [topicId]);
 
-  // 🔽 CONSULTA SI EL TEMA ORIENTACIONAL YA ESTÁ GUARDADO
   const checkIfSaved = async () => {
     try {
       const token = localStorage.getItem("authToken");
@@ -148,21 +148,21 @@ const TopicOrientacional = () => {
         <p>{error}</p>
       ) : (
         <>
-          {/*Envolver el título con un div especial para centrarlo */}
           <div className="title-container">
             <h1>{topic.title}</h1>
           </div>
 
-          {/*Formatear el texto en párrafos separados */}
           <div className="formatted-text">
             {topic.text.split("\n").map((paragraph, index) => (
               <p key={index}>{paragraph}</p>
             ))}
           </div>
+
+          {/* 🔥 Recomendaciones para orientación */}
+          <RecommendedTopics title={topic.title} category="orientacional" />
         </>
       )}
 
-      {/*Popup de éxito con botón de cerrar (❌) */}
       {showPopup && (
         <div className="popup">
           <div className="popup-content">

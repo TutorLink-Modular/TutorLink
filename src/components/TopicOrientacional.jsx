@@ -26,6 +26,7 @@ const TopicOrientacional = () => {
   const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
   const [topic, setTopic] = useState({
+    _id: uuidv4(),
     title: location.state?.title || "",
     text: location.state?.text || "",
     videos: location.state?.videos || [],
@@ -51,7 +52,13 @@ const TopicOrientacional = () => {
         if (!response.ok) throw new Error("No se pudo obtener el tema.");
 
         const data = await response.json();
-        setTopic({ title: data.title, text: data.text, videos: data.videos, comments: data.comments || [] });
+        setTopic({
+          _id: data._id,
+          title: data.title,
+          text: data.text,
+          videos: data.videos || [],
+          comments: data.comments || [],
+        });
       } catch (error) {
         setError("No se pudo cargar el tema.");
       } finally {

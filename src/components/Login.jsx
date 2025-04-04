@@ -110,7 +110,6 @@ const Login = () => {
 
       <div className="login-box">
         <h1 className="login-title">TutorLink</h1>
-        <p className="login-version">v0.1.1</p>
         <h2 className="login-welcome">Bienvenido</h2>
         <p className="login-instruction">Ingresa con tus credenciales:</p>
         <form className="login-form" onSubmit={handleLogin}>
@@ -133,8 +132,14 @@ const Login = () => {
               type="button"
               className="toggle-password"
               onClick={toggleShowPassword}
-              >
-              <i className={`fas ${showPassword ? "fa-eye eye-icon" : "fa-eye-slash eyeSlash-icon"}`}></i>
+            >
+              <i
+                className={`fas ${
+                  showPassword
+                    ? "fa-eye eye-icon"
+                    : "fa-eye-slash eyeSlash-icon"
+                }`}
+              ></i>
             </button>
           </div>
           <button type="submit" className="login-button" disabled={isLoading}>
@@ -167,7 +172,10 @@ const Login = () => {
 
         <p className="login-footer">
           Al iniciar sesión con tu correo y contraseña, aceptas nuestra{" "}
-          <a href="https://udg.mx/politica-de-privacidad-y-manejo-de-datos" className="privacy-policy">
+          <a
+            href="https://udg.mx/politica-de-privacidad-y-manejo-de-datos"
+            className="privacy-policy"
+          >
             política de uso y privacidad.
           </a>
         </p>

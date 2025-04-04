@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import Sidebar from "./Sidebar";
 import "../styles/Header.css";
+import useAutoLogout from "../hooks/useAutoLogout"; //Libreria para eliminar el token a los 15 min de inactividad
 
 const Header = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
@@ -21,6 +22,8 @@ const Header = () => {
     navigate("/");
   };
 
+  useAutoLogout(30); // 15 minutos de inactividad
+
   return (
     <>
       <header className="header">
@@ -30,7 +33,8 @@ const Header = () => {
             onClick={toggleSidebar}
             title="📋  Haz clic para abrir/cerrar el sidebar"
           ></i>
-          <div className="logo-container" onClick={() => navigate("/")}>
+          {/* Logo y Texto con evento de clic para redirigir a la página principal */}
+          <div title="🏠  Haz clic para regresar al home" className="logo-container" onClick={() => navigate("/")}>
             <img src="/logo.svg" alt="TutorLink Logo" className="logo" />
             <span className="logo-text">
               Tutor<span className="highlight">Link</span>

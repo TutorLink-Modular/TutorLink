@@ -40,7 +40,22 @@ const Login = () => {
       if (response.ok) {
         const data = await response.json();
         localStorage.setItem("authToken", data.jwt);
-        navigate("/"); // Redirigir a la página principal
+        // Obtener solo name y surname del perfil
+        const profileResponse = await fetch(`${apiUrl}/user/profile`, {
+          method: "GET",
+          headers: {
+            "Authorization": `Bearer ${data.jwt}`,
+            "Content-Type": "application/json"
+          }
+        });
+
+        if (profileResponse.ok) {
+          const profileData = await profileResponse.json();
+          const { name, surname, _id } = profileData;
+          localStorage.setItem("user", JSON.stringify({ name, surname, _id }));
+        }
+
+        navigate("/");
       } else {
         const errorData = await response.json();
         const errorMessage = errorData.errors[0] || "Error al iniciar sesión";

@@ -8,7 +8,7 @@ import "../styles/RecommendedTopics.css";
 const RecommendedTopics = ({ title }) => {
   const [recommendations, setRecommendations] = useState([]);
   const [error, setError] = useState(null);
-  const apiUrl = import.meta.env.VITE_PYTHON_API_URL || "http://localhost:5001";
+  const apiUrl = import.meta.env.VITE_PYTHON_API_URL;
   const navigate = useNavigate();
   const location = useLocation();
 

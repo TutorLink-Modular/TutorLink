@@ -55,6 +55,9 @@ const Login = () => {
           localStorage.setItem("user", JSON.stringify({ name, surname, _id }));
         }
 
+        // Establecer expiración en 30 minutos si se sale de la pagina
+        const expiration = new Date().getTime() + 30 * 60 * 1000;
+        localStorage.setItem("tokenExpiresAt", expiration);
         navigate("/");
       } else {
         const errorData = await response.json();

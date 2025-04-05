@@ -1,0 +1,26 @@
+.recommended-container {
+  background-color: #757fa6;
+  padding: 20px;
+  border-radius: 15px;
+  margin: 20px auto;
+  max-width: 90%;
+  text-align: center;
+}
+
+.cards-recommended-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  padding: 20px;
+}
+
+.recommended-container h2 {
+  color: #ffffff;
+  margin-bottom: 15px;
+}
+
+.error-message {
+  color: #ff4b4b;
+}

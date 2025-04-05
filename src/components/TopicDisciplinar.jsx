@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
+import RecommendedTopics from "./RecommendedTopics";
 import { v4 as uuidv4 } from "uuid";
 import "../styles/TopicDisciplinar.css";
 
 const toEmbedURL = (url) => {
   try {
     const urlObj = new URL(url);
-    if (urlObj.hostname.includes("youtube.com") && urlObj.searchParams.get("v")) {
+    if (
+      urlObj.hostname.includes("youtube.com") &&
+      urlObj.searchParams.get("v")
+    ) {
       return `https://www.youtube.com/embed/${urlObj.searchParams.get("v")}`;
     }
     if (urlObj.hostname === "youtu.be") {
@@ -40,7 +44,13 @@ const TopicDisciplinar = () => {
   const [newComment, setNewComment] = useState("");
 
   useEffect(() => {
-    if (location.state?.title && location.state?.text && location.state?.videos && location.state?.comments) return;
+    if (
+      location.state?.title &&
+      location.state?.text &&
+      location.state?.videos &&
+      location.state?.comments
+    )
+      return;
 
     setLoading(true);
     const fetchTopic = async () => {
@@ -173,13 +183,16 @@ const TopicDisciplinar = () => {
         _id: commentId,
         user,
         userId,
-        message: newComment
-      })
+        message: newComment,
+      }),
     });
 
     setTopic((prev) => ({
       ...prev,
-      comments: [...prev.comments, { _id: commentId, user, userId, message: newComment }],
+      comments: [
+        ...prev.comments,
+        { _id: commentId, user, userId, message: newComment },
+      ],
     }));
 
     setNewComment("");
@@ -209,42 +222,48 @@ const TopicDisciplinar = () => {
             ))}
           </div>
 
-          {topic.videos.length > 0 && topic.videos.some(v => v.trim() !== "") && (
-            <>
-              <div className="section-divider">
-                <span>🎥 Videos de referencia</span>
-              </div>
-              <div className="video-container">
-                {topic.videos.filter(link => link.trim() !== "").map((link, index) => (
-                  <div key={index} className="video-wrapper">
-                    <iframe
-                      width="100%"
-                      height="315"
-                      src={toEmbedURL(link)}
-                      title={`Video ${index + 1}`}
-                      frameBorder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                      onError={(e) => {
-                        const msg = document.createElement("div");
-                        msg.textContent = "⚠️ Este video puede estar bloqueado por una extensión del navegador.";
-                        msg.style.color = "#ffcc00";
-                        msg.style.marginTop = "10px";
-                        msg.style.fontSize = "0.9rem";
-                        e.target.parentElement.appendChild(msg);
-                      }}
-                    ></iframe>
-                  </div>
-                ))}
-              </div>
-            </>
-          )}
-          
+          {topic.videos.length > 0 &&
+            topic.videos.some((v) => v.trim() !== "") && (
+              <>
+                <div className="section-divider">
+                  <span>🎥 Videos de referencia</span>
+                </div>
+                <div className="video-container">
+                  {topic.videos
+                    .filter((link) => link.trim() !== "")
+                    .map((link, index) => (
+                      <div key={index} className="video-wrapper">
+                        <iframe
+                          width="100%"
+                          height="315"
+                          src={toEmbedURL(link)}
+                          title={`Video ${index + 1}`}
+                          frameBorder="0"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowFullScreen
+                          onError={(e) => {
+                            const msg = document.createElement("div");
+                            msg.textContent =
+                              "⚠️ Este video puede estar bloqueado por una extensión del navegador.";
+                            msg.style.color = "#ffcc00";
+                            msg.style.marginTop = "10px";
+                            msg.style.fontSize = "0.9rem";
+                            e.target.parentElement.appendChild(msg);
+                          }}
+                        ></iframe>
+                      </div>
+                    ))}
+                </div>
+              </>
+            )}
+
           <div className="comments-section">
             <h3>💬 Comentarios: </h3>
             <ul className="comments-list">
               {topic.comments.map((c, i) => (
-                <li key={c.id || i}><strong>{c.user}</strong>: {c.message}</li>
+                <li key={c.id || i}>
+                  <strong>{c.user}</strong>: {c.message}
+                </li>
               ))}
             </ul>
             <textarea
@@ -257,6 +276,9 @@ const TopicDisciplinar = () => {
               Publicar
             </button>
           </div>
+
+          {/* Componente de recomendaciones */}
+          <RecommendedTopics title={topic.title} />
         </>
       )}
 

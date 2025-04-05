@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
+import RecommendedTopics from "./RecommendedTopics";
 import { v4 as uuidv4 } from "uuid";
 import "../styles/TopicOrientacional.css";
 
@@ -7,7 +8,10 @@ import "../styles/TopicOrientacional.css";
 const toEmbedURL = (url) => {
   try {
     const urlObj = new URL(url);
-    if (urlObj.hostname.includes("youtube.com") && urlObj.searchParams.get("v")) {
+    if (
+      urlObj.hostname.includes("youtube.com") &&
+      urlObj.searchParams.get("v")
+    ) {
       return `https://www.youtube.com/embed/${urlObj.searchParams.get("v")}`;
     }
     if (urlObj.hostname === "youtu.be") {
@@ -41,7 +45,13 @@ const TopicOrientacional = () => {
   const [newComment, setNewComment] = useState("");
 
   useEffect(() => {
-    if (location.state?.title && location.state?.text && location.state?.videos && location.state?.comments) return;
+    if (
+      location.state?.title &&
+      location.state?.text &&
+      location.state?.videos &&
+      location.state?.comments
+    )
+      return;
 
     setLoading(true);
     const fetchTopic = async () => {
@@ -164,9 +174,9 @@ const TopicOrientacional = () => {
     const user = userData ? `${userData.name} ${userData.surname}` : "Usuario";
     const userId = userData?._id || null;
     const commentId = uuidv4();
-  
+
     if (!newComment.trim()) return;
-  
+
     await fetch(`${apiUrl}/topics-orientation/topic/${topicId}/comment`, {
       method: "POST",
       headers: {
@@ -177,13 +187,16 @@ const TopicOrientacional = () => {
         _id: commentId,
         user,
         userId,
-        message: newComment
-      })
+        message: newComment,
+      }),
     });
-  
+
     setTopic((prev) => ({
       ...prev,
-      comments: [...prev.comments, { _id: commentId, user, userId, message: newComment }],
+      comments: [
+        ...prev.comments,
+        { _id: commentId, user, userId, message: newComment },
+      ],
     }));
 
     setNewComment("");
@@ -214,36 +227,40 @@ const TopicOrientacional = () => {
             ))}
           </div>
 
-          {topic.videos.length > 0 && topic.videos.some(v => v.trim() !== "") && (
-            <>
-              <div className="section-divider">
-                <span>🎥 Videos de referencia</span>
-              </div>
-              <div className="video-container">
-                {topic.videos.filter(link => link.trim() !== "").map((link, index) => (
-                  <div key={index} className="video-wrapper">
-                    <iframe
-                      width="80%"
-                      height="315"
-                      src={toEmbedURL(link)}
-                      title={`Video ${index + 1}`}
-                      frameBorder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                      onError={(e) => {
-                        const msg = document.createElement("div");
-                        msg.textContent = "⚠️ Este video puede estar bloqueado por una extensión del navegador.";
-                        msg.style.color = "#ffcc00";
-                        msg.style.marginTop = "10px";
-                        msg.style.fontSize = "0.9rem";
-                        e.target.parentElement.appendChild(msg);
-                      }}
-                    ></iframe>
-                  </div>
-                ))}
-              </div>
-            </>
-          )}
+          {topic.videos.length > 0 &&
+            topic.videos.some((v) => v.trim() !== "") && (
+              <>
+                <div className="section-divider">
+                  <span>🎥 Videos de referencia</span>
+                </div>
+                <div className="video-container">
+                  {topic.videos
+                    .filter((link) => link.trim() !== "")
+                    .map((link, index) => (
+                      <div key={index} className="video-wrapper">
+                        <iframe
+                          width="80%"
+                          height="315"
+                          src={toEmbedURL(link)}
+                          title={`Video ${index + 1}`}
+                          frameBorder="0"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowFullScreen
+                          onError={(e) => {
+                            const msg = document.createElement("div");
+                            msg.textContent =
+                              "⚠️ Este video puede estar bloqueado por una extensión del navegador.";
+                            msg.style.color = "#ffcc00";
+                            msg.style.marginTop = "10px";
+                            msg.style.fontSize = "0.9rem";
+                            e.target.parentElement.appendChild(msg);
+                          }}
+                        ></iframe>
+                      </div>
+                    ))}
+                </div>
+              </>
+            )}
           {/* COMENTARIOS */}
           <div className="comments-section">
             <h3>💬 Comentarios: </h3>
@@ -265,6 +282,8 @@ const TopicOrientacional = () => {
               Publicar
             </button>
           </div>
+          {/* Recomendaciones para orientación */}
+          <RecommendedTopics title={topic.title} category="orientacional" />
         </>
       )}
       {showPopup && (

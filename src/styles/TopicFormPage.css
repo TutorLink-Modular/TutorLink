@@ -1,60 +1,118 @@
 .topic-form-page {
   max-width: 700px;
-  margin: auto;
+  margin: 40px auto;
   padding: 40px;
-  background-color: #f9fafc;
-  border-radius: 10px;
-  box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+  background-color: #cfd1d9;
+  border-radius: 16px;
+  box-shadow: 0 0 20px rgba(19, 23, 53, 0.2);
+  color: #131735;
+}
+
+.topic-form-page h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 28px;
+  font-weight: bold;
+  color: #131735;
 }
 
 .topic-form input,
 .topic-form textarea {
-  width: 100%;
-  margin-bottom: 15px;
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
+  width: 95%;
+  margin-bottom: 20px;
+  padding: 14px;
+  border: 2px solid #757fa6;
+  border-radius: 10px;
+  font-size: 15px;
+  background-color: white;
+  color: #131735;
+  transition: border 0.3s;
 }
 
-.topic-form button {
-  padding: 10px 20px;
-  margin-right: 10px;
-  border: none;
-  border-radius: 6px;
-  background-color: #1d245a;
-  color: white;
-  cursor: pointer;
-}
-
-.topic-form button:hover {
-  background-color: #151b45;
+.topic-form input:focus,
+.topic-form textarea:focus {
+  border-color: #fbbd08;
+  outline: none;
 }
 
 .video-input-group {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
   position: relative;
+  margin-bottom: 15px;
 }
 
 .video-input-group input {
-  flex: 1;
-  padding-right: 40px; /* espacio para el botón */
+  width: 90%;
+  padding: 14px 36px 14px 14px;
+  border: 2px solid #757fa6;
+  border-radius: 10px;
+  font-size: 15px;
+  background-color: white;
+  color: #131735;
 }
 
 .remove-video-btn {
   position: absolute;
-  right: 5px;
-  top: 50%;
+  top: 35%;
+  right: 0px;
   transform: translateY(-50%);
-  background-color: #ff4d4f;
+  background: none;
   border: none;
-  color: white;
-  padding: 6px 10px;
-  border-radius: 4px;
+  font-size: 18px;
+  color: #d9363e;
   cursor: pointer;
+  padding: 0;
+  line-height: 1;
 }
 
 .remove-video-btn:hover {
-  background-color: #d9363e;
+  color: #b12c33;
+}
+
+.topic-form button {
+  padding: 12px 22px;
+  margin-right: 12px;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.topic-form button[type="submit"] {
+  background-color: #131735;
+  color: white;
+}
+
+.topic-form button[type="submit"]:hover {
+  background-color: #202437;
+}
+
+.topic-form button[type="button"]:not(.remove-video-btn) {
+  background-color: #fbbd08;
+  color: #131735;
+}
+
+.topic-form button[type="button"]:not(.remove-video-btn):hover {
+  background-color: #e6aa05;
+}
+
+.form-buttons {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  gap: 10px;
+}
+
+/* Altura personalizada para los campos de texto largos */
+textarea[name="description"] {
+  height: 100px;
+}
+
+textarea[name="text"] {
+  height: 200px;
+}
+
+textarea {
+  resize: vertical;
 }

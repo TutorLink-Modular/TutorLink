@@ -137,12 +137,25 @@ function App() {
 
           {/* 🆕 Ruta para editar temas */}
           <Route
-            path="/manejo-temas/edit/:category/:id"
+            path="/manejo-temas/edit/:tipo/:id"
             element={
               <ProtectedRoute>
                 <>
                   <Header />
                   <TopicFormPage />
+                </>
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/manejo-temas/nuevo/:tipo"
+            element={
+              <ProtectedRoute>
+                <>
+                  <Header />
+                  <TopicFormPage />
+                  <Chatbot />
                 </>
               </ProtectedRoute>
             }

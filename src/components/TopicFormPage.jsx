@@ -1,127 +1,154 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import "../styles/TopicFormPage.css";
 
 const TopicFormPage = () => {
-  const { id } = useParams();
-  const [topicData, setTopicData] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const { id, tipo } = useParams();
+  const location = useLocation();
   const navigate = useNavigate();
+
+  const isNew = !id || id === "new";
+  const isDisciplinar = tipo === "disciplinar";
   const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
-  const isDisciplinar = window.location.pathname.includes("disciplinar");
-  const endpoint = isDisciplinar
-    ? `${apiUrl}/topics-disciplinary/topic/${id}`
-    : `${apiUrl}/topics-orientation/topic/${id}`;
+  const [formData, setFormData] = useState({
+    title: "",
+    description: "",
+    text: "",
+    image: "",
+    idMainTopic: isDisciplinar ? location.state?.selectedMainTopic || "" : "",
+    videos: [""],
+  });
 
   useEffect(() => {
-    const fetchTopic = async () => {
-      try {
-        const res = await fetch(endpoint);
-        const data = await res.json();
+    if (!isNew) {
+      const endpoint = isDisciplinar
+        ? `${apiUrl}/topics-disciplinary/topic/${id}`
+        : `${apiUrl}/topics-orientation/topic/${id}`;
 
-        setTopicData({
-          ...data,
-          description: data.description || "",
-          image: data.image || "",
-          videos:
-            Array.isArray(data.videos) && data.videos.length > 0
-              ? data.videos
-              : [""],
+      fetch(endpoint)
+        .then((res) => {
+          if (!res.ok) throw new Error("Tema no encontrado");
+          return res.json();
+        })
+        .then((data) => {
+          setFormData({
+            title: data.title || "",
+            description: data.description || "",
+            text: data.text || "",
+            image: data.image || "",
+            idMainTopic: data.idMainTopic || "",
+            videos: Array.isArray(data.videos) ? data.videos : [""],
+          });
+        })
+        .catch((err) => {
+          console.error("❌ Error al cargar el tema:", err);
+          alert("No se pudo cargar el tema.");
+          navigate("/manejo-temas");
         });
-      } catch (err) {
-        console.error("Error al obtener el tema:", err);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchTopic();
-  }, [endpoint]);
+    }
+  }, [id, isDisciplinar]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setTopicData((prev) => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleVideoChange = (index, value) => {
-    const updatedVideos = [...topicData.videos];
+    const updatedVideos = [...formData.videos];
     updatedVideos[index] = value;
-    setTopicData({ ...topicData, videos: updatedVideos });
+    setFormData({ ...formData, videos: updatedVideos });
   };
 
   const addVideoField = () => {
-    setTopicData((prev) => ({ ...prev, videos: [...prev.videos, ""] }));
+    setFormData((prev) => ({ ...prev, videos: [...prev.videos, ""] }));
   };
 
-  const removeVideoField = (indexToRemove) => {
-    const updatedVideos = topicData.videos.filter(
-      (_, i) => i !== indexToRemove
-    );
-    setTopicData({ ...topicData, videos: updatedVideos });
+  const removeVideoField = (index) => {
+    setFormData((prev) => ({
+      ...prev,
+      videos: prev.videos.filter((_, i) => i !== index),
+    }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const url = isDisciplinar
-      ? `${apiUrl}/topics-disciplinary/topic/${id}`
-      : `${apiUrl}/topics-orientation/topic/${id}`;
+    const endpoint = isDisciplinar
+      ? `${apiUrl}/topics-disciplinary/topic${isNew ? "" : `/${id}`}`
+      : `${apiUrl}/topics-orientation/topic${isNew ? "" : `/${id}`}`;
+
+    const body = {
+      ...formData,
+      idMainTopic: isDisciplinar
+        ? formData.idMainTopic || location.state?.selectedMainTopic || ""
+        : "",
+    };
 
     try {
-      const response = await fetch(url, {
-        method: "PUT",
+      const response = await fetch(endpoint, {
+        method: isNew ? "POST" : "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(topicData),
+        body: JSON.stringify(body),
       });
 
-      if (!response.ok) throw new Error("Error al actualizar el tema");
+      if (!response.ok) throw new Error("Error al guardar el tema");
 
-      alert("Tema actualizado con éxito");
+      alert(`Tema ${isNew ? "creado" : "actualizado"} correctamente`);
       navigate("/manejo-temas");
     } catch (err) {
-      console.error(err);
-      alert("Hubo un error al actualizar el tema.");
+      console.error("❌ Error al guardar:", err);
+      alert("Error al guardar el tema.");
     }
   };
 
-  if (isLoading || !topicData) return <p>Cargando tema...</p>;
-
   return (
     <div className="topic-form-page">
-      <h2>Editar Tema</h2>
+      <h2>{isNew ? "Agregar Tema" : "Editar Tema"}</h2>
       <form onSubmit={handleSubmit} className="topic-form">
-        <input
-          name="title"
-          placeholder="Título"
-          value={topicData.title}
-          onChange={handleChange}
-          required
-        />
+        <label>
+          <span>Título</span>
+          <input
+            name="title"
+            placeholder="Título"
+            value={formData.title}
+            onChange={handleChange}
+            required
+          />
+        </label>
 
-        <textarea
-          name="description"
-          placeholder="Descripción"
-          value={topicData.description}
-          onChange={handleChange}
-        />
+        <label>
+          <span>Descripción</span>
+          <textarea
+            name="description"
+            placeholder="Descripción"
+            value={formData.description}
+            onChange={handleChange}
+          />
+        </label>
 
-        <textarea
-          name="text"
-          placeholder="Contenido del tema"
-          value={topicData.text}
-          onChange={handleChange}
-          required
-        />
+        <label>
+          <span>Contenido del tema</span>
+          <textarea
+            name="text"
+            placeholder="Contenido del tema"
+            value={formData.text}
+            onChange={handleChange}
+            required
+          />
+        </label>
 
-        {topicData.videos.map((video, index) => (
+        <label>
+          <span>Videos relacionados</span>
+        </label>
+        {formData.videos.map((video, index) => (
           <div key={index} className="video-input-group">
             <input
               placeholder={`Video ${index + 1}`}
               value={video}
               onChange={(e) => handleVideoChange(index, e.target.value)}
             />
-            {topicData.videos.length > 1 && (
+            {formData.videos.length > 1 && (
               <button
                 type="button"
                 className="remove-video-btn"

@@ -1,3 +1,4 @@
+// src/components/ManageTopics.jsx
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/ManageTopics.css";
@@ -34,7 +35,7 @@ const ManageTopics = () => {
           console.error("Error cargando temas orientacionales", err)
         );
     } else {
-      setTopics([]); // Limpiar temas si no hay selección válida
+      setTopics([]);
     }
   }, [selectedTutoria, selectedMainTopic]);
 
@@ -96,7 +97,20 @@ const ManageTopics = () => {
         )}
       </div>
 
-      {/* ✅ Mostrar tabla si hay temas */}
+      {(selectedTutoria === "orientacional" ||
+        (selectedTutoria === "disciplinar" && selectedMainTopic)) && (
+        <button
+          className="add-topic-btn"
+          onClick={() =>
+            navigate(`/manejo-temas/nuevo/${selectedTutoria}`, {
+              state: { selectedMainTopic },
+            })
+          }
+        >
+          Agregar nuevo tema
+        </button>
+      )}
+
       {topics.length > 0 ? (
         <table className="topics-table">
           <thead>
@@ -110,7 +124,7 @@ const ManageTopics = () => {
             {topics.map((topic) => (
               <tr key={topic._id}>
                 <td>{topic.title}</td>
-                <td>{topic.description}</td>
+                <td title={topic.description}>{topic.description}</td>
                 <td>
                   <button
                     className="edit-btn"

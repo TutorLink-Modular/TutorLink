@@ -14,10 +14,10 @@ import TopicOrientacional from "./components/TopicOrientacional";
 import TopicDisciplinar from "./components/TopicDisciplinar";
 import TopicsByMainTopic from "./components/TopicsByMainTopic";
 import Chatbot from "./components/Chatbot";
-
-// ✅ Nuevos componentes
 import ManageTopics from "./components/ManageTopics";
-import TopicFormPage from "./components/TopicFormPage"; //Este es el que muestra el formulario con datos
+import TopicFormPage from "./components/TopicFormPage";
+import ManageMainTopics from "./components/ManageMainTopics";
+import MainTopicFormPage from "./components/MainTopicFormPage";
 
 function App() {
   return (
@@ -135,7 +135,7 @@ function App() {
             }
           />
 
-          {/* 🆕 Ruta para editar temas */}
+          {/*Ruta para editar temas */}
           <Route
             path="/manejo-temas/edit/:tipo/:id"
             element={
@@ -155,6 +155,45 @@ function App() {
                 <>
                   <Header />
                   <TopicFormPage />
+                  <Chatbot />
+                </>
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/manejo-main-topics"
+            element={
+              <ProtectedRoute>
+                <>
+                  <Header />
+                  <ManageMainTopics />
+                  <Chatbot />
+                </>
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/manejo-main-topics/nuevo"
+            element={
+              <ProtectedRoute>
+                <>
+                  <Header />
+                  <MainTopicFormPage />
+                  <Chatbot />
+                </>
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/manejo-main-topics/editar/:id"
+            element={
+              <ProtectedRoute>
+                <>
+                  <Header />
+                  <MainTopicFormPage />
                   <Chatbot />
                 </>
               </ProtectedRoute>

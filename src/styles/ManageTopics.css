@@ -1,0 +1,82 @@
+.manage-topics-container {
+  padding: 40px;
+  max-width: 90%;
+  margin: auto;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.manage-topics-title {
+  font-size: 32px;
+  color: #1d245a;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.manage-topics-description {
+  font-size: 16px;
+  color: #555;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.dropdowns {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.dropdowns select {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.topics-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.topics-table th,
+.topics-table td {
+  border: 1px solid #000000;
+  padding: 12px;
+  text-align: left;
+  color: #000000;
+}
+
+.topics-table th {
+  background-color: #1d245a;
+  color: rgb(255, 255, 255);
+}
+
+.edit-btn,
+.delete-btn {
+  padding: 6px 10px;
+  margin-right: 10px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.edit-btn {
+  background-color: #1d88e5;
+  color: white;
+}
+
+.delete-btn {
+  background-color: #e03838;
+  color: white;
+}
+
+.no-topics-message {
+  text-align: center;
+  margin-top: 30px;
+  font-size: 18px;
+  color: #666;
+  font-style: italic;
+}

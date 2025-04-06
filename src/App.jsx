@@ -12,8 +12,12 @@ import TutoriaDisciplinar from "./components/TutoriaDisciplinar";
 import TutoriaOrientacional from "./components/TutoriaOrientacional";
 import TopicOrientacional from "./components/TopicOrientacional";
 import TopicDisciplinar from "./components/TopicDisciplinar";
-import Chatbot from "./components/Chatbot";
 import TopicsByMainTopic from "./components/TopicsByMainTopic";
+import Chatbot from "./components/Chatbot";
+
+// ✅ Nuevos componentes
+import ManageTopics from "./components/ManageTopics";
+import TopicFormPage from "./components/TopicFormPage"; //Este es el que muestra el formulario con datos
 
 function App() {
   return (
@@ -40,7 +44,6 @@ function App() {
             }
           />
 
-          {/* Página Principal */}
           <Route
             path="/"
             element={
@@ -67,7 +70,6 @@ function App() {
               </ProtectedRoute>
             }
           />
-          {/* Nueva Ruta: Ver temas de un Main Topic */}
           <Route
             path="/tutoria-disciplinar/main-topic/:idMainTopic"
             element={
@@ -80,7 +82,6 @@ function App() {
               </ProtectedRoute>
             }
           />
-          {/* Ver un tema individual */}
           <Route
             path="/tutoria-disciplinar/topic/:topicId"
             element={
@@ -107,7 +108,6 @@ function App() {
               </ProtectedRoute>
             }
           />
-          {/* Ver un tema individual */}
           <Route
             path="/tutoria-orientacional/topic/:topicId"
             element={
@@ -116,6 +116,33 @@ function App() {
                   <Header />
                   <TopicOrientacional />
                   <Chatbot />
+                </>
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Manejo de temas */}
+          <Route
+            path="/manejo-temas"
+            element={
+              <ProtectedRoute>
+                <>
+                  <Header />
+                  <ManageTopics />
+                  <Chatbot />
+                </>
+              </ProtectedRoute>
+            }
+          />
+
+          {/* 🆕 Ruta para editar temas */}
+          <Route
+            path="/manejo-temas/edit/:category/:id"
+            element={
+              <ProtectedRoute>
+                <>
+                  <Header />
+                  <TopicFormPage />
                 </>
               </ProtectedRoute>
             }

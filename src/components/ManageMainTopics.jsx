@@ -47,7 +47,9 @@ const ManageMainTopics = () => {
 
   return (
     <div className="manage-topics-container">
-      <h1 className="manage-topics-title">Manejo de Temas Principales</h1>
+      <h1 className="manage-topics-title">
+        Manejo de Temas Principales de tutoria Disciplinar
+      </h1>
       <p className="manage-topics-description">
         Aquí puedes ver, editar, eliminar o agregar temas principales.
       </p>

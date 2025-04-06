@@ -14,7 +14,11 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
   const [openPanels, setOpenPanels] = useState({
     disciplinary: false,
     orientation: false,
+    academic: false, // nuevo panel
   });
+
+  const userEmail = localStorage.getItem("userEmail");
+  const isAcademic = userEmail?.includes("@academicos");
 
   useEffect(() => {
     const fetchTopics = async (url, setTopics) => {
@@ -29,13 +33,23 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
     };
 
     Promise.all([
-      fetchTopics(`${apiUrl}/topics-orientation/sidebarTopicsOrientation`, setOrientationTopics),
-      fetchTopics(`${apiUrl}/topics-disciplinary/sidebarTopicsDisciplinary`, setDisciplinaryTopics)
+      fetchTopics(
+        `${apiUrl}/topics-orientation/sidebarTopicsOrientation`,
+        setOrientationTopics
+      ),
+      fetchTopics(
+        `${apiUrl}/topics-disciplinary/sidebarTopicsDisciplinary`,
+        setDisciplinaryTopics
+      ),
     ]).finally(() => setLoading(false));
   }, []);
 
   const handleTopicClick = (type, topicId) => {
-    navigate(type === "orientation" ? `/tutoria-orientacional/topic/${topicId}` : `/tutoria-disciplinar/topic/${topicId}`);
+    navigate(
+      type === "orientation"
+        ? `/tutoria-orientacional/topic/${topicId}`
+        : `/tutoria-disciplinar/topic/${topicId}`
+    );
   };
 
   const togglePanel = (panel) => {
@@ -52,25 +66,51 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
           title="Tutoría disciplinar"
           isOpen={openPanels.disciplinary}
           togglePanel={() => togglePanel("disciplinary")}
-          items={loading ? [{ label: "Cargando temas...", onClick: () => {} }] :
-            error ? [{ label: "❌ Error al cargar temas", onClick: () => {} }] :
-            disciplinaryTopics.map(topic => ({
-              label: topic.title,
-              onClick: () => handleTopicClick("disciplinary", topic._id),
-            }))}
+          items={
+            loading
+              ? [{ label: "Cargando temas...", onClick: () => {} }]
+              : error
+              ? [{ label: "❌ Error al cargar temas", onClick: () => {} }]
+              : disciplinaryTopics.map((topic) => ({
+                  label: topic.title,
+                  onClick: () => handleTopicClick("disciplinary", topic._id),
+                }))
+          }
         />
 
         <Panel
           title="Tutoría de orientación"
           isOpen={openPanels.orientation}
           togglePanel={() => togglePanel("orientation")}
-          items={loading ? [{ label: "Cargando temas...", onClick: () => {} }] :
-            error ? [{ label: "❌ Error al cargar temas", onClick: () => {} }] :
-            orientationTopics.map(topic => ({
-              label: topic.title,
-              onClick: () => handleTopicClick("orientation", topic._id),
-            }))}
+          items={
+            loading
+              ? [{ label: "Cargando temas...", onClick: () => {} }]
+              : error
+              ? [{ label: "❌ Error al cargar temas", onClick: () => {} }]
+              : orientationTopics.map((topic) => ({
+                  label: topic.title,
+                  onClick: () => handleTopicClick("orientation", topic._id),
+                }))
+          }
         />
+
+        {isAcademic && (
+          <Panel
+            title="Gestión académica"
+            isOpen={openPanels.academic}
+            togglePanel={() => togglePanel("academic")}
+            items={[
+              {
+                label: "Gestionar temas",
+                onClick: () => navigate("/manejo-temas"),
+              },
+              {
+                label: "Temas principales",
+                onClick: () => navigate("/manejo-main-topics"),
+              },
+            ]}
+          />
+        )}
       </ul>
     </div>
   );

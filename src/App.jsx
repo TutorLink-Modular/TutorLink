@@ -121,11 +121,10 @@ function App() {
             }
           />
 
-          {/* Manejo de temas */}
           <Route
             path="/manejo-temas"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute requiresAcademic={true}>
                 <>
                   <Header />
                   <ManageTopics />
@@ -135,11 +134,10 @@ function App() {
             }
           />
 
-          {/*Ruta para editar temas */}
           <Route
             path="/manejo-temas/edit/:tipo/:id"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute requiresAcademic={true}>
                 <>
                   <Header />
                   <TopicFormPage />
@@ -151,7 +149,7 @@ function App() {
           <Route
             path="/manejo-temas/nuevo/:tipo"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute requiresAcademic={true}>
                 <>
                   <Header />
                   <TopicFormPage />
@@ -164,7 +162,7 @@ function App() {
           <Route
             path="/manejo-main-topics"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute requiresAcademic={true}>
                 <>
                   <Header />
                   <ManageMainTopics />
@@ -177,7 +175,7 @@ function App() {
           <Route
             path="/manejo-main-topics/nuevo"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute requiresAcademic={true}>
                 <>
                   <Header />
                   <MainTopicFormPage />
@@ -190,7 +188,7 @@ function App() {
           <Route
             path="/manejo-main-topics/editar/:id"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute requiresAcademic={true}>
                 <>
                   <Header />
                   <MainTopicFormPage />

@@ -12,8 +12,12 @@ import TutoriaDisciplinar from "./components/TutoriaDisciplinar";
 import TutoriaOrientacional from "./components/TutoriaOrientacional";
 import TopicOrientacional from "./components/TopicOrientacional";
 import TopicDisciplinar from "./components/TopicDisciplinar";
-import Chatbot from "./components/Chatbot";
 import TopicsByMainTopic from "./components/TopicsByMainTopic";
+import Chatbot from "./components/Chatbot";
+import ManageTopics from "./components/ManageTopics";
+import TopicFormPage from "./components/TopicFormPage";
+import ManageMainTopics from "./components/ManageMainTopics";
+import MainTopicFormPage from "./components/MainTopicFormPage";
 
 function App() {
   return (
@@ -40,7 +44,6 @@ function App() {
             }
           />
 
-          {/* Página Principal */}
           <Route
             path="/"
             element={
@@ -67,7 +70,6 @@ function App() {
               </ProtectedRoute>
             }
           />
-          {/* Nueva Ruta: Ver temas de un Main Topic */}
           <Route
             path="/tutoria-disciplinar/main-topic/:idMainTopic"
             element={
@@ -80,7 +82,6 @@ function App() {
               </ProtectedRoute>
             }
           />
-          {/* Ver un tema individual */}
           <Route
             path="/tutoria-disciplinar/topic/:topicId"
             element={
@@ -107,7 +108,6 @@ function App() {
               </ProtectedRoute>
             }
           />
-          {/* Ver un tema individual */}
           <Route
             path="/tutoria-orientacional/topic/:topicId"
             element={
@@ -115,6 +115,83 @@ function App() {
                 <>
                   <Header />
                   <TopicOrientacional />
+                  <Chatbot />
+                </>
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/manejo-temas"
+            element={
+              <ProtectedRoute requiresAcademic={true}>
+                <>
+                  <Header />
+                  <ManageTopics />
+                  <Chatbot />
+                </>
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/manejo-temas/edit/:tipo/:id"
+            element={
+              <ProtectedRoute requiresAcademic={true}>
+                <>
+                  <Header />
+                  <TopicFormPage />
+                </>
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/manejo-temas/nuevo/:tipo"
+            element={
+              <ProtectedRoute requiresAcademic={true}>
+                <>
+                  <Header />
+                  <TopicFormPage />
+                  <Chatbot />
+                </>
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/manejo-main-topics"
+            element={
+              <ProtectedRoute requiresAcademic={true}>
+                <>
+                  <Header />
+                  <ManageMainTopics />
+                  <Chatbot />
+                </>
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/manejo-main-topics/nuevo"
+            element={
+              <ProtectedRoute requiresAcademic={true}>
+                <>
+                  <Header />
+                  <MainTopicFormPage />
+                  <Chatbot />
+                </>
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/manejo-main-topics/editar/:id"
+            element={
+              <ProtectedRoute requiresAcademic={true}>
+                <>
+                  <Header />
+                  <MainTopicFormPage />
                   <Chatbot />
                 </>
               </ProtectedRoute>

@@ -40,13 +40,14 @@ const Login = () => {
       if (response.ok) {
         const data = await response.json();
         localStorage.setItem("authToken", data.jwt);
+        localStorage.setItem("userEmail", email);
         // Obtener solo name y surname del perfil
         const profileResponse = await fetch(`${apiUrl}/user/profile`, {
           method: "GET",
           headers: {
-            "Authorization": `Bearer ${data.jwt}`,
-            "Content-Type": "application/json"
-          }
+            Authorization: `Bearer ${data.jwt}`,
+            "Content-Type": "application/json",
+          },
         });
 
         if (profileResponse.ok) {

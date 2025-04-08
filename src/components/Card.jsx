@@ -20,7 +20,9 @@ const Card = ({ title, subtitle, description, imageUrl }) => {
     <div className="card">
       <div
         className="card-image"
-        style={{ backgroundImage: `url(${imageUrl})` }}
+        style={{
+          backgroundImage: imageUrl ? `url(${imageUrl})` : `url("../assets/images/disciplinar.png")`, // Imagen por defecto si no hay imageUrl
+        }}
       ></div>
       <div className="card-content">
         <h3 className="card-title">{title}</h3>

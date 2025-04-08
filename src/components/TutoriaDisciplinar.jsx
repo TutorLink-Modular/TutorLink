@@ -2,15 +2,31 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CardTutorials from "./CardTutorials";
 import HeaderDisciplinar from "./HeaderTopic";
-import image from "../assets/images/disciplinar.png";
 import imageHeader from "../assets/images/HeaderDisciplinar.png";
 import "../styles/TutoriaDisciplinar.css";
+
 
 const TutoriaDisciplinar = () => {
   const [topics, setTopics] = useState([]);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:3000";
+
+  // Cargar todas las imágenes de la carpeta disciplinar
+  const images = import.meta.glob('../assets/images/**/*.png', {
+    eager: true,
+    import: 'default',
+  });
+
+  // Buscar la imagen que coincida con el nombre guardado
+  const getImageUrl = (imageName) => {
+    const match = Object.entries(images).find(([path]) =>
+      path.endsWith(imageName)
+    );
+    return match ? match[1] : null;
+  };
+
+  const defaultImage = "../assets/images/disciplinar.png"; // Ruta de la imagen por defecto
 
   useEffect(() => {
     const fetchMainTopicsDisciplinar = async () => {
@@ -74,8 +90,7 @@ const TutoriaDisciplinar = () => {
                 key={topic._id}
                 title={topic.title || "Sin título"}
                 description={topic.description || "Sin descripción"}
-                imageUrl={topic.image}
-                defaultImage={image}
+                imageUrl={getImageUrl(topic.image) || defaultImage}
                 onClick={() => handleCardClick(topic._id)}
               />
             ))

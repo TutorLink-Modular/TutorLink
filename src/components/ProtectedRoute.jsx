@@ -1,17 +1,20 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
 
-// Componente funcional para proteger rutas y redirigir a los usuarios no autenticados
-const ProtectedRoute = ({ children }) => {
-  // Verifica si el usuario está autenticado revisando si hay un token en localStorage
-  const isAuthenticated = !!localStorage.getItem("authToken");
+const ProtectedRoute = ({ children, requiresAcademic = false }) => {
+  const token = localStorage.getItem("authToken");
+  const email = localStorage.getItem("userEmail"); // asegúrate de guardarlo al iniciar sesión
 
-  // Si el usuario no está autenticado, redirige al login
+  const isAuthenticated = !!token;
+
   if (!isAuthenticated) {
     return <Navigate to="/login" />;
   }
 
-  // Si el usuario está autenticado, renderiza los elementos hijos (children)
+  if (requiresAcademic && (!email || !email.includes("@academicos"))) {
+    return <Navigate to="/" />; // o alguna ruta de error/acceso denegado
+  }
+
   return children;
 };
 

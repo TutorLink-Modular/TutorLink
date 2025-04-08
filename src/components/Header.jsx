@@ -1,27 +1,40 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // Importar para navegación
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import Sidebar from "./Sidebar";
 import "../styles/Header.css";
+import useAutoLogout from "../hooks/useAutoLogout"; //Libreria para eliminar el token a los 15 min de inactividad
 
 const Header = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
-  const navigate = useNavigate(); // Hook para redirigir
+  const navigate = useNavigate();
 
   const toggleSidebar = () => {
     setSidebarOpen(!isSidebarOpen);
   };
 
-  //Creamos una funcion cuando el usuario quiera salir de su cuenta, simplemente eliminamos el token 
-  //que le permite acceso y recargamos la pagina
   const handleLogout = () => {
     localStorage.removeItem("authToken");
+    localStorage.removeItem("user");
+    localStorage.removeItem("tokenExpiresAt");
     window.location.reload();
   };
 
-  const handleMain = () => { 
-      navigate("/");
-  }
+  const handleMain = () => {
+    navigate("/");
+  };
+
+  useAutoLogout(30); // 30 minutos de inactividad
+
+  useEffect(() => {
+    const expiration = localStorage.getItem("tokenExpiresAt");
+    if (expiration && new Date().getTime() > parseInt(expiration)) {
+      localStorage.removeItem("authToken");
+      localStorage.removeItem("user");
+      localStorage.removeItem("tokenExpiresAt");
+      window.location.href = "/login"; // o navigate("/login") si estás dentro de un componente
+    }
+  }, []);
 
   return (
     <>
@@ -33,7 +46,7 @@ const Header = () => {
             title="📋  Haz clic para abrir/cerrar el sidebar"
           ></i>
           {/* Logo y Texto con evento de clic para redirigir a la página principal */}
-          <div className="logo-container" onClick={() => navigate("/")}>
+          <div title="🏠  Haz clic para regresar al home" className="logo-container" onClick={() => navigate("/")}>
             <img src="/logo.svg" alt="TutorLink Logo" className="logo" />
             <span className="logo-text">
               Tutor<span className="highlight">Link</span>
@@ -43,7 +56,7 @@ const Header = () => {
         <div className="header-right">
           <i
             className="fas fa-user-circle user-icon"
-            onClick={() => navigate("/profile")} // Redirigir al perfil
+            onClick={() => navigate("/profile")}
             title="👤  Haz clic para abrir perfil"
           ></i>
           <i

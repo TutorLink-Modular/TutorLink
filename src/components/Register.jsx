@@ -38,14 +38,14 @@ const Register = () => {
       return;
     }
 
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@(alumnos\.udg\.mx|academicos\.udg\.mx)$/;
+    const emailRegex =
+      /^[a-zA-Z0-9._%+-]+@(alumnos\.udg\.mx|academicos\.udg\.mx)$/;
     if (!emailRegex.test(email)) {
       setError(
         "El correo electrónico debe ser de la institución @alumnos.udg.mx o @academicos.udg.mx"
       );
       return;
     }
-
 
     setIsLoading(true);
 
@@ -128,8 +128,14 @@ const Register = () => {
               type="button"
               className="toggle-password"
               onClick={toggleShowPassword}
-              >
-              <i className={`fas ${showPassword ? "fa-eye eye-icon" : "fa-eye-slash eyeSlash-icon"}`}></i>
+            >
+              <i
+                className={`fas ${
+                  showPassword
+                    ? "fa-eye eye-icon"
+                    : "fa-eye-slash eyeSlash-icon"
+                }`}
+              ></i>
             </button>
           </div>
           <div className="password-container">
@@ -144,8 +150,14 @@ const Register = () => {
               type="button"
               className="toggle-password"
               onClick={toggleShowConfirmPassword}
-              >
-              <i className={`fas ${showConfirmPassword ? "fa-eye eye-icon" : "fa-eye-slash eyeSlash-icon"}`}></i>
+            >
+              <i
+                className={`fas ${
+                  showConfirmPassword
+                    ? "fa-eye eye-icon"
+                    : "fa-eye-slash eyeSlash-icon"
+                }`}
+              ></i>
             </button>
           </div>
           <button type="submit" className="login-button" disabled={isLoading}>

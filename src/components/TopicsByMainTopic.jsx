@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import CardTutorials from "./CardTutorials";
 import image from "../assets/images/disciplinar.png";
+import SearchBar from "./SearchBar";
 import "../styles/TopicsByMainTopic.css";
 
 // Cargar todas las imágenes de la carpeta disciplinar
@@ -26,6 +27,8 @@ const TopicsByMainTopic = () => {
   const [mainTopicInfo, setMainTopicInfo] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState(""); // 🔍
+
   const navigate = useNavigate();
   const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
@@ -75,6 +78,10 @@ const TopicsByMainTopic = () => {
     }
   };
 
+  const filteredTopics = topics.filter((topic) =>
+    topic.title.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   if (loading) {
     return (
       <div className="spinner-fullscreen">
@@ -88,11 +95,17 @@ const TopicsByMainTopic = () => {
       <h1 className="topics-main-title">{mainTopicInfo?.title}</h1>
       <h3 className="topics-main-description">{mainTopicInfo?.description}</h3>
 
+      <SearchBar
+        value={searchQuery}
+        onChange={setSearchQuery}
+        placeholder="Buscar tema por título..."
+      />
+
       {error && <p className="error-message">{error}</p>}
 
       <div className="cards-wrapper">
-        {topics.length > 0 ? (
-          topics.map((topic) => (
+        {filteredTopics.length > 0 ? (
+          filteredTopics.map((topic) => (
             <CardTutorials
               key={topic._id}
               title={topic.title || "Sin título"}
@@ -103,7 +116,7 @@ const TopicsByMainTopic = () => {
             />
           ))
         ) : (
-          <p>No hay temas disponibles.</p>
+          <p>No hay temas que coincidan con tu búsqueda.</p>
         )}
       </div>
     </div>

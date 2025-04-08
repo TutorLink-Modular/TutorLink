@@ -2,7 +2,7 @@
 .topic-container {
   position: relative;
   padding: 20px;
-  margin-top: 120px; /* 🔽 Baja todo el contenido para que no lo tape el header */
+  margin-top: 120px; /*Baja todo el contenido para que no lo tape el header */
 }
 
 /* Botón en la parte superior derecha, pero más abajo */
@@ -25,7 +25,7 @@
   background-color: #e0a800; /* Amarillo más oscuro */
 }
 
-/* 🔥 Estilos del Popup */
+/*Estilos del Popup */
 .popup {
   position: fixed;
   top: 0;
@@ -50,7 +50,7 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* 🔥 Botón de cerrar (X) en la esquina superior derecha */
+/* Botón de cerrar (X) en la esquina superior derecha */
 .close-popup {
   position: absolute;
   top: 10px;
@@ -61,7 +61,7 @@
   cursor: pointer;
 }
 
-/* 🔥 Botón de "Ir al perfil" */
+/* Botón de "Ir al perfil" */
 .popup-button {
   background-color: #4caf50;
   color: white;
@@ -76,31 +76,96 @@
   background-color: #45a049;
 }
 
-/* 🔽 Centrar SOLO el título del tema */
+/* centrar SOLO el título del tema */
 .title-container {
   text-align: center;
-  margin-bottom: 20px; /* 🔽 Espacio debajo del título */
+  margin-bottom: 20px; /*Espacio debajo del título */
 }
 
 .title-container h1 {
-  font-size: 40px; /* 🔽 Mantiene buen tamaño de título */
+  font-size: 40px; /* Mantiene buen tamaño de título */
   font-weight: bold;
   margin-top: 30px;
   margin-bottom: 80px;
-  color: white; /* 🔽 Mantiene el color original */
+  color: white; /* Mantiene el color original */
 }
 
 /* Contenedor del texto formateado */
 .formatted-text {
-  margin: 20px auto; /* 🔽 Agrega margen más ancho a los lados */
-  padding: 0 100px; /* 🔽 Agrega espacio extra a la derecha e izquierda */
+  margin: 20px auto; /* Agrega margen más ancho a los lados */
+  padding: 0 10%;
   line-height: 1.8; /* Mejora la legibilidad */
-  font-size: 18px; /* 🔽 Letra un poco más grande */
+  font-size: 18px; /* Letra un poco más grande */
   text-align: justify;
   color: white;
 }
 
 /* Espaciado entre párrafos */
 .formatted-text p {
-  margin-bottom: 20px; /* 🔽 Aumenta el espacio entre párrafos */
+  margin-bottom: 20px; /* Aumenta el espacio entre párrafos */
+}
+
+.section-divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 2rem 0;
+  color: #fff;
+  font-weight: bold;
+  font-size: 1.3rem;
+}
+
+.section-divider::before,
+.section-divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 2px solid #ccc;
+  margin: 0 2rem;
+}
+
+.video-wrapper{
+  text-align: center;
+}
+
+.comments-section {
+  margin-top: 2rem;
+  background: #1f1f2e;
+  padding: 1rem;
+  border-radius: 10px;
+}
+.comments-list {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 1rem;
+}
+.comments-list li {
+  color: white;
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.comments-list li strong {
+  color: #ffffff; 
+}
+
+.comment-input {
+  width: 100%;
+  min-height: 60px;
+  border-radius: 8px;
+  background: #2a2a3d;
+  color: white;
+  border: 1px solid #444;
+  resize: none;
+}
+.comment-button {
+  margin-top: 0.5rem;
+  padding: 0.4rem 1.2rem;
+  border: none;
+  border-radius: 5px;
+  background-color: #4e8cff;
+  color: white;
+  cursor: pointer;
+}
+.comment-button:hover {
+  background-color: #3a6cd1;
 }

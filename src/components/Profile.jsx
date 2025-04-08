@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom"; // ✅ Importamos `useNavigate`
+import { useNavigate } from "react-router-dom"; //Importamos `useNavigate`
 import "../styles/Profile.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
@@ -11,7 +11,7 @@ const Profile = () => {
   const [orientationalTopics, setOrientationalTopics] = useState([]);
   const [isDisciplinarOpen, setIsDisciplinarOpen] = useState(false);
   const [isOrientationalOpen, setIsOrientationalOpen] = useState(false);
-  const navigate = useNavigate(); // ✅ Para redirigir a los temas
+  const navigate = useNavigate(); //Para redirigir a los temas
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -41,7 +41,7 @@ const Profile = () => {
         setUserData(data);
         setLoading(false);
 
-        // ✅ Obtener los títulos de los temas guardados
+        //Obtener los títulos de los temas guardados
         fetchTopicTitles(data.savedTopics, "disciplinar");
         fetchTopicTitles(data.savedOrientationalTopics, "orientacional");
       } catch (err) {
@@ -53,7 +53,7 @@ const Profile = () => {
     fetchProfile();
   }, []);
 
-  // ✅ Función para obtener títulos desde la API según el tipo de tema
+  //Función para obtener títulos desde la API según el tipo de tema
   const fetchTopicTitles = async (topicIds, type) => {
     try {
       if (!topicIds || topicIds.length === 0) return;
@@ -81,12 +81,12 @@ const Profile = () => {
     }
   };
 
-  // ✅ Función para redirigir a un tema guardado
+  //función para redirigir a un tema guardado
   const navigateToTopic = (topicId, type) => {
     if (type === "disciplinar") {
-      navigate(`/tutoria-disciplinar/topic/${topicId}`); // 🔥 Corrige la ruta
+      navigate(`/tutoria-disciplinar/topic/${topicId}`); //Corrige la ruta
     } else {
-      navigate(`/tutoria-orientacional/topic/${topicId}`); // 🔥 Corrige la ruta
+      navigate(`/tutoria-orientacional/topic/${topicId}`); //Corrige la ruta
     }
   };
 
@@ -106,7 +106,7 @@ const Profile = () => {
             </h1>
             <p className="profile-email">{userData.email}</p>
 
-            {/* 🔽 Dropdown de Tutoría Disciplinar */}
+            {/* dropdown de Tutoría Disciplinar */}
             <div className="dropdown">
               <button
                 className="dropdown-button"
@@ -125,7 +125,7 @@ const Profile = () => {
                     disciplinarTopics.map((topic) => (
                       <li
                         key={topic.id}
-                        className="clickable-topic" // ✅ Clase CSS para diseño
+                        className="clickable-topic" //Clase CSS para diseño
                         onClick={() => navigateToTopic(topic.id, "disciplinar")}
                       >
                         {topic.title}
@@ -138,7 +138,7 @@ const Profile = () => {
               )}
             </div>
 
-            {/* 🔽 Dropdown de Tutoría de Orientación */}
+            {/*Dropdown de Tutoría de Orientación */}
             <div className="dropdown">
               <button
                 className="dropdown-button"
@@ -157,7 +157,7 @@ const Profile = () => {
                     orientationalTopics.map((topic) => (
                       <li
                         key={topic.id}
-                        className="clickable-topic" // ✅ Clase CSS para diseño
+                        className="clickable-topic" //Clase CSS para diseño
                         onClick={() =>
                           navigateToTopic(topic.id, "orientacional")
                         }

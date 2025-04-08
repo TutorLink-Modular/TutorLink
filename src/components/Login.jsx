@@ -40,7 +40,26 @@ const Login = () => {
       if (response.ok) {
         const data = await response.json();
         localStorage.setItem("authToken", data.jwt);
-        navigate("/"); // Redirigir a la página principal
+        localStorage.setItem("userEmail", email);
+        // Obtener solo name y surname del perfil
+        const profileResponse = await fetch(`${apiUrl}/user/profile`, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${data.jwt}`,
+            "Content-Type": "application/json",
+          },
+        });
+
+        if (profileResponse.ok) {
+          const profileData = await profileResponse.json();
+          const { name, surname, _id } = profileData;
+          localStorage.setItem("user", JSON.stringify({ name, surname, _id }));
+        }
+
+        // Establecer expiración en 30 minutos si se sale de la pagina
+        const expiration = new Date().getTime() + 30 * 60 * 1000;
+        localStorage.setItem("tokenExpiresAt", expiration);
+        navigate("/");
       } else {
         const errorData = await response.json();
         const errorMessage = errorData.errors[0] || "Error al iniciar sesión";
@@ -110,7 +129,6 @@ const Login = () => {
 
       <div className="login-box">
         <h1 className="login-title">TutorLink</h1>
-        <p className="login-version">v0.1.1</p>
         <h2 className="login-welcome">Bienvenido</h2>
         <p className="login-instruction">Ingresa con tus credenciales:</p>
         <form className="login-form" onSubmit={handleLogin}>
@@ -133,8 +151,14 @@ const Login = () => {
               type="button"
               className="toggle-password"
               onClick={toggleShowPassword}
-              >
-              <i className={`fas ${showPassword ? "fa-eye eye-icon" : "fa-eye-slash eyeSlash-icon"}`}></i>
+            >
+              <i
+                className={`fas ${
+                  showPassword
+                    ? "fa-eye eye-icon"
+                    : "fa-eye-slash eyeSlash-icon"
+                }`}
+              ></i>
             </button>
           </div>
           <button type="submit" className="login-button" disabled={isLoading}>
@@ -167,7 +191,10 @@ const Login = () => {
 
         <p className="login-footer">
           Al iniciar sesión con tu correo y contraseña, aceptas nuestra{" "}
-          <a href="https://udg.mx/politica-de-privacidad-y-manejo-de-datos" className="privacy-policy">
+          <a
+            href="https://udg.mx/politica-de-privacidad-y-manejo-de-datos"
+            className="privacy-policy"
+          >
             política de uso y privacidad.
           </a>
         </p>

@@ -40,13 +40,14 @@ const Login = () => {
       if (response.ok) {
         const data = await response.json();
         localStorage.setItem("authToken", data.jwt);
+        localStorage.setItem("userEmail", email);
         // Obtener solo name y surname del perfil
         const profileResponse = await fetch(`${apiUrl}/user/profile`, {
           method: "GET",
           headers: {
-            "Authorization": `Bearer ${data.jwt}`,
-            "Content-Type": "application/json"
-          }
+            Authorization: `Bearer ${data.jwt}`,
+            "Content-Type": "application/json",
+          },
         });
 
         if (profileResponse.ok) {
@@ -55,6 +56,9 @@ const Login = () => {
           localStorage.setItem("user", JSON.stringify({ name, surname, _id }));
         }
 
+        // Establecer expiración en 30 minutos si se sale de la pagina
+        const expiration = new Date().getTime() + 30 * 60 * 1000;
+        localStorage.setItem("tokenExpiresAt", expiration);
         navigate("/");
       } else {
         const errorData = await response.json();

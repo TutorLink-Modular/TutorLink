@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import Sidebar from "./Sidebar";
@@ -15,6 +15,8 @@ const Header = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("authToken");
+    localStorage.removeItem("user");
+    localStorage.removeItem("tokenExpiresAt");
     window.location.reload();
   };
 
@@ -22,7 +24,17 @@ const Header = () => {
     navigate("/");
   };
 
-  useAutoLogout(30); // 15 minutos de inactividad
+  useAutoLogout(30); // 30 minutos de inactividad
+
+  useEffect(() => {
+    const expiration = localStorage.getItem("tokenExpiresAt");
+    if (expiration && new Date().getTime() > parseInt(expiration)) {
+      localStorage.removeItem("authToken");
+      localStorage.removeItem("user");
+      localStorage.removeItem("tokenExpiresAt");
+      window.location.href = "/login"; // o navigate("/login") si estás dentro de un componente
+    }
+  }, []);
 
   return (
     <>

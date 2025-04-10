@@ -93,7 +93,7 @@
 /* Contenedor del texto formateado */
 .formatted-text {
   margin: 20px auto; /* Agrega margen más ancho a los lados */
-  padding: 0 100px; /* Agrega espacio extra a la derecha e izquierda */
+  padding: 0 10%;
   line-height: 1.8; /* Mejora la legibilidad */
   font-size: 18px; /*Letra un poco más grande */
   color: white;
@@ -137,11 +137,19 @@
   list-style: none;
   padding-left: 0;
   margin-bottom: 1rem;
+  color: white;
 }
 .comments-list li {
+  color: white;
   margin-bottom: 0.5rem;
   font-size: 0.95rem;
 }
+
+.comments-list li strong {
+  color: #ffffff; 
+}
+
+
 .comment-input {
   width: 100%;
   min-height: 60px;

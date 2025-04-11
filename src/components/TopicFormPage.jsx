@@ -18,7 +18,7 @@ const TopicFormPage = () => {
     title: "",
     description: "",
     text: "",
-    image: "",
+    image: "", // Campo de imagen agregado
     idMainTopic: isDisciplinar ? location.state?.selectedMainTopic || "" : "",
     videos: [""],
   });
@@ -139,6 +139,16 @@ const TopicFormPage = () => {
             name="description"
             placeholder="Descripción"
             value={formData.description}
+            onChange={handleChange}
+          />
+        </label>
+
+        <label>
+          <span>URL de Imagen</span>
+          <input
+            name="image"
+            placeholder="https://ejemplo.com/imagen.jpg"
+            value={formData.image}
             onChange={handleChange}
           />
         </label>

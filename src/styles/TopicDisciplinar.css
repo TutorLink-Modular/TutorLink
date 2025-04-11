@@ -1,171 +1,59 @@
-/* Contenedor del tema */
-.topic-container {
-  position: relative;
-  padding: 20px;
-  margin-top: 120px; /*Baja todo el contenido para que no lo tape el header */
-}
-
-/* Botón en la parte superior derecha, pero más abajo */
-.save-topic-button {
-  position: absolute;
-  margin-top: -20px;
-  right: 20px;
-  background-color: #fbbd08; /* Amarillo */
-  color: #202437; /* Azul oscuro */
-  padding: 10px 15px;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-.save-topic-button:hover {
-  background-color: #e0a800; /* Amarillo más oscuro */
-}
-
-/*Estilos del Popup */
-.popup {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-.popup-content {
-  background: white;
-  color: black;
-  padding: 20px;
-  border-radius: 10px;
-  text-align: center;
-  max-width: 400px;
-  position: relative;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-/* Botón de cerrar (X) en la esquina superior derecha */
-.close-popup {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: none;
-  border: none;
-  font-size: 18px;
-  cursor: pointer;
-}
-
-/* Botón de "Ir al perfil" */
-.popup-button {
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-top: 15px;
-}
-
-.popup-button:hover {
-  background-color: #45a049;
-}
-
-/* centrar SOLO el título del tema */
-.title-container {
-  text-align: center;
-  margin-bottom: 20px; /*Espacio debajo del título */
-}
-
-.title-container h1 {
-  font-size: 40px; /* Mantiene buen tamaño de título */
-  font-weight: bold;
-  margin-top: 30px;
-  margin-bottom: 80px;
-  color: white; /* Mantiene el color original */
-}
-
-/* Contenedor del texto formateado */
 .formatted-text {
-  margin: 20px auto; /* Agrega margen más ancho a los lados */
-  padding: 0 10%;
-  line-height: 1.8; /* Mejora la legibilidad */
-  font-size: 18px; /* Letra un poco más grande */
+  margin: 20px auto;
+  padding: 2rem;
+  background-color: #cfd1d9; /* Fondo gris claro */
+  border-radius: 12px;
+  line-height: 1.8;
+  font-size: 18px;
   text-align: justify;
-  color: white;
+  color: #1a1a1a; /* Texto negro */
 }
 
-/* Espaciado entre párrafos */
-.formatted-text p {
-  margin-bottom: 20px; /* Aumenta el espacio entre párrafos */
-}
-
-.section-divider {
-  display: flex;
-  align-items: center;
-  text-align: center;
-  margin: 2rem 0;
-  color: #fff;
+.formatted-text h1,
+.formatted-text h2,
+.formatted-text h3 {
+  color: #131735; /* Azul oscuro */
+  margin-top: 1.5rem;
   font-weight: bold;
-  font-size: 1.3rem;
 }
 
-.section-divider::before,
-.section-divider::after {
-  content: '';
-  flex: 1;
-  border-bottom: 2px solid #ccc;
-  margin: 0 2rem;
-}
-
-.video-wrapper{
-  text-align: center;
-}
-
-.comments-section {
-  margin-top: 2rem;
-  background: #1f1f2e;
-  padding: 1rem;
-  border-radius: 10px;
-}
-.comments-list {
-  list-style: none;
-  padding-left: 0;
+.formatted-text p {
   margin-bottom: 1rem;
 }
-.comments-list li {
-  color: white;
+
+.formatted-text ul,
+.formatted-text ol {
+  padding-left: 2rem;
+  margin-bottom: 1rem;
+}
+
+.formatted-text li {
   margin-bottom: 0.5rem;
-  font-size: 0.95rem;
 }
 
-.comments-list li strong {
-  color: #ffffff; 
+.formatted-text a {
+  color: #007acc;
+  text-decoration: underline;
+  transition: color 0.3s ease;
 }
 
-.comment-input {
-  width: 100%;
-  min-height: 60px;
+.formatted-text a:hover {
+  color: #005f99;
+}
+
+.formatted-text code {
+  background: #e0e0e0;
+  color: #333;
+  padding: 2px 4px;
+  border-radius: 4px;
+  font-family: monospace;
+}
+
+.formatted-text pre {
+  background: #e8e8e8;
+  color: #000;
+  padding: 1rem;
   border-radius: 8px;
-  background: #2a2a3d;
-  color: white;
-  border: 1px solid #444;
-  resize: none;
-}
-.comment-button {
-  margin-top: 0.5rem;
-  padding: 0.4rem 1.2rem;
-  border: none;
-  border-radius: 5px;
-  background-color: #4e8cff;
-  color: white;
-  cursor: pointer;
-}
-.comment-button:hover {
-  background-color: #3a6cd1;
+  overflow-x: auto;
+  font-family: monospace;
 }

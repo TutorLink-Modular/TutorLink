@@ -117,13 +117,13 @@
 
 .section-divider::before,
 .section-divider::after {
-  content: '';
+  content: "";
   flex: 1;
   border-bottom: 2px solid #ccc;
   margin: 0 2rem;
 }
 
-.video-wrapper{
+.video-wrapper {
   text-align: center;
 }
 
@@ -146,9 +146,8 @@
 }
 
 .comments-list li strong {
-  color: #ffffff; 
+  color: #ffffff;
 }
-
 
 .comment-input {
   width: 100%;

@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import "../styles/TopicFormPage.css";
+import MdEditor from "react-markdown-editor-lite";
+import ReactMarkdown from "react-markdown";
+import "react-markdown-editor-lite/lib/index.css";
 
 const TopicFormPage = () => {
   const { id, tipo } = useParams();
@@ -48,6 +51,19 @@ const TopicFormPage = () => {
         });
     }
   }, [id, isDisciplinar]);
+
+  // 🔒 Elimina cualquier input file oculto para subir imágenes
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const fileInputs = document.querySelectorAll("input[type='file']");
+      fileInputs.forEach((input) => {
+        if (input.closest(".rc-md-editor")) {
+          input.remove();
+        }
+      });
+    }, 500);
+    return () => clearInterval(interval);
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -129,13 +145,47 @@ const TopicFormPage = () => {
 
         <label>
           <span>Contenido del tema</span>
-          <textarea
-            name="text"
-            placeholder="Contenido del tema"
+          <MdEditor
+            style={{ height: "300px", borderRadius: "8px", overflow: "hidden" }}
             value={formData.text}
-            onChange={handleChange}
-            required
+            renderHTML={(text) => <ReactMarkdown>{text}</ReactMarkdown>}
+            onChange={({ text }) => setFormData((prev) => ({ ...prev, text }))}
+            config={{
+              view: { menu: true, md: true, html: false },
+              image: false,
+            }}
+            onImageUpload={() => Promise.reject()}
           />
+          <div className="markdown-help">
+            <p>
+              <strong>Guía rápida de formato:</strong>
+            </p>
+            <ul>
+              <li>
+                <code># Título</code>, <code>## Subtítulo</code>
+              </li>
+              <li>
+                <code>**negrita**</code>, <code>*cursiva*</code>,{" "}
+                <code>__subrayado__</code>
+              </li>
+              <li>
+                <code>- Lista</code>, <code>1. Lista numerada</code>
+              </li>
+              <li>
+                <code>[enlace](https://ejemplo.com)</code>
+              </li>
+              <li>
+                <code>`código en línea`</code>,{" "}
+                <code>```bloque de código```</code>
+              </li>
+              <li>
+                <code>| tabla | markdown |</code>
+              </li>
+              <li>
+                <code>![imagen](url)</code> ❌ <em>(no disponible)</em>
+              </li>
+            </ul>
+          </div>
         </label>
 
         <label>

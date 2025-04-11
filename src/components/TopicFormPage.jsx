@@ -18,7 +18,7 @@ const TopicFormPage = () => {
     title: "",
     description: "",
     text: "",
-    image: "", // Campo de imagen agregado
+    image: "",
     idMainTopic: isDisciplinar ? location.state?.selectedMainTopic || "" : "",
     videos: [""],
   });

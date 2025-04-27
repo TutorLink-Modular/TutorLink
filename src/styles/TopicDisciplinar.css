@@ -5,7 +5,6 @@
   border-radius: 12px;
   line-height: 1.8;
   font-size: 18px;
-  text-align: justify;
   color: #1a1a1a; /* Texto negro */
 }
 
@@ -56,4 +55,24 @@
   border-radius: 8px;
   overflow-x: auto;
   font-family: monospace;
+}
+
+/* 📱 Ajustes para móviles */
+@media (max-width: 600px) {
+  .formatted-text {
+    font-size: 15px;
+    padding: 1.2rem;
+  }
+
+  .formatted-text h1 {
+    font-size: 22px;
+  }
+
+  .formatted-text h2 {
+    font-size: 20px;
+  }
+
+  .formatted-text h3 {
+    font-size: 18px;
+  }
 }

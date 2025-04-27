@@ -3,13 +3,21 @@ import { Link } from "react-router-dom";
 import "../styles/CardTutorials.css";
 
 // CardTutorials solo muestra el titulo, y la descripcion y la imagemen correspondiente de cada uno
-const CardTutorials = ({ title, description, imageUrl, defaultImage, onClick }) => {
+const CardTutorials = ({
+  title,
+  description,
+  imageUrl,
+  defaultImage,
+  onClick,
+}) => {
   return (
     <div className="cardTutorials">
-      <img 
-        src={imageUrl} 
-        alt={title} 
-        onError={(e) => {e.target.src = defaultImage;}}
+      <img
+        src={imageUrl}
+        alt={title}
+        onError={(e) => {
+          e.target.src = defaultImage;
+        }}
       />
       <div className="cardTutorials-content">
         <h3 className="cardTutorials-title">{title}</h3>
@@ -23,4 +31,3 @@ const CardTutorials = ({ title, description, imageUrl, defaultImage, onClick }) 
 };
 
 export default CardTutorials;
-

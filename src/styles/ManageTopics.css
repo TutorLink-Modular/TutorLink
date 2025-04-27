@@ -1,10 +1,6 @@
 .manage-topics-container {
   padding: 40px;
-  padding-top: clamp(
-    60px,
-    10vh,
-    100px
-  ); /* Solo da espacio arriba si hace falta */
+  padding-top: clamp(60px, 10vh, 100px);
   max-width: 90%;
   margin: auto;
   background-color: #cfd1d9;
@@ -31,6 +27,7 @@
   gap: 20px;
   justify-content: center;
   margin-bottom: 30px;
+  flex-wrap: wrap; /* 🔁 Para que se acomoden verticalmente en móviles */
 }
 
 .dropdowns select {
@@ -40,12 +37,15 @@
   border: 1px solid #757fa6;
   background-color: #ffffff;
   color: #202437;
+  min-width: 200px;
+  margin-top: 10px;
 }
 
 .topics-table {
   width: 100%;
   border-collapse: collapse;
   background-color: #ffffff;
+  overflow-x: auto;
 }
 
 .topics-table th,
@@ -54,6 +54,7 @@
   padding: 12px;
   text-align: left;
   color: #131735;
+  font-size: 15px;
 }
 
 .topics-table th {
@@ -109,12 +110,60 @@
   background-color: #e5ac00;
 }
 
-/* Limitar ancho de la columna de descripción */
+/* 🔎 Limitar ancho de descripción para evitar desbordes */
 .topics-table td:nth-child(2),
 .topics-table th:nth-child(2) {
-  max-width: 300px; /* ajusta este valor según necesites */
+  max-width: 300px;
   width: 30%;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+/* 📱 RESPONSIVE para pantallas pequeñas */
+@media (max-width: 768px) {
+  .manage-topics-container {
+    padding: 20px;
+  }
+
+  .manage-topics-title {
+    font-size: 26px;
+  }
+
+  .manage-topics-description {
+    font-size: 14px;
+  }
+
+  .dropdowns {
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .topics-table th,
+  .topics-table td {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  .topics-table td:nth-child(2),
+  .topics-table th:nth-child(2) {
+    max-width: 180px;
+    width: auto;
+  }
+
+  .edit-btn,
+  .delete-btn {
+    font-size: 12px;
+    padding: 3px 6px;
+  }
+
+  .add-topic-btn {
+    font-size: 14px;
+    padding: 8px 14px;
+  }
+
+  .no-topics-message {
+    font-size: 16px;
+  }
 }

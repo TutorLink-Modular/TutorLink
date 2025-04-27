@@ -7,8 +7,8 @@
   margin: 20px;
   transition: transform 0.3s;
   display: flex;
-  flex-direction: column; /* Asegura que los elementos se apilen verticalmente */
-  height: auto; /* Permite que la altura se ajuste según el contenido */
+  flex-direction: column;
+  height: auto;
 }
 
 .card:hover {
@@ -16,24 +16,24 @@
 }
 
 .card-image {
-  height: 250px;
+  height: 200px;
   background-size: cover;
   background-position: center;
-  flex-shrink: 0; /* Evita que la imagen se reduzca demasiado */
+  flex-shrink: 0;
 }
 
 .card-content {
-  padding: 20px;
-  flex: 1; /* Permite que el contenido ocupe espacio disponible */
+  padding: 16px;
+  flex: 1;
   display: flex;
-  flex-direction: column; /* Asegura que los elementos se organicen verticalmente */
-  justify-content: space-between; /* Distribuye el contenido, dejando espacio para el botón */
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .card-title {
   font-size: 18px;
   margin: 0;
-  color: rgb(0, 0, 0);
+  color: #000;
 }
 
 .card-subtitle {
@@ -42,9 +42,9 @@
 }
 
 .card-description {
-  font-size: 12px;
+  font-size: 13px;
   margin: 10px 0;
-  color: rgb(0, 0, 0);
+  color: #000;
 }
 
 .card-button {
@@ -54,32 +54,56 @@
   border-radius: 5px;
   padding: 8px 16px;
   cursor: pointer;
-  align-self: flex-start; /* Asegura que el botón no ocupe todo el ancho */
+  align-self: flex-start;
 }
 
 .card-button:hover {
   background-color: #131735;
 }
 
-/* Media query para pantallas más pequeñas */
+/* Media query para pantallas medianas */
 @media (max-width: 768px) {
   .card {
-    width: 250px; /* Ancho más pequeño para pantallas medianas */
-    height: auto; /* Ajusta la altura automáticamente */
+    width: 90%;
+    max-width: 280px;
+    margin: 16px auto;
   }
 
   .card-image {
-    height: 200px; /* Reduce la altura de la imagen */
+    height: 180px;
+  }
+
+  .card-content {
+    padding: 14px;
   }
 }
 
+/* Media query para pantallas pequeñas (celulares) */
 @media (max-width: 480px) {
   .card {
-    width: 200px; /* Ancho más pequeño para pantallas muy pequeñas */
-    height: auto; /* Ajusta la altura automáticamente */
+    width: 95%;
+    max-width: 240px;
+    margin: 12px auto;
   }
 
   .card-image {
-    height: 150px; /* Reduce aún más la altura de la imagen */
+    height: 160px;
+  }
+
+  .card-content {
+    padding: 12px;
+  }
+
+  .card-title {
+    font-size: 16px;
+  }
+
+  .card-description {
+    font-size: 12px;
+  }
+
+  .card-button {
+    padding: 6px 12px;
+    font-size: 14px;
   }
 }

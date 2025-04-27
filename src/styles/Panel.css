@@ -1,26 +1,29 @@
 .panel {
-  color: #131735;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  transition: background-color 0.3s ease;
+  background-color: #e6e8ef;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  overflow: hidden;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Cuando el panel está abierto, cambia de color */
 .panel.open {
-  background-color: #cfd1d9; /* Color cuando está abierto */
+  background-color: #e6e8ef;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
 }
 
-/*Cambia el color del título cuando el panel está activo */
 .title-panel {
   cursor: pointer;
-  padding: 15px;
+  padding: 15px 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
+  background-color: transparent;
   color: #131735;
   font-weight: 400;
-  transition: background-color 0.3s ease;
-  margin-top: 0px;
-  margin-bottom: 0px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-sizing: border-box;
 }
 
 .title-panel:hover {
@@ -29,7 +32,6 @@
   transform: scale(1.02);
 }
 
-/* Cuando el panel está abierto, el título también cambia de color */
 .panel.open .title-panel {
   background-color: #fbbd08;
   color: #131735;
@@ -43,23 +45,78 @@
   list-style: none;
   padding: 0;
   margin: 0;
-  max-height: 0;
   overflow: hidden;
   transition: max-height 0.3s ease-out;
 }
 
 .panel-items li {
-  font-weight: 100;
   padding: 12px 20px;
-  background-color: #131735;
-  color: #eceef1;
+  background-color: #e6e8ef !important;
+  color: #131735 !important;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  font-size: 15px;
+  transition: background-color 0.3s ease, padding-left 0.3s ease;
+  border-top: 1px solid #d3d5dc;
 }
 
-/*Se mantiene el hover, pero más suave */
-.panel-items li:hover {
+.panel-items li:hover:not(.open-subpanel) {
+  background-color: #fbbd08 !important;
+  color: #131735 !important;
+  padding-left: 25px;
+}
+
+.panel-subitem.open-subpanel {
+  background-color: #fbbd08 !important;
+  color: #131735 !important;
+}
+
+.subpanel-toggle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.subpanel-items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.panel-subitem {
+  padding: 10px 24px;
+  background-color: #e6e8ef;
+  color: #131735;
+  transition: background-color 0.3s ease, padding-left 0.3s ease;
+  cursor: pointer;
+}
+
+.panel-subitem:hover {
   background-color: #fbbd08;
   color: #131735;
-  transform: scale(1.02);
+  padding-left: 28px;
+}
+
+.active-subitem {
+  background-color: #fbbd08 !important;
+  color: #131735 !important;
+  font-weight: 500;
+}
+
+/* 🔻 Responsive para panel en móviles */
+@media screen and (max-width: 768px) {
+  .title-panel {
+    padding: 12px 16px;
+    font-size: 15px;
+  }
+
+  .panel-items li,
+  .panel-subitem {
+    font-size: 14px;
+    padding: 10px 16px;
+  }
+
+  .toggle-icon {
+    font-size: 12px;
+  }
 }

@@ -23,6 +23,8 @@ const TopicFormPage = () => {
     videos: [""],
   });
 
+  const [formErrors, setFormErrors] = useState({});
+
   useEffect(() => {
     if (!isNew) {
       const endpoint = isDisciplinar
@@ -52,14 +54,11 @@ const TopicFormPage = () => {
     }
   }, [id, isDisciplinar]);
 
-  // 🔒 Elimina cualquier input file oculto para subir imágenes
   useEffect(() => {
     const interval = setInterval(() => {
       const fileInputs = document.querySelectorAll("input[type='file']");
       fileInputs.forEach((input) => {
-        if (input.closest(".rc-md-editor")) {
-          input.remove();
-        }
+        if (input.closest(".rc-md-editor")) input.remove();
       });
     }, 500);
     return () => clearInterval(interval);
@@ -68,6 +67,7 @@ const TopicFormPage = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormErrors((prev) => ({ ...prev, [name]: "" }));
   };
 
   const handleVideoChange = (index, value) => {
@@ -89,6 +89,15 @@ const TopicFormPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const errors = {};
+    if (!formData.title.trim()) errors.title = "El título es obligatorio";
+    if (!formData.text.trim()) errors.text = "El contenido es obligatorio";
+
+    if (Object.keys(errors).length > 0) {
+      setFormErrors(errors);
+      return;
+    }
 
     const endpoint = isDisciplinar
       ? `${apiUrl}/topics-disciplinary/topic${isNew ? "" : `/${id}`}`
@@ -123,14 +132,19 @@ const TopicFormPage = () => {
       <h2>{isNew ? "Agregar Tema" : "Editar Tema"}</h2>
       <form onSubmit={handleSubmit} className="topic-form">
         <label>
-          <span>Título</span>
+          <span>
+            Título <span style={{ color: "red" }}>*</span>
+          </span>
           <input
             name="title"
             placeholder="Título"
             value={formData.title}
             onChange={handleChange}
-            required
+            className={formErrors.title ? "input-error" : ""}
           />
+          {formErrors.title && (
+            <p className="error-message">{formErrors.title}</p>
+          )}
         </label>
 
         <label>
@@ -154,48 +168,34 @@ const TopicFormPage = () => {
         </label>
 
         <label>
-          <span>Contenido del tema</span>
-          <MdEditor
-            style={{ height: "300px", borderRadius: "8px", overflow: "hidden" }}
-            value={formData.text}
-            renderHTML={(text) => <ReactMarkdown>{text}</ReactMarkdown>}
-            onChange={({ text }) => setFormData((prev) => ({ ...prev, text }))}
-            config={{
-              view: { menu: true, md: true, html: false },
-              image: false,
-            }}
-            onImageUpload={() => Promise.reject()}
-          />
-          <div className="markdown-help">
-            <p>
-              <strong>Guía rápida de formato:</strong>
-            </p>
-            <ul>
-              <li>
-                <code># Título</code>, <code>## Subtítulo</code>
-              </li>
-              <li>
-                <code>**negrita**</code>, <code>*cursiva*</code>,{" "}
-                <code>__subrayado__</code>
-              </li>
-              <li>
-                <code>- Lista</code>, <code>1. Lista numerada</code>
-              </li>
-              <li>
-                <code>[enlace](https://ejemplo.com)</code>
-              </li>
-              <li>
-                <code>`código en línea`</code>,{" "}
-                <code>```bloque de código```</code>
-              </li>
-              <li>
-                <code>| tabla | markdown |</code>
-              </li>
-              <li>
-                <code>![imagen](url)</code> ❌ <em>(no disponible)</em>
-              </li>
-            </ul>
+          <span>
+            Contenido del tema <span style={{ color: "red" }}>*</span>
+          </span>
+          <div className={formErrors.text ? "input-error" : ""}>
+            <MdEditor
+              style={{
+                height: "300px",
+                borderRadius: "8px",
+                overflow: "hidden",
+                border: formErrors.text
+                  ? "2px solid #d9363e"
+                  : "2px solid #757fa6",
+              }}
+              value={formData.text}
+              renderHTML={(text) => <ReactMarkdown>{text}</ReactMarkdown>}
+              onChange={({ text }) =>
+                setFormData((prev) => ({ ...prev, text }))
+              }
+              config={{
+                view: { menu: true, md: true, html: false },
+                image: false,
+              }}
+              onImageUpload={() => Promise.reject()}
+            />
           </div>
+          {formErrors.text && (
+            <p className="error-message">{formErrors.text}</p>
+          )}
         </label>
 
         <label>

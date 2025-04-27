@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import Sidebar from "./Sidebar";
 import "../styles/Header.css";
-import useAutoLogout from "../hooks/useAutoLogout"; //Libreria para eliminar el token a los 15 min de inactividad
+import useAutoLogout from "../hooks/useAutoLogout";
 
 const Header = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
+  const toggleRef = useRef(null);
   const navigate = useNavigate();
 
   const toggleSidebar = () => {
-    setSidebarOpen(!isSidebarOpen);
+    setSidebarOpen((prev) => !prev);
   };
 
   const handleLogout = () => {
@@ -24,7 +25,7 @@ const Header = () => {
     navigate("/");
   };
 
-  useAutoLogout(30); // 30 minutos de inactividad
+  useAutoLogout(30);
 
   useEffect(() => {
     const expiration = localStorage.getItem("tokenExpiresAt");
@@ -32,7 +33,7 @@ const Header = () => {
       localStorage.removeItem("authToken");
       localStorage.removeItem("user");
       localStorage.removeItem("tokenExpiresAt");
-      window.location.href = "/login"; // o navigate("/login") si estás dentro de un componente
+      window.location.href = "/login";
     }
   }, []);
 
@@ -41,12 +42,16 @@ const Header = () => {
       <header className="header">
         <div className="header-left">
           <i
+            ref={toggleRef}
             className={`fas fa-bars menu-icon ${isSidebarOpen ? "active" : ""}`}
             onClick={toggleSidebar}
             title="📋  Haz clic para abrir/cerrar el sidebar"
           ></i>
-          {/* Logo y Texto con evento de clic para redirigir a la página principal */}
-          <div title="🏠  Haz clic para regresar al home" className="logo-container" onClick={() => navigate("/")}>
+          <div
+            title="🏠  Haz clic para regresar al home"
+            className="logo-container"
+            onClick={handleMain}
+          >
             <img src="/logo.svg" alt="TutorLink Logo" className="logo" />
             <span className="logo-text">
               Tutor<span className="highlight">Link</span>
@@ -62,11 +67,15 @@ const Header = () => {
           <i
             className="fas fa-sign-out-alt logout-icon"
             onClick={handleLogout}
-            title="❌ Haz clic para cerrar sesion"
+            title="❌ Haz clic para cerrar sesión"
           ></i>
         </div>
       </header>
-      <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
+      <Sidebar
+        isOpen={isSidebarOpen}
+        toggleSidebar={toggleSidebar}
+        toggleRef={toggleRef}
+      />
     </>
   );
 };

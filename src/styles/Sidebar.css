@@ -1,46 +1,65 @@
+/* Sidebar Estilo General */
 .sidebar {
   position: fixed;
   top: 80px;
-  left: -500px;
-  width: 250px;
+  left: 0;
+  width: 260px;
   height: calc(100% - 80px);
-  background-color: #cfd1d9;
-  transition: left 0.4s ease-in-out;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+  background-color: #dfe2ea;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15);
   overflow-y: auto;
   z-index: 999;
+  padding: 10px;
+  border-top-right-radius: 12px;
+  border-bottom-right-radius: 12px;
+  transition: transform 0.3s ease-in-out;
+  transform: translateX(-100%);
 }
 
 .sidebar.open {
-  left: 0;
+  transform: translateX(0);
 }
 
+/* Lista */
 .sidebar ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-.sidebar ul li {
+.sidebar ul > li {
   padding: 12px 20px;
   background-color: #131735;
   color: #eceef1;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.2s ease;
+  border-radius: 6px;
+  margin: 4px 8px;
 }
 
-/* Se cambia el color cuando un panel está activo */
-.sidebar ul li.active {
+.sidebar ul > li.active {
   background-color: #fbbd08;
   color: #131735;
 }
 
-/*Efecto hover */
-.sidebar ul li:hover {
+.sidebar ul > li:hover {
   background-color: #fbbd08;
   transform: scale(1.03);
+  color: #131735;
 }
 
-.sidebar ul li i {
-  font-size: 14px;
+/* Responsivo para móviles */
+@media screen and (max-width: 768px) {
+  .sidebar {
+    width: 100vw;
+    top: 60px;
+    height: calc(100% - 60px);
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .sidebar ul > li {
+    margin: 0;
+    border-radius: 0;
+  }
 }

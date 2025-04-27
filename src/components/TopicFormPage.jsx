@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import "../styles/TopicFormPage.css";
+import MdEditor from "react-markdown-editor-lite";
+import ReactMarkdown from "react-markdown";
+import "react-markdown-editor-lite/lib/index.css";
 
 const TopicFormPage = () => {
   const { id, tipo } = useParams();
@@ -19,6 +22,8 @@ const TopicFormPage = () => {
     idMainTopic: isDisciplinar ? location.state?.selectedMainTopic || "" : "",
     videos: [""],
   });
+
+  const [formErrors, setFormErrors] = useState({});
 
   useEffect(() => {
     if (!isNew) {
@@ -49,9 +54,20 @@ const TopicFormPage = () => {
     }
   }, [id, isDisciplinar]);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const fileInputs = document.querySelectorAll("input[type='file']");
+      fileInputs.forEach((input) => {
+        if (input.closest(".rc-md-editor")) input.remove();
+      });
+    }, 500);
+    return () => clearInterval(interval);
+  }, []);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormErrors((prev) => ({ ...prev, [name]: "" }));
   };
 
   const handleVideoChange = (index, value) => {
@@ -73,6 +89,15 @@ const TopicFormPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const errors = {};
+    if (!formData.title.trim()) errors.title = "El título es obligatorio";
+    if (!formData.text.trim()) errors.text = "El contenido es obligatorio";
+
+    if (Object.keys(errors).length > 0) {
+      setFormErrors(errors);
+      return;
+    }
 
     const endpoint = isDisciplinar
       ? `${apiUrl}/topics-disciplinary/topic${isNew ? "" : `/${id}`}`
@@ -107,14 +132,19 @@ const TopicFormPage = () => {
       <h2>{isNew ? "Agregar Tema" : "Editar Tema"}</h2>
       <form onSubmit={handleSubmit} className="topic-form">
         <label>
-          <span>Título</span>
+          <span>
+            Título <span style={{ color: "red" }}>*</span>
+          </span>
           <input
             name="title"
             placeholder="Título"
             value={formData.title}
             onChange={handleChange}
-            required
+            className={formErrors.title ? "input-error" : ""}
           />
+          {formErrors.title && (
+            <p className="error-message">{formErrors.title}</p>
+          )}
         </label>
 
         <label>
@@ -128,14 +158,44 @@ const TopicFormPage = () => {
         </label>
 
         <label>
-          <span>Contenido del tema</span>
-          <textarea
-            name="text"
-            placeholder="Contenido del tema"
-            value={formData.text}
+          <span>URL de Imagen</span>
+          <input
+            name="image"
+            placeholder="https://ejemplo.com/imagen.jpg"
+            value={formData.image}
             onChange={handleChange}
-            required
           />
+        </label>
+
+        <label>
+          <span>
+            Contenido del tema <span style={{ color: "red" }}>*</span>
+          </span>
+          <div className={formErrors.text ? "input-error" : ""}>
+            <MdEditor
+              style={{
+                height: "300px",
+                borderRadius: "8px",
+                overflow: "hidden",
+                border: formErrors.text
+                  ? "2px solid #d9363e"
+                  : "2px solid #757fa6",
+              }}
+              value={formData.text}
+              renderHTML={(text) => <ReactMarkdown>{text}</ReactMarkdown>}
+              onChange={({ text }) =>
+                setFormData((prev) => ({ ...prev, text }))
+              }
+              config={{
+                view: { menu: true, md: true, html: false },
+                image: false,
+              }}
+              onImageUpload={() => Promise.reject()}
+            />
+          </div>
+          {formErrors.text && (
+            <p className="error-message">{formErrors.text}</p>
+          )}
         </label>
 
         <label>

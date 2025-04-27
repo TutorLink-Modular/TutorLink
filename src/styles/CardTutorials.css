@@ -7,8 +7,8 @@
   margin: 20px;
   transition: transform 0.3s;
   display: flex;
-  flex-direction: column; /* Asegura que los elementos se apilen verticalmente */
-  height: 480px; /* Permite que la altura se ajuste según el contenido */
+  flex-direction: column;
+  height: 480px;
 }
 
 .cardTutorials:hover {
@@ -19,15 +19,15 @@
   height: 250px;
   background-size: cover;
   background-position: center;
-  flex-shrink: 0; /* Evita que la imagen se reduzca demasiado */
+  flex-shrink: 0;
 }
 
 .cardTutorials-content {
   padding: 20px;
-  flex: 1; /* Permite que el contenido ocupe espacio disponible */
+  flex: 1;
   display: flex;
-  flex-direction: column; /* Asegura que los elementos se organicen verticalmente */
-  justify-content: space-between; /* Distribuye el contenido, dejando espacio para el botón */
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .cardTutorials-title {
@@ -54,7 +54,7 @@
   border-radius: 5px;
   padding: 8px 16px;
   cursor: pointer;
-  align-self: flex-start; /* Asegura que el botón no ocupe todo el ancho */
+  align-self: flex-start;
 }
 
 .cardTutorials-button:hover {
@@ -64,22 +64,22 @@
 /* Media query para pantallas más pequeñas */
 @media (max-width: 768px) {
   .cardTutorials {
-    width: 250px; /* Ancho más pequeño para pantallas medianas */
-    height: auto; /* Ajusta la altura automáticamente */
+    width: 240px;
+    height: auto;
   }
 
   .cardTutorials-image {
-    height: 200px; /* Reduce la altura de la imagen */
+    height: 200px;
   }
 }
 
 @media (max-width: 480px) {
   .cardTutorials {
-    width: 200px; /* Ancho más pequeño para pantallas muy pequeñas */
-    height: auto; /* Ajusta la altura automáticamente */
+    width: 240px; /* 📌 Más ancho que antes (era 200px) */
+    height: auto;
   }
 
   .cardTutorials-image {
-    height: 150px; /* Reduce aún más la altura de la imagen */
+    height: 160px;
   }
 }

@@ -2,6 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import RecommendedTopics from "./RecommendedTopics";
 import { v4 as uuidv4 } from "uuid";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import remarkBreaks from "remark-breaks";
+import rehypeRaw from "rehype-raw";
 import "../styles/TopicDisciplinar.css";
 
 const toEmbedURL = (url) => {
@@ -216,10 +220,14 @@ const TopicDisciplinar = () => {
           <div className="title-container">
             <h1>{topic.title}</h1>
           </div>
+
           <div className="formatted-text">
-            {topic.text.split("\n").map((paragraph, index) => (
-              <p key={index}>{paragraph}</p>
-            ))}
+            <ReactMarkdown
+              remarkPlugins={[remarkGfm, remarkBreaks]}
+              rehypePlugins={[rehypeRaw]}
+            >
+              {topic.text}
+            </ReactMarkdown>
           </div>
 
           {topic.videos.length > 0 &&
@@ -241,15 +249,6 @@ const TopicDisciplinar = () => {
                           frameBorder="0"
                           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                           allowFullScreen
-                          onError={(e) => {
-                            const msg = document.createElement("div");
-                            msg.textContent =
-                              "⚠️ Este video puede estar bloqueado por una extensión del navegador.";
-                            msg.style.color = "#ffcc00";
-                            msg.style.marginTop = "10px";
-                            msg.style.fontSize = "0.9rem";
-                            e.target.parentElement.appendChild(msg);
-                          }}
                         ></iframe>
                       </div>
                     ))}
@@ -277,7 +276,6 @@ const TopicDisciplinar = () => {
             </button>
           </div>
 
-          {/* Componente de recomendaciones */}
           <RecommendedTopics title={topic.title} />
         </>
       )}

@@ -1,10 +1,14 @@
+// TopicOrientacional.jsx
 import React, { useEffect, useState } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import RecommendedTopics from "./RecommendedTopics";
 import { v4 as uuidv4 } from "uuid";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import remarkBreaks from "remark-breaks";
+import rehypeRaw from "rehype-raw";
 import "../styles/TopicOrientacional.css";
 
-//Funcion que convierte un link de youtube a embed, para que sea compatible para reproducirlo
 const toEmbedURL = (url) => {
   try {
     const urlObj = new URL(url);
@@ -52,16 +56,12 @@ const TopicOrientacional = () => {
       location.state?.comments
     )
       return;
-
     setLoading(true);
-    const fetchTopic = async () => {
-      try {
-        const response = await fetch(
-          `${apiUrl}/topics-orientation/topic/${topicId}`
-        );
-        if (!response.ok) throw new Error("No se pudo obtener el tema.");
-
-        const data = await response.json();
+    fetch(`${apiUrl}/topics-orientation/topic/${topicId}`)
+      .then((res) =>
+        res.ok ? res.json() : Promise.reject("No se pudo obtener el tema.")
+      )
+      .then((data) => {
         setTopic({
           _id: data._id,
           title: data.title,
@@ -69,102 +69,69 @@ const TopicOrientacional = () => {
           videos: data.videos || [],
           comments: data.comments || [],
         });
-      } catch (error) {
-        setError("No se pudo cargar el tema.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchTopic();
+      })
+      .catch(() => setError("No se pudo cargar el tema."))
+      .finally(() => setLoading(false));
   }, [topicId]);
 
-  const checkIfSaved = async () => {
-    try {
-      const token = localStorage.getItem("authToken");
-      if (!token) return;
-
-      const response = await fetch(`${apiUrl}/user/profile`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      if (!response.ok) throw new Error("Error al obtener datos del usuario");
-
-      const userData = await response.json();
-      setIsSaved(userData.savedOrientationalTopics.includes(topicId));
-    } catch (err) {
-      console.error("❌ Error al verificar temas guardados:", err);
-    }
-  };
-
   useEffect(() => {
-    checkIfSaved();
-  }, [topicId, showPopup]);
-
-  const handleSaveTopic = async () => {
-    try {
-      const token = localStorage.getItem("authToken");
-      if (!token) {
-        setError("Debes iniciar sesión para guardar temas.");
-        return;
-      }
-
-      const response = await fetch(`${apiUrl}/user/save-orientational-topic`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ topicId }),
-      });
-
-      if (response.ok) {
-        setPopupMessage("¡Tema guardado con éxito! Puedes verlo en tu perfil.");
-        setShowPopup(true);
-        await checkIfSaved();
-      } else {
-        const data = await response.json();
-        setError(data.errors[0]);
-      }
-    } catch (err) {
-      setError("Error al guardar el tema.");
-    }
-  };
-
-  const handleRemoveTopic = async () => {
-    try {
-      const token = localStorage.getItem("authToken");
-      if (!token) {
-        setError("Debes iniciar sesión para eliminar temas.");
-        return;
-      }
-
-      const response = await fetch(
-        `${apiUrl}/user/remove-orientational-topic`,
-        {
-          method: "POST",
+    const checkIfSaved = async () => {
+      try {
+        const token = localStorage.getItem("authToken");
+        if (!token) return;
+        const res = await fetch(`${apiUrl}/user/profile`, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify({ topicId }),
-        }
-      );
-
-      if (response.ok) {
-        setPopupMessage("¡Tema eliminado! Ya no está en tu perfil.");
-        setShowPopup(true);
-        await checkIfSaved();
-      } else {
-        const data = await response.json();
-        setError(data.errors[0]);
+        });
+        if (!res.ok) throw new Error();
+        const userData = await res.json();
+        setIsSaved(userData.savedOrientationalTopics.includes(topicId));
+      } catch (e) {
+        console.error("Error al verificar tema guardado", e);
       }
-    } catch (err) {
-      setError("Error al eliminar el tema.");
+    };
+    checkIfSaved();
+  }, [topicId, showPopup]);
+
+  const handleSaveTopic = async () => {
+    const token = localStorage.getItem("authToken");
+    if (!token) return setError("Debes iniciar sesión para guardar temas.");
+    const res = await fetch(`${apiUrl}/user/save-orientational-topic`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ topicId }),
+    });
+    if (res.ok) {
+      setPopupMessage("¡Tema guardado con éxito!");
+      setShowPopup(true);
+    } else {
+      const data = await res.json();
+      setError(data.errors[0]);
+    }
+  };
+
+  const handleRemoveTopic = async () => {
+    const token = localStorage.getItem("authToken");
+    if (!token) return setError("Debes iniciar sesión para eliminar temas.");
+    const res = await fetch(`${apiUrl}/user/remove-orientational-topic`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ topicId }),
+    });
+    if (res.ok) {
+      setPopupMessage("¡Tema eliminado!");
+      setShowPopup(true);
+    } else {
+      const data = await res.json();
+      setError(data.errors[0]);
     }
   };
 
@@ -174,9 +141,7 @@ const TopicOrientacional = () => {
     const user = userData ? `${userData.name} ${userData.surname}` : "Usuario";
     const userId = userData?._id || null;
     const commentId = uuidv4();
-
     if (!newComment.trim()) return;
-
     await fetch(`${apiUrl}/topics-orientation/topic/${topicId}/comment`, {
       method: "POST",
       headers: {
@@ -190,7 +155,6 @@ const TopicOrientacional = () => {
         message: newComment,
       }),
     });
-
     setTopic((prev) => ({
       ...prev,
       comments: [
@@ -198,11 +162,9 @@ const TopicOrientacional = () => {
         { _id: commentId, user, userId, message: newComment },
       ],
     }));
-
     setNewComment("");
   };
 
-  //EMPEZAMOS CON LA PAGINA
   return (
     <div key={topicId} className="topic-container">
       <button
@@ -211,9 +173,8 @@ const TopicOrientacional = () => {
       >
         {isSaved ? "Eliminar Tema" : "Guardar Tema"}
       </button>
-
       {loading ? (
-        <p>Cargando tema...</p>
+        <p>Cargando...</p>
       ) : error ? (
         <p>{error}</p>
       ) : (
@@ -221,12 +182,14 @@ const TopicOrientacional = () => {
           <div className="title-container">
             <h1>{topic.title}</h1>
           </div>
-          <div className="formatted-text">
-            {topic.text.split("\n").map((paragraph, index) => (
-              <p key={index}>{paragraph}</p>
-            ))}
+          <div className="formatted-text light-mode">
+            <ReactMarkdown
+              remarkPlugins={[remarkGfm, remarkBreaks]}
+              rehypePlugins={[rehypeRaw]}
+            >
+              {topic.text}
+            </ReactMarkdown>
           </div>
-
           {topic.videos.length > 0 &&
             topic.videos.some((v) => v.trim() !== "") && (
               <>
@@ -246,43 +209,31 @@ const TopicOrientacional = () => {
                           frameBorder="0"
                           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                           allowFullScreen
-                          onError={(e) => {
-                            const msg = document.createElement("div");
-                            msg.textContent =
-                              "⚠️ Este video puede estar bloqueado por una extensión del navegador.";
-                            msg.style.color = "#ffcc00";
-                            msg.style.marginTop = "10px";
-                            msg.style.fontSize = "0.9rem";
-                            e.target.parentElement.appendChild(msg);
-                          }}
                         ></iframe>
                       </div>
                     ))}
                 </div>
               </>
             )}
-          {/* COMENTARIOS */}
           <div className="comments-section">
-            <h3>💬 Comentarios: </h3>
+            <h3>💬 Comentarios:</h3>
             <ul className="comments-list">
-              {topic.comments?.map((c, i) => (
+              {topic.comments.map((c, i) => (
                 <li key={i}>
                   <strong>{c.user}</strong>: {c.message}
                 </li>
               ))}
             </ul>
-
             <textarea
               className="comment-input"
               placeholder="Escribe tu comentario..."
               value={newComment}
               onChange={(e) => setNewComment(e.target.value)}
-            ></textarea>
+            />
             <button className="comment-button" onClick={handlePostComment}>
               Publicar
             </button>
           </div>
-          {/* Recomendaciones para orientación */}
           <RecommendedTopics title={topic.title} category="orientacional" />
         </>
       )}

@@ -116,3 +116,20 @@ textarea[name="text"] {
 textarea {
   resize: vertical;
 }
+
+/* Oculta el botón de subir imagen del editor */
+.rc-md-editor .button.upload-image {
+  display: none !important;
+}
+
+.input-error {
+  border-color: #d9363e !important;
+  background-color: #fff4f4;
+}
+
+.error-message {
+  color: #d9363e;
+  font-size: 13px;
+  margin-top: 4px;
+  margin-bottom: 12px;
+}

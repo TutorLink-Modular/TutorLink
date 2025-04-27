@@ -1,17 +1,16 @@
-/* Contenedor del tema */
+/* Estilos base (como ya los tienes) */
 .topic-container {
   position: relative;
   padding: 20px;
-  margin-top: 120px; /* 🔽 Baja todo el contenido para que no lo tape el header */
+  margin-top: 120px;
 }
 
-/* Botón en la parte superior derecha, pero más abajo */
 .save-topic-button {
   position: absolute;
   margin-top: -20px;
   right: 20px;
-  background-color: #fbbd08; /* Amarillo */
-  color: #202437; /* Azul oscuro */
+  background-color: #fbbd08;
+  color: #202437;
   padding: 10px 15px;
   border: none;
   border-radius: 5px;
@@ -22,10 +21,9 @@
 }
 
 .save-topic-button:hover {
-  background-color: #e0a800; /* Amarillo más oscuro */
+  background-color: #e0a800;
 }
 
-/* Estilos del Popup */
 .popup {
   position: fixed;
   top: 0;
@@ -50,7 +48,6 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Botón de cerrar (X) en la esquina superior derecha */
 .close-popup {
   position: absolute;
   top: 10px;
@@ -61,7 +58,6 @@
   cursor: pointer;
 }
 
-/* Botón de "Ir al perfil" */
 .popup-button {
   background-color: #4caf50;
   color: white;
@@ -76,33 +72,29 @@
   background-color: #45a049;
 }
 
-/* Centrar SOLO el título del tema */
 .title-container {
   text-align: center;
-  margin-bottom: 20px; /* Espacio debajo del título */
+  margin-bottom: 20px;
 }
 
 .title-container h1 {
-  font-size: 40px; /* Mantiene buen tamaño de título */
+  font-size: 40px;
   font-weight: bold;
   margin-top: 30px;
   margin-bottom: 80px;
-  color: white; /* Mantiene el color original */
-}
-
-/* Contenedor del texto formateado */
-.formatted-text {
-  margin: 20px auto; /* Agrega margen más ancho a los lados */
-  padding: 0 10%;
-  line-height: 1.8; /* Mejora la legibilidad */
-  font-size: 18px; /*Letra un poco más grande */
   color: white;
-  text-align: justify;
 }
 
-/* Espaciado entre párrafos */
+.formatted-text {
+  margin: 20px auto;
+  padding: 0 10%;
+  line-height: 1.8;
+  font-size: 18px;
+  color: white;
+}
+
 .formatted-text p {
-  margin-bottom: 20px; /* Aumenta el espacio entre párrafos */
+  margin-bottom: 20px;
 }
 
 .section-divider {
@@ -117,13 +109,13 @@
 
 .section-divider::before,
 .section-divider::after {
-  content: '';
+  content: "";
   flex: 1;
   border-bottom: 2px solid #ccc;
   margin: 0 2rem;
 }
 
-.video-wrapper{
+.video-wrapper {
   text-align: center;
 }
 
@@ -133,12 +125,14 @@
   padding: 1rem;
   border-radius: 10px;
 }
+
 .comments-list {
   list-style: none;
   padding-left: 0;
   margin-bottom: 1rem;
   color: white;
 }
+
 .comments-list li {
   color: white;
   margin-bottom: 0.5rem;
@@ -146,9 +140,8 @@
 }
 
 .comments-list li strong {
-  color: #ffffff; 
+  color: #ffffff;
 }
-
 
 .comment-input {
   width: 100%;
@@ -161,6 +154,7 @@
   font: inherit;
   font-size: smaller;
 }
+
 .comment-button {
   margin-top: 0.5rem;
   padding: 0.4rem 1.2rem;
@@ -170,6 +164,43 @@
   color: white;
   cursor: pointer;
 }
+
 .comment-button:hover {
   background-color: #3a6cd1;
+}
+
+/* 📱 Responsivo para móviles */
+@media (max-width: 600px) {
+  .formatted-text {
+    font-size: 15px;
+    padding: 0 5%;
+  }
+
+  .title-container h1 {
+    font-size: 26px;
+    margin-bottom: 40px;
+  }
+
+  .save-topic-button {
+    font-size: 14px;
+    padding: 8px 12px;
+    right: 10px;
+  }
+
+  .popup-content {
+    max-width: 90%;
+    padding: 15px;
+  }
+
+  .section-divider {
+    font-size: 1.1rem;
+  }
+
+  .comment-input {
+    font-size: 14px;
+  }
+
+  .comment-button {
+    font-size: 14px;
+  }
 }

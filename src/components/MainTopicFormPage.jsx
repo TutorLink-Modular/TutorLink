@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import ModalMessage from "./ModalMessage";
 import "../styles/TopicFormPage.css";
 
 const MainTopicFormPage = () => {
@@ -12,6 +13,8 @@ const MainTopicFormPage = () => {
     title: "",
     description: "",
   });
+
+  const [modal, setModal] = useState({ show: false, title: "", message: "", actions: [] });
 
   useEffect(() => {
     if (isEdit) {
@@ -28,8 +31,14 @@ const MainTopicFormPage = () => {
         })
         .catch((err) => {
           console.error("❌ Error al cargar main topic:", err);
-          alert("Error al cargar main topic");
-          navigate("/manejo-main-topics");
+          setModal({
+            show: true,
+            title: "Error",
+            message: "No se pudo cargar el tema principal.",
+            actions: [
+              { label: "Cerrar", onClick: () => { setModal({ show: false }); navigate("/manejo-main-topics"); } }
+            ]
+          });
         });
     }
   }, [id]);
@@ -54,11 +63,29 @@ const MainTopicFormPage = () => {
 
       if (!response.ok) throw new Error("Error al guardar");
 
-      alert(`Main topic ${isEdit ? "actualizado" : "creado"} correctamente`);
-      navigate("/manejo-main-topics");
+      setModal({
+        show: true,
+        title: "Éxito",
+        message: `Main topic ${isEdit ? "actualizado" : "creado"} correctamente`,
+        type: "",
+        actions: [
+          {
+            label: "Aceptar",
+            onClick: () => {
+              setModal({ show: false });
+              navigate("/manejo-main-topics");
+            },
+          },
+        ],
+      });
     } catch (err) {
       console.error("❌ Error al guardar:", err);
-      alert("Error al guardar el main topic.");
+      setModal({
+        show: true,
+        title: "Error",
+        message: "Error al guardar el main topic.",
+        actions: [{ label: "Cerrar", onClick: () => setModal({ show: false }) }],
+      });
     }
   };
 
@@ -87,11 +114,10 @@ const MainTopicFormPage = () => {
 
         <div className="form-buttons">
           <button type="submit">Guardar</button>
-          <button type="button" onClick={() => navigate("/manejo-main-topics")}>
-            Cancelar
-          </button>
+          <button type="button" onClick={() => navigate("/manejo-main-topics")}>Cancelar</button>
         </div>
       </form>
+      <ModalMessage {...modal} onClose={() => setModal({ show: false })} />
     </div>
   );
 };

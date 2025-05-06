@@ -27,7 +27,7 @@ const TopicsByMainTopic = () => {
   const [mainTopicInfo, setMainTopicInfo] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [searchQuery, setSearchQuery] = useState(""); // 🔍
+  const [searchQuery, setSearchQuery] = useState(""); 
 
   const navigate = useNavigate();
   const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:3000";

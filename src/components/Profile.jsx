@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom"; //Importamos `useNavigate`
 import "../styles/Profile.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
+import ChangePassword from "./ChangePassword";
 
 const Profile = () => {
   const [userData, setUserData] = useState(null);
@@ -171,6 +172,7 @@ const Profile = () => {
                 </ul>
               )}
             </div>
+            <ChangePassword />
           </>
         )}
       </div>

@@ -1,27 +1,26 @@
 /* Contenedor principal */
 .profile-container {
-  height: 100vh;
+  min-height: 100vh;
   width: 100vw;
+  padding-top: 120px; /* Espacio para el header fijo */
+  padding-bottom: 40px;
+  background-color: #131735;
   display: flex;
   justify-content: center;
-  align-items: center;
-  background: #131735;
-  position: relative;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
+  overflow-y: auto;
+  box-sizing: border-box;
 }
 
 /* Tarjeta de perfil con color original */
 .profile-box {
   position: relative;
   z-index: 2;
-  background: #cfd1d9; /* Color original */
-  padding: 40px;
+  background: #cfd1d9;
+  padding: 65px;
   border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* Sombra suave */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
   text-align: center;
-  color: #000; /* Texto negro */
+  color: #000;
   width: 100%;
   max-width: 400px;
 }
@@ -43,33 +42,7 @@
   margin-bottom: 5px;
   color: #000; /* Texto negro */
 }
-/* Contenedor principal */
-.profile-container {
-  height: 100vh;
-  width: 100vw;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #131735;
-  position: relative;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-}
 
-/* Tarjeta de perfil con color original */
-.profile-box {
-  position: relative;
-  z-index: 2;
-  background: #cfd1d9; /* Color original */
-  padding: 40px;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* Sombra suave */
-  text-align: center;
-  color: #000; /* Texto negro */
-  width: 100%;
-  max-width: 400px;
-}
 
 /* Ícono de usuario en lugar de imagen */
 .profile-icon {
@@ -78,13 +51,6 @@
   margin-bottom: 15px;
 }
 
-/* Nombre */
-.profile-title {
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 5px;
-  color: #000; /* Texto negro */
-}
 
 /* Correo electrónico */
 .profile-email {
@@ -162,3 +128,5 @@
   color: #ffcc33; /* Amarillo más claro */
   text-decoration: underline;
 }
+
+

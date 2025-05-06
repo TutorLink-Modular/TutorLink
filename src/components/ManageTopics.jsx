@@ -1,6 +1,7 @@
-// src/components/ManageTopics.jsx
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import SearchBar from "./SearchBar";
+import ModalMessage from "./ModalMessage";
 import "../styles/ManageTopics.css";
 
 const ManageTopics = () => {
@@ -8,6 +9,8 @@ const ManageTopics = () => {
   const [mainTopics, setMainTopics] = useState([]);
   const [selectedMainTopic, setSelectedMainTopic] = useState("");
   const [topics, setTopics] = useState([]);
+  const [searchQuery, setSearchQuery] = useState(""); 
+  const [modal, setModal] = useState({ show: false, title: "", message: "", actions: [] });
   const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
   const navigate = useNavigate();
@@ -31,13 +34,30 @@ const ManageTopics = () => {
       fetch(`${apiUrl}/topics-orientation/topicsOrientationCards`)
         .then((res) => res.json())
         .then((data) => setTopics(data))
-        .catch((err) =>
-          console.error("Error cargando temas orientacionales", err)
-        );
+        .catch((err) => console.error("Error cargando temas orientacionales", err));
     } else {
       setTopics([]);
     }
   }, [selectedTutoria, selectedMainTopic]);
+
+  const showConfirmation = (message, onConfirm) => {
+    setModal({
+      show: true,
+      title: "Confirmación",
+      message,
+      type: "red",
+      actions: [
+        { label: "Cancelar", onClick: () => setModal({ show: false }) },
+        {
+          label: "Sí, eliminar",
+          onClick: () => {
+            setModal({ show: false });
+            onConfirm();
+          },
+        },
+      ],
+    });
+  };
 
   const handleDelete = async (id) => {
     const url =
@@ -45,21 +65,35 @@ const ManageTopics = () => {
         ? `${apiUrl}/topics-disciplinary/topic/${id}`
         : `${apiUrl}/topics-orientation/topic/${id}`;
 
-    if (window.confirm("¿Estás seguro que deseas eliminar este tema?")) {
+    showConfirmation("¿Estás seguro que deseas eliminar este tema?", async () => {
       try {
         const response = await fetch(url, { method: "DELETE" });
         if (response.ok) {
-          alert("Tema eliminado correctamente.");
+          setModal({
+            show: true,
+            title: "Éxito",
+            message: "Tema eliminado correctamente.",
+            actions: [{ label: "Aceptar", onClick: () => setModal({ show: false }) }],
+          });
           setTopics((prev) => prev.filter((t) => t._id !== id));
         } else {
           throw new Error("Error al eliminar tema");
         }
       } catch (err) {
         console.error(err);
-        alert("No se pudo eliminar el tema.");
+        setModal({
+          show: true,
+          title: "Error",
+          message: "No se pudo eliminar el tema.",
+          actions: [{ label: "Cerrar", onClick: () => setModal({ show: false }) }],
+        });
       }
-    }
+    });
   };
+
+  const filteredTopics = topics.filter((topic) =>
+    topic.title.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <div className="manage-topics-container">
@@ -111,6 +145,17 @@ const ManageTopics = () => {
         </button>
       )}
 
+      {(selectedTutoria === "orientacional" ||
+        (selectedTutoria === "disciplinar" && selectedMainTopic)) && (
+        <>
+          <SearchBar
+            value={searchQuery}
+            onChange={setSearchQuery}
+            placeholder="Buscar tema por título..."
+          />
+        </>
+      )}
+
       {topics.length > 0 ? (
         <table className="topics-table">
           <thead>
@@ -121,7 +166,7 @@ const ManageTopics = () => {
             </tr>
           </thead>
           <tbody>
-            {topics.map((topic) => (
+            {filteredTopics.map((topic) => (
               <tr key={topic._id}>
                 <td>{topic.title}</td>
                 <td title={topic.description}>{topic.description}</td>
@@ -163,6 +208,8 @@ const ManageTopics = () => {
           </p>
         )
       )}
+
+      <ModalMessage {...modal} onClose={() => setModal({ show: false })} />
     </div>
   );
 };

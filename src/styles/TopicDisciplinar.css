@@ -76,3 +76,63 @@
     font-size: 18px;
   }
 }
+
+
+.icon-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  padding: 4px;
+  margin-left: 8px;
+  transition: transform 0.2s ease;
+}
+
+.icon-button:hover {
+  transform: scale(1.2);
+}
+
+.edit-comment-btn {
+  color: #fbbd08; /* amarillo TutorLink */
+}
+
+.delete-comment-btn {
+  color: #d9363e; /* rojo de advertencia */
+}
+
+.comment-edit-actions {
+  margin-top: 8px;
+  display: flex;
+  gap: 12px;
+}
+
+.comment-edit-actions button {
+  padding: 6px 14px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Botón Guardar */
+.save-btn {
+  background-color: #fbbd08;
+  color: #202437;
+}
+
+.save-btn:hover {
+  background-color: #ffd43b;
+  color: #131735;
+}
+
+/* Botón Cancelar */
+.cancel-btn {
+  background-color: #333;
+  color: #fff;
+}
+
+.cancel-btn:hover {
+  background-color: #555;
+}

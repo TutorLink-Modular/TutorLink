@@ -25,17 +25,7 @@ const Header = () => {
     navigate("/");
   };
 
-  useAutoLogout(30);
-
-  useEffect(() => {
-    const expiration = localStorage.getItem("tokenExpiresAt");
-    if (expiration && new Date().getTime() > parseInt(expiration)) {
-      localStorage.removeItem("authToken");
-      localStorage.removeItem("user");
-      localStorage.removeItem("tokenExpiresAt");
-      window.location.href = "/login";
-    }
-  }, []);
+  useAutoLogout(45);
 
   return (
     <>

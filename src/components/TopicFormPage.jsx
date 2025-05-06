@@ -4,6 +4,7 @@ import "../styles/TopicFormPage.css";
 import MdEditor from "react-markdown-editor-lite";
 import ReactMarkdown from "react-markdown";
 import "react-markdown-editor-lite/lib/index.css";
+import ModalMessage from "./ModalMessage"; 
 
 const TopicFormPage = () => {
   const { id, tipo } = useParams();
@@ -24,6 +25,7 @@ const TopicFormPage = () => {
   });
 
   const [formErrors, setFormErrors] = useState({});
+  const [modal, setModal] = useState({ show: false, title: "", message: "", actions: [] });
 
   useEffect(() => {
     if (!isNew) {
@@ -48,8 +50,12 @@ const TopicFormPage = () => {
         })
         .catch((err) => {
           console.error("❌ Error al cargar el tema:", err);
-          alert("No se pudo cargar el tema.");
-          navigate("/manejo-temas");
+          setModal({
+            show: true,
+            title: "Error",
+            message: "No se pudo cargar el tema.",
+            actions: [{ label: "Aceptar", onClick: () => navigate("/manejo-temas") }],
+          });
         });
     }
   }, [id, isDisciplinar]);
@@ -119,11 +125,20 @@ const TopicFormPage = () => {
 
       if (!response.ok) throw new Error("Error al guardar el tema");
 
-      alert(`Tema ${isNew ? "creado" : "actualizado"} correctamente`);
-      navigate("/manejo-temas");
+      setModal({
+        show: true,
+        title: "Éxito",
+        message: `Tema ${isNew ? "creado" : "actualizado"} correctamente`,
+        actions: [{ label: "Aceptar", onClick: () => navigate("/manejo-temas") }],
+      });
     } catch (err) {
       console.error("❌ Error al guardar:", err);
-      alert("Error al guardar el tema.");
+      setModal({
+        show: true,
+        title: "Error",
+        message: "No se pudo guardar el tema.",
+        actions: [{ label: "Cerrar", onClick: () => setModal({ show: false }) }],
+      });
     }
   };
 
@@ -231,6 +246,8 @@ const TopicFormPage = () => {
           </button>
         </div>
       </form>
+
+      <ModalMessage {...modal} onClose={() => setModal({ show: false })} />
     </div>
   );
 };

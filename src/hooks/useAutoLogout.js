@@ -1,29 +1,38 @@
 import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
-const useAutoLogout = (timeoutMinutes = 15) => {
+const useAutoLogout = (timeoutMinutes = 45) => {
   const navigate = useNavigate();
-  const timer = useRef(null);
-
-  const clearAuth = () => {
-    localStorage.removeItem("authToken");
-    navigate("/login");
-  };
+  const timerRef = useRef(null);
 
   const resetTimer = () => {
-    if (timer.current) clearTimeout(timer.current);
-    timer.current = setTimeout(clearAuth, timeoutMinutes * 60 * 1000);
+    if (timerRef.current) clearTimeout(timerRef.current);
+    timerRef.current = setTimeout(() => {
+      localStorage.removeItem("authToken");
+      localStorage.removeItem("user");
+      localStorage.removeItem("tokenExpiresAt");
+      navigate("/login");
+    }, timeoutMinutes * 60 * 1000);
   };
 
   useEffect(() => {
-    const events = ["mousemove", "keydown", "click"];
-    events.forEach((e) => window.addEventListener(e, resetTimer));
+    const handleActivity = () => resetTimer();
 
-    resetTimer(); // iniciar temporizador al cargar
+    window.addEventListener("mousemove", handleActivity);
+    window.addEventListener("keydown", handleActivity);
+    window.addEventListener("click", handleActivity);
+    window.addEventListener("scroll", handleActivity);
+    window.addEventListener("touchstart", handleActivity);
+
+    resetTimer(); // Iniciar el temporizador
 
     return () => {
-      events.forEach((e) => window.removeEventListener(e, resetTimer));
-      clearTimeout(timer.current);
+      if (timerRef.current) clearTimeout(timerRef.current);
+      window.removeEventListener("mousemove", handleActivity);
+      window.removeEventListener("keydown", handleActivity);
+      window.removeEventListener("click", handleActivity);
+      window.removeEventListener("scroll", handleActivity);
+      window.removeEventListener("touchstart", handleActivity);
     };
   }, []);
 };

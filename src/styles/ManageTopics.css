@@ -2,7 +2,7 @@
   padding: 40px;
   padding-top: clamp(60px, 10vh, 100px);
   max-width: 90%;
-  margin: auto;
+  margin: 100px auto 20px;
   background-color: #cfd1d9;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);

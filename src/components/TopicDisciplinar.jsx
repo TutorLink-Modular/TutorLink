@@ -6,6 +6,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import remarkBreaks from "remark-breaks";
 import rehypeRaw from "rehype-raw";
+import ModalMessage from "./ModalMessage"; 
 import "../styles/TopicDisciplinar.css";
 
 const toEmbedURL = (url) => {
@@ -46,6 +47,10 @@ const TopicDisciplinar = () => {
   const [popupMessage, setPopupMessage] = useState("");
   const [isSaved, setIsSaved] = useState(false);
   const [newComment, setNewComment] = useState("");
+  const [editingCommentId, setEditingCommentId] = useState(null);
+  const [editedMessage, setEditedMessage] = useState("");
+  const userId = JSON.parse(localStorage.getItem("user"))?._id;
+  const [modal, setModal] = useState({ show: false, title: "", message: "", actions: [] });
 
   useEffect(() => {
     if (
@@ -202,6 +207,62 @@ const TopicDisciplinar = () => {
     setNewComment("");
   };
 
+
+
+  // Actualizar
+  const handleUpdateComment = async (commentId) => {
+    const token = localStorage.getItem("authToken");
+    await fetch(`${apiUrl}/topics-disciplinary/topic/${topicId}/comment/${commentId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ message: editedMessage }),
+    });
+    setTopic((prev) => ({
+      ...prev,
+      comments: prev.comments.map((c) =>
+        c._id === commentId ? { ...c, message: editedMessage } : c
+      ),
+    }));
+    setEditingCommentId(null);
+  };
+
+  // Eliminar
+  const handleDeleteComment = (commentId) => {
+    setModal({
+      show: true,
+      title: "¿Estás seguro?",
+      message: "¿Deseas eliminar este comentario?",
+      type: "red",
+      actions: [
+        { label: "Cancelar", onClick: () => setModal({ show: false }) },
+        {
+          label: "Sí, eliminar",
+          onClick: async () => {
+            const token = localStorage.getItem("authToken");
+            await fetch(`${apiUrl}/topics-disciplinary/topic/${topicId}/comment/${commentId}`, {
+              method: "DELETE",
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            });
+            setTopic((prev) => ({
+              ...prev,
+              comments: prev.comments.filter((c) => c._id !== commentId),
+            }));
+            setModal({ show: false });
+          },
+        },
+      ],
+    });
+  };
+
+
+
+
+
   return (
     <div key={topicId} className="topic-container">
       <button
@@ -259,9 +320,52 @@ const TopicDisciplinar = () => {
           <div className="comments-section">
             <h3>💬 Comentarios: </h3>
             <ul className="comments-list">
-              {topic.comments.map((c, i) => (
-                <li key={c.id || i}>
-                  <strong>{c.user}</strong>: {c.message}
+              {topic.comments.map((c) => (
+                <li key={c._id}>
+                  <strong>{c.user}</strong>:{" "}
+                  {editingCommentId === c._id ? (
+                    <>
+                      <textarea
+                        className="comment-input edit-comment-input"
+                        value={editedMessage}
+                        onChange={(e) => setEditedMessage(e.target.value)}
+                        placeholder="Edita tu comentario..."
+                      ></textarea>
+                      <div className="comment-edit-actions">
+                        <button className="save-btn" onClick={() => handleUpdateComment(c._id)}>
+                          Guardar
+                        </button>
+                        <button className="cancel-btn" onClick={() => setEditingCommentId(null)}>
+                          Cancelar
+                        </button>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      {c.message}
+                      {c.userId === userId && (
+                      <>
+                        <button
+                          title="Editar comentario"
+                          onClick={() => {
+                            setEditingCommentId(c._id);
+                            setEditedMessage(c.message);
+                          }}
+                          className="icon-button edit-comment-btn"
+                        >
+                          ✏️
+                        </button>
+                        <button
+                          title="Eliminar comentario"
+                          onClick={() => handleDeleteComment(c._id)}
+                          className="icon-button delete-comment-btn"
+                        >
+                          ❌
+                        </button>
+                      </>
+                    )}
+                    </>
+                  )}
                 </li>
               ))}
             </ul>
@@ -296,6 +400,7 @@ const TopicDisciplinar = () => {
           </div>
         </div>
       )}
+      <ModalMessage {...modal} onClose={() => setModal({ show: false })} />
     </div>
   );
 };

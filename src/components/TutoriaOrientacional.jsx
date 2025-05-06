@@ -15,9 +15,16 @@ const images = import.meta.glob('../assets/images/**/*.png', {
 
 // Buscar la imagen que coincida con el nombre guardado
 const getImageUrl = (imageName) => {
+  // Si es un enlace http o https, úsalo directamente
+  if (typeof imageName === 'string' && (imageName.startsWith('http://') || imageName.startsWith('https://'))) {
+    return imageName;
+  }
+
+  // Si no, busca la imagen local
   const match = Object.entries(images).find(([path]) =>
     path.endsWith(imageName)
   );
+
   return match ? match[1] : null;
 };
 
@@ -104,7 +111,6 @@ const TutoriaOrientacion = () => {
               title={topic.title || "Sin título"}
               description={topic.description || "Sin descripción"}
               imageUrl={getImageUrl(topic.image) || defaultImage}
-              //defaultImage={image}
               onClick={() => handleCardClick(topic._id)}
             />
           ))

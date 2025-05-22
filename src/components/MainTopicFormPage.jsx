@@ -15,6 +15,7 @@ const MainTopicFormPage = () => {
   });
 
   const [modal, setModal] = useState({ show: false, title: "", message: "", actions: [] });
+  const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
     if (isEdit) {
@@ -50,10 +51,11 @@ const MainTopicFormPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSaving(true);
     const url = `${apiUrl}/topics-disciplinary/main-topics-disciplinary${
       isEdit ? `/${id}` : ""
     }`;
-
+    
     try {
       const response = await fetch(url, {
         method: isEdit ? "PUT" : "POST",
@@ -86,6 +88,8 @@ const MainTopicFormPage = () => {
         message: "Error al guardar el main topic.",
         actions: [{ label: "Cerrar", onClick: () => setModal({ show: false }) }],
       });
+    }finally {
+      setIsSaving(false);
     }
   };
 
@@ -113,7 +117,9 @@ const MainTopicFormPage = () => {
         </label>
 
         <div className="form-buttons">
-          <button type="submit">Guardar</button>
+          <button type="submit" disabled={isSaving}>
+            {isSaving ? <span className="loader"></span> : "Guardar"}
+          </button>
           <button type="button" onClick={() => navigate("/manejo-main-topics")}>Cancelar</button>
         </div>
       </form>

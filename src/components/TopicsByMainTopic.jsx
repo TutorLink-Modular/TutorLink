@@ -37,19 +37,16 @@ const TopicsByMainTopic = () => {
       try {
         const [topicsRes, infoRes] = await Promise.all([
           fetch(`${apiUrl}/topics-disciplinary/main-topic/${idMainTopic}`),
-          fetch(
-            `${apiUrl}/topics-disciplinary/main-topics-disciplinary/${idMainTopic}`
-          ),
+          fetch(`${apiUrl}/topics-disciplinary/main-topics-disciplinary/${idMainTopic}`),
         ]);
-
-        if (!topicsRes.ok || !infoRes.ok)
-          throw new Error("Error al obtener datos del tema principal.");
-
-        const topicsData = await topicsRes.json();
+    
+        if (!infoRes.ok) throw new Error("Error al obtener información del tema principal.");
+    
         const infoData = await infoRes.json();
-
-        setTopics(topicsData);
         setMainTopicInfo(infoData);
+    
+        const topicsData = topicsRes.ok ? await topicsRes.json() : [];
+        setTopics(Array.isArray(topicsData) ? topicsData : []);
       } catch (err) {
         console.error("Error:", err);
         setError("No se pudieron obtener los temas.");

@@ -28,17 +28,34 @@ const ManageTopics = () => {
     if (selectedTutoria === "disciplinar" && selectedMainTopic) {
       fetch(`${apiUrl}/topics-disciplinary/main-topic/${selectedMainTopic}`)
         .then((res) => res.json())
-        .then((data) => setTopics(data))
-        .catch((err) => console.error("Error cargando temas", err));
+        .then((data) => {
+          if (Array.isArray(data)) {
+            setTopics(data);
+          } else {
+            setTopics([]);
+          }
+        })
+        .catch((err) => {
+          setTopics([]);
+        });
     } else if (selectedTutoria === "orientacional") {
       fetch(`${apiUrl}/topics-orientation/topicsOrientationCards`)
         .then((res) => res.json())
-        .then((data) => setTopics(data))
-        .catch((err) => console.error("Error cargando temas orientacionales", err));
+        .then((data) => {
+          if (Array.isArray(data)) {
+            setTopics(data);
+          } else {
+            setTopics([]);
+          }
+        })
+        .catch((err) => {
+          setTopics([]);
+        });
     } else {
       setTopics([]);
     }
   }, [selectedTutoria, selectedMainTopic]);
+ 
 
   const showConfirmation = (message, onConfirm) => {
     setModal({
@@ -91,9 +108,11 @@ const ManageTopics = () => {
     });
   };
 
-  const filteredTopics = topics.filter((topic) =>
-    topic.title.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const filteredTopics = Array.isArray(topics)
+  ? topics.filter((topic) =>
+      topic.title.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+  : [];
 
   return (
     <div className="manage-topics-container">
@@ -155,8 +174,8 @@ const ManageTopics = () => {
           />
         </>
       )}
-
-      {topics.length > 0 ? (
+      {(selectedTutoria === "orientacional" ||
+        (selectedTutoria === "disciplinar" && selectedMainTopic)) && (
         <table className="topics-table">
           <thead>
             <tr>
@@ -166,49 +185,41 @@ const ManageTopics = () => {
             </tr>
           </thead>
           <tbody>
-            {filteredTopics.map((topic) => (
-              <tr key={topic._id}>
-                <td>{topic.title}</td>
-                <td title={topic.description}>{topic.description}</td>
-                <td>
-                  <button
-                    className="edit-btn"
-                    onClick={() =>
-                      navigate(
-                        `/manejo-temas/edit/${selectedTutoria}/${topic._id}`,
-                        {
-                          state: {
-                            topic,
-                            selectedTutoria,
-                            selectedMainTopic,
-                          },
-                        }
-                      )
-                    }
-                  >
-                    Editar
-                  </button>
-                  <button
-                    className="delete-btn"
-                    onClick={() => handleDelete(topic._id)}
-                  >
-                    Eliminar
-                  </button>
+            {filteredTopics.length > 0 ? (
+              filteredTopics.map((topic) => (
+                <tr key={topic._id}>
+                  <td>{topic.title}</td>
+                  <td title={topic.description}>{topic.description}</td>
+                  <td>
+                    <button
+                      className="edit-btn"
+                      onClick={() =>
+                        navigate(`/manejo-temas/edit/${selectedTutoria}/${topic._id}`, {
+                          state: { topic, selectedTutoria, selectedMainTopic },
+                        })
+                      }
+                    >
+                      Editar
+                    </button>
+                    <button
+                      className="delete-btn"
+                      onClick={() => handleDelete(topic._id)}
+                    >
+                      Eliminar
+                    </button>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="3" className="no-topics-message">
+                  No se encontraron temas que coincidan con tu búsqueda.
                 </td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
-      ) : (
-        selectedTutoria &&
-        ((selectedTutoria === "disciplinar" && selectedMainTopic) ||
-          selectedTutoria === "orientacional") && (
-          <p className="no-topics-message">
-            No hay temas disponibles para mostrar.
-          </p>
-        )
       )}
-
       <ModalMessage {...modal} onClose={() => setModal({ show: false })} />
     </div>
   );

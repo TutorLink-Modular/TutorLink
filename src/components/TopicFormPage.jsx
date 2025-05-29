@@ -26,6 +26,7 @@ const TopicFormPage = () => {
 
   const [formErrors, setFormErrors] = useState({});
   const [modal, setModal] = useState({ show: false, title: "", message: "", actions: [] });
+  const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
     if (!isNew) {
@@ -95,36 +96,39 @@ const TopicFormPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
+    setIsSaving(true); // 👈 Mostrar loader y deshabilitar botón
+  
     const errors = {};
     if (!formData.title.trim()) errors.title = "El título es obligatorio";
     if (!formData.text.trim()) errors.text = "El contenido es obligatorio";
-
+  
     if (Object.keys(errors).length > 0) {
       setFormErrors(errors);
+      setIsSaving(false); // 👈 Habilitar nuevamente
       return;
     }
-
+  
     const endpoint = isDisciplinar
       ? `${apiUrl}/topics-disciplinary/topic${isNew ? "" : `/${id}`}`
       : `${apiUrl}/topics-orientation/topic${isNew ? "" : `/${id}`}`;
-
+  
     const body = {
       ...formData,
       idMainTopic: isDisciplinar
         ? formData.idMainTopic || location.state?.selectedMainTopic || ""
         : "",
     };
-
+  
     try {
       const response = await fetch(endpoint, {
         method: isNew ? "POST" : "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
-
+  
       if (!response.ok) throw new Error("Error al guardar el tema");
-
+  
       setModal({
         show: true,
         title: "Éxito",
@@ -139,8 +143,11 @@ const TopicFormPage = () => {
         message: "No se pudo guardar el tema.",
         actions: [{ label: "Cerrar", onClick: () => setModal({ show: false }) }],
       });
+    } finally {
+      setIsSaving(false);
     }
   };
+  
 
   return (
     <div className="topic-form-page">
@@ -240,7 +247,9 @@ const TopicFormPage = () => {
         </button>
 
         <div className="form-buttons">
-          <button type="submit">Guardar</button>
+          <button type="submit" disabled={isSaving}>
+            {isSaving ? <span className="loader"></span> : "Guardar"}
+          </button>
           <button type="button" onClick={() => navigate("/manejo-temas")}>
             Cancelar
           </button>

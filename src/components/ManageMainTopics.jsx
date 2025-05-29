@@ -109,25 +109,33 @@ const ManageMainTopics = () => {
           </tr>
         </thead>
         <tbody>
-          {filteredTopics.map((topic) => (
-            <tr key={topic._id}>
-              <td>{topic.title}</td>
-              <td>
-                <button
-                  className="edit-btn"
-                  onClick={() => navigate(`/manejo-main-topics/editar/${topic._id}`)}
-                >
-                  Editar
-                </button>
-                <button
-                  className="delete-btn"
-                  onClick={() => handleDelete(topic._id)}
-                >
-                  Eliminar
-                </button>
+          {filteredTopics.length > 0 ? (
+            filteredTopics.map((topic) => (
+              <tr key={topic._id}>
+                <td>{topic.title}</td>
+                <td>
+                  <button
+                    className="edit-btn"
+                    onClick={() => navigate(`/manejo-main-topics/editar/${topic._id}`)}
+                  >
+                    Editar
+                  </button>
+                  <button
+                    className="delete-btn"
+                    onClick={() => handleDelete(topic._id)}
+                  >
+                    Eliminar
+                  </button>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="2" className="no-topics-message">
+                No se encontraron temas principales.
               </td>
             </tr>
-          ))}
+          )}
         </tbody>
       </table>
 

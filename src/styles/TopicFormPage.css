@@ -133,3 +133,20 @@ textarea {
   margin-top: 4px;
   margin-bottom: 12px;
 }
+
+
+.loader {
+  width: 18px;
+  height: 18px;
+  border: 3px solid #fff;
+  border-top: 3px solid #757fa6;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

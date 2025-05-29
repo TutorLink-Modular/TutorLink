@@ -62,16 +62,18 @@ const TutoriaDisciplinar = () => {
   const handleCardClick = async (topicId) => {
     try {
       const response = await fetch(
-        `${apiUrl}/topics-disciplinary/main-topic/${topicId}`
+        `${apiUrl}/topics-disciplinary/main-topics-disciplinary/${topicId}`
       );
-      if (!response.ok) throw new Error(`Error: ${response.statusText}`);
-      const topicData = await response.json();
+      const topicData = response.ok ? await response.json() : { title: "Sin título" };
+      
       navigate(`/tutoria-disciplinar/main-topic/${topicId}`, {
         state: { title: topicData.title },
       });
     } catch (error) {
-      console.error("Error al obtener el tema:", error);
-      alert("No se pudo cargar el tema.");
+      console.error("Error al intentar navegar al tema:", error);
+      navigate(`/tutoria-disciplinar/main-topic/${topicId}`, {
+        state: { title: "Sin título" },
+      });
     }
   };
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../styles/Panel.css";
 
 const Panel = ({ title, items, isOpen, togglePanel }) => {
@@ -7,11 +7,29 @@ const Panel = ({ title, items, isOpen, togglePanel }) => {
   const [activeSubItem, setActiveSubItem] = useState(null);
 
   const toggleSubPanel = (index) => {
-    setOpenSubPanels((prev) => ({
-      ...prev,
-      [index]: !prev[index],
-    }));
+    setOpenSubPanels((prev) => {
+      const isCurrentlyOpen = !!prev[index];
+      const newState = { ...prev, [index]: !isCurrentlyOpen };
+
+      // 🧠 Si el subpanel se está cerrando, quitamos la selección
+      if (isCurrentlyOpen) {
+        setActiveItem(null);
+        setActiveSubItem(null);
+      }
+
+      return newState;
+    });
   };
+
+  // 🧹 NUEVO: Cuando el panel principal cambia (se cierra o abre otro),
+  // limpiamos la selección y subpanels abiertos
+  useEffect(() => {
+    if (!isOpen) {
+      setActiveItem(null);
+      setActiveSubItem(null);
+      setOpenSubPanels({});
+    }
+  }, [isOpen]);
 
   return (
     <div className={`panel ${isOpen ? "open" : ""}`}>
@@ -26,7 +44,7 @@ const Panel = ({ title, items, isOpen, togglePanel }) => {
         {items.map((item, index) => (
           <li
             key={index}
-            className={`panel-item ${
+            className={`panel-item ${item.isSubPanel ? "has-subitems" : ""} ${
               activeItem === index ? "active-item" : ""
             }`}
           >
@@ -36,8 +54,11 @@ const Panel = ({ title, items, isOpen, togglePanel }) => {
                   onClick={() => {
                     toggleSubPanel(index);
                     item.onToggle?.();
-                    setActiveItem(index);
-                    setActiveSubItem(null); // Limpiar subtema seleccionado
+                    // Solo marcamos activo al abrir
+                    if (!openSubPanels[index]) {
+                      setActiveItem(index);
+                      setActiveSubItem(null);
+                    }
                   }}
                   className={`subpanel-toggle ${
                     openSubPanels[index] ? "open-subpanel" : ""
@@ -54,6 +75,7 @@ const Panel = ({ title, items, isOpen, togglePanel }) => {
                       <li
                         key={subIdx}
                         onClick={() => {
+                          // 🔹 Antes de seleccionar, limpiamos todo lo anterior
                           setActiveItem(index);
                           setActiveSubItem(`${index}-${subIdx}`);
                           sub.onClick?.();
@@ -73,9 +95,10 @@ const Panel = ({ title, items, isOpen, togglePanel }) => {
             ) : (
               <div
                 onClick={() => {
-                  item.onClick?.();
+                  // 🔹 Al hacer clic en otro tema, limpiamos selección previa
                   setActiveItem(index);
                   setActiveSubItem(null);
+                  item.onClick?.();
                 }}
               >
                 {item.label}

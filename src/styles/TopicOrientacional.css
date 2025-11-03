@@ -3,6 +3,11 @@
   position: relative;
   padding: 20px;
   margin-top: 120px;
+  max-width: 1200px; /* ✅ Nuevo: limita el ancho del contenido */
+  margin-left: auto; /* ✅ Nuevo: centra horizontalmente */
+  margin-right: auto; /* ✅ Nuevo: centra horizontalmente */
+  padding-left: 20px; /* ✅ Nuevo: agrega margen interno lateral */
+  padding-right: 20px; /* ✅ Nuevo: agrega margen interno lateral */
 }
 
 .save-topic-button {
@@ -171,6 +176,11 @@
 
 /* 📱 Responsivo para móviles */
 @media (max-width: 600px) {
+  .topic-container {
+    padding-left: 10px; /* ✅ más pequeño en móviles */
+    padding-right: 10px;
+  }
+
   .formatted-text {
     font-size: 15px;
     padding: 0 5%;
@@ -204,7 +214,6 @@
     font-size: 14px;
   }
 }
-
 
 .icon-button {
   background: none;

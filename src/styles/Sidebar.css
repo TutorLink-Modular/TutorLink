@@ -1,17 +1,16 @@
-/* Sidebar Estilo General */
 .sidebar {
   position: fixed;
   top: 80px;
   left: 0;
-  width: 260px;
+  width: 240px;
   height: calc(100% - 80px);
-  background-color: #dfe2ea;
-  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15);
+  background-color: #f0f1f5;
+  box-shadow: 2px 0 6px rgba(0, 0, 0, 0.1);
   overflow-y: auto;
   z-index: 999;
-  padding: 10px;
-  border-top-right-radius: 12px;
-  border-bottom-right-radius: 12px;
+  padding: 4px 8px; /* 🔹 Antes 10px → menos espacio interior */
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
   transition: transform 0.3s ease-in-out;
   transform: translateX(-100%);
 }
@@ -20,35 +19,23 @@
   transform: translateX(0);
 }
 
-/* Lista */
+/* 🔹 Elimina espacios innecesarios entre paneles */
 .sidebar ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-.sidebar ul > li {
-  padding: 12px 20px;
-  background-color: #131735;
-  color: #eceef1;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  border-radius: 6px;
-  margin: 4px 8px;
+/* 🔹 Compacta los paneles dentro del sidebar */
+.sidebar .panel {
+  margin-bottom: 2px; /* 🔹 Antes 6px → ahora más pegados */
 }
 
-.sidebar ul > li.active {
-  background-color: #fbbd08;
-  color: #131735;
+/* 🔹 También ajusta el espaciado general del contenedor */
+.sidebar .title-panel {
+  margin-bottom: 1px; /* 🔹 Reduce espacio entre títulos */
 }
 
-.sidebar ul > li:hover {
-  background-color: #fbbd08;
-  transform: scale(1.03);
-  color: #131735;
-}
-
-/* Responsivo para móviles */
 @media screen and (max-width: 768px) {
   .sidebar {
     width: 100vw;
@@ -56,10 +43,6 @@
     height: calc(100% - 60px);
     border-radius: 0;
     box-shadow: none;
-  }
-
-  .sidebar ul > li {
-    margin: 0;
-    border-radius: 0;
+    padding: 6px 10px;
   }
 }

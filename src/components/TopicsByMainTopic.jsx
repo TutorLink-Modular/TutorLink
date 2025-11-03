@@ -1,25 +1,31 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import CardTutorials from "./CardTutorials";
-import image from "../assets/images/disciplinar.png";
 import SearchBar from "./SearchBar";
 import "../styles/TopicsByMainTopic.css";
+import defaultImg from "../assets/images/disciplinar.png"; // Importamos la imagen por defecto
 
-// Cargar todas las imágenes de la carpeta disciplinar
-const images = import.meta.glob('../assets/images/**/*.png', {
+// Cargar todas las imágenes locales (solo las .png dentro de assets/images)
+const images = import.meta.glob("../assets/images/**/*.png", {
   eager: true,
-  import: 'default',
+  import: "default",
 });
 
-// Buscar la imagen que coincida con el nombre guardado
+// Función para obtener la URL de imagen (local o externa)
 const getImageUrl = (imageName) => {
+  if (!imageName) return null;
+
+  // Si es un enlace externo (http o https), lo devolvemos directamente
+  if (imageName.startsWith("http://") || imageName.startsWith("https://")) {
+    return imageName;
+  }
+
+  // Buscar la imagen local
   const match = Object.entries(images).find(([path]) =>
     path.endsWith(imageName)
   );
   return match ? match[1] : null;
 };
-
-const defaultImage = "../assets/images/disciplinar.png"; // Ruta de la imagen por defecto
 
 const TopicsByMainTopic = () => {
   const { idMainTopic } = useParams();
@@ -27,9 +33,9 @@ const TopicsByMainTopic = () => {
   const [mainTopicInfo, setMainTopicInfo] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [searchQuery, setSearchQuery] = useState(""); 
-
+  const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
+
   const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
   useEffect(() => {
@@ -37,14 +43,17 @@ const TopicsByMainTopic = () => {
       try {
         const [topicsRes, infoRes] = await Promise.all([
           fetch(`${apiUrl}/topics-disciplinary/main-topic/${idMainTopic}`),
-          fetch(`${apiUrl}/topics-disciplinary/main-topics-disciplinary/${idMainTopic}`),
+          fetch(
+            `${apiUrl}/topics-disciplinary/main-topics-disciplinary/${idMainTopic}`
+          ),
         ]);
-    
-        if (!infoRes.ok) throw new Error("Error al obtener información del tema principal.");
-    
+
+        if (!infoRes.ok)
+          throw new Error("Error al obtener información del tema principal.");
+
         const infoData = await infoRes.json();
         setMainTopicInfo(infoData);
-    
+
         const topicsData = topicsRes.ok ? await topicsRes.json() : [];
         setTopics(Array.isArray(topicsData) ? topicsData : []);
       } catch (err) {
@@ -107,8 +116,7 @@ const TopicsByMainTopic = () => {
               key={topic._id}
               title={topic.title || "Sin título"}
               description={topic.description || "Sin descripción"}
-              imageUrl={getImageUrl(topic.image) || defaultImage}
-              //defaultImage={image}
+              imageUrl={getImageUrl(topic.image) || defaultImg}
               onClick={() => handleCardClick(topic._id)}
             />
           ))

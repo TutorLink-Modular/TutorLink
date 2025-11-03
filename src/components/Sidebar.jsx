@@ -99,11 +99,22 @@ const Sidebar = ({ isOpen, toggleSidebar, toggleRef }) => {
         ? `/tutoria-orientacional/topic/${topicId}`
         : `/tutoria-disciplinar/topic/${topicId}`
     );
-    toggleSidebar(); // Cierra el sidebar al navegar
+    toggleSidebar(); // 🔹 Cierra el sidebar al navegar
   };
 
   const togglePanel = (panel) => {
-    setOpenPanels((prev) => ({ ...prev, [panel]: !prev[panel] }));
+    setOpenPanels((prev) => ({
+      disciplinary: panel === "disciplinary" ? !prev.disciplinary : false,
+      orientation: panel === "orientation" ? !prev.orientation : false,
+      academic: panel === "academic" ? !prev.academic : false,
+    }));
+    setExpandedMainTopics({}); // 🔹 Cierra los subitems al cambiar de panel
+  };
+
+  // 🔹 Funciones nuevas para cerrar sidebar al abrir gestión académica
+  const handleNavigateAndClose = (path) => {
+    navigate(path);
+    toggleSidebar(); // 🔹 Cierra sidebar
   };
 
   return (
@@ -155,11 +166,11 @@ const Sidebar = ({ isOpen, toggleSidebar, toggleRef }) => {
             items={[
               {
                 label: "Gestionar temas",
-                onClick: () => navigate("/manejo-temas"),
+                onClick: () => handleNavigateAndClose("/manejo-temas"),
               },
               {
                 label: "Temas principales",
-                onClick: () => navigate("/manejo-main-topics"),
+                onClick: () => handleNavigateAndClose("/manejo-main-topics"),
               },
             ]}
           />

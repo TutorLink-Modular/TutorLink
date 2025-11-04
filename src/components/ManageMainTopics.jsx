@@ -42,7 +42,7 @@ const ManageMainTopics = () => {
       "¿Estás seguro que deseas eliminar este tema principal?",
       () => {
         showConfirmation(
-          "⚠️ Este tema principal tiene subtemas. Si continúas, se eliminarán también. ¿Deseas continuar?",
+          "⚠️ Este tema principal puede tener subtemas. Si continúas, se eliminarán también. ¿Deseas continuar?",
           async () => {
             try {
               const response = await fetch(

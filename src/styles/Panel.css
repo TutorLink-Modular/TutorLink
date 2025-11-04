@@ -52,13 +52,21 @@
   border-radius: 4px;
 }
 
+.panel-item:hover {
+  background-color: #e6e8ef;
+  color: #131735;
+  border-radius: 4px;
+  padding-left: 10px; /* 🔹 ligero desplazamiento visual */
+}
+
 /* 🔸 Hover solo para items SIN subitems (simulan subitems) */
 .panel-item:not(.has-subitems) > div:hover {
   background-color: #dfe2ea;
   color: #131735;
-  padding-left: 24px; /* 🔹 desplazamiento mayor */
+  padding-left: 15px; /* 🔹 desplazamiento mayor */
   box-shadow: inset 2px 0 0 #131735;
   border-radius: 4px;
+  transition: all 0.2s ease;
 }
 
 /* 🔸 Hover para items CON subitems */
@@ -67,6 +75,7 @@
   color: #131735;
   border-radius: 4px;
   padding-left: 4px; /* 🔹 ligero desplazamiento visual */
+  transition: all 0.2s ease;
 }
 
 /* 🔹 Toggle del subpanel */
@@ -76,6 +85,7 @@
   align-items: center;
   padding: 6px 4px; /* 🔹 pequeño padding horizontal extra */
   color: #2c2f3a;
+  transition: all 0.2s ease;
 }
 
 /* 🔹 Subitems (nivel 2) */
@@ -112,6 +122,7 @@
   box-shadow: inset 2px 0 0 #131735;
   border-radius: 4px;
   padding-left: 22px; /* 🔹 Mueve más a la derecha para que no tape la letra */
+  transition: all 0.2s ease;
 }
 
 /* 🔹 Responsive */

@@ -8,11 +8,11 @@ const Chatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
     {
-      text: "Hola! Soy tu AI tutor para ayudarte en lo que necesites. Pregúntame lo que quieras!",
+      text: "Hola! Soy tu IA tutor para ayudarte en lo que necesites. Pregúntame lo que quieras!",
       sender: "bot",
     },
     {
-      text: "Ejemplos para preguntar a la AI de manera efectiva: \n🧠 ¿Qué significa (concepto) en [materia]? \n📊 Explícame (concepto) con un ejemplo",
+      text: "Ejemplos para preguntar a la IA de manera efectiva: \n🧠 ¿Qué significa (concepto) en [materia]? \n📊 Explícame (concepto) con un ejemplo",
       sender: "bot",
     },
   ]);

@@ -68,7 +68,7 @@ const MainTopicFormPage = () => {
       setModal({
         show: true,
         title: "Éxito",
-        message: `Main topic ${isEdit ? "actualizado" : "creado"} correctamente`,
+        message: `Tema principal ${isEdit ? "actualizado" : "creado"} correctamente`,
         type: "",
         actions: [
           {
@@ -85,7 +85,7 @@ const MainTopicFormPage = () => {
       setModal({
         show: true,
         title: "Error",
-        message: "Error al guardar el main topic.",
+        message: "Error al guardar el tema principal.",
         actions: [{ label: "Cerrar", onClick: () => setModal({ show: false }) }],
       });
     }finally {
@@ -95,7 +95,7 @@ const MainTopicFormPage = () => {
 
   return (
     <div className="topic-form-page">
-      <h2>{isEdit ? "Editar Main Topic" : "Agregar Main Topic"}</h2>
+      <h2>{isEdit ? "Editar Tema Principal" : "Agregar Tema Principal"}</h2>
       <form onSubmit={handleSubmit} className="topic-form">
         <label>
           <span>Título</span>

@@ -29,7 +29,7 @@ const Card = ({ title, subtitle, description, imageUrl }) => {
         <h4 className="card-subtitle">{subtitle}</h4>
         <p className="card-description">{description}</p>
         <Link to={modifyLinkTutorials(title)}>
-          <button className="card-button">Enter</button>
+          <button className="card-button">Entrar</button>
         </Link>
       </div>
     </div>

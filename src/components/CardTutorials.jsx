@@ -23,7 +23,7 @@ const CardTutorials = ({
         <h3 className="cardTutorials-title">{title}</h3>
         <p className="cardTutorials-description">{description}</p>
         <Link to="#" onClick={onClick}>
-          <button className="cardTutorials-button">Enter</button>
+          <button className="cardTutorials-button">Entrar</button>
         </Link>
       </div>
     </div>

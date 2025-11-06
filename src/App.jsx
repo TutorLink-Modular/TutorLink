@@ -141,6 +141,7 @@ function App() {
                 <>
                   <Header />
                   <TopicFormPage />
+                  <Chatbot />
                 </>
               </ProtectedRoute>
             }

@@ -8,11 +8,11 @@ const Chatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
     {
-      text: "Hola! Soy tu IA tutor para ayudarte en lo que necesites. Pregúntame lo que quieras!",
+      text: "Hola! Soy tu AI tutor para ayudarte en lo que necesites. Pregúntame lo que quieras!",
       sender: "bot",
     },
     {
-      text: "Ejemplos para preguntar a la IA de manera efectiva: \n🧠 ¿Qué significa (concepto) en [materia]? \n📊 Explícame (concepto) con un ejemplo",
+      text: "Ejemplos para preguntar a la AI de manera efectiva: \n🧠 ¿Qué significa (concepto) en [materia]? \n📊 Explícame (concepto) con un ejemplo",
       sender: "bot",
     },
   ]);
@@ -25,47 +25,89 @@ const Chatbot = () => {
     setIsOpen(!isOpen);
   };
 
-  const sendMessage = async () => {
+
+const sendMessage = async () => {
     if (!input.trim()) return;
     setError(null);
     setIsLoading(true);
 
-    const newMessages = [...messages, { text: input, sender: "user" }];
+    const userMessage = { text: input, sender: "user" };
+    const newMessages = [...messages, userMessage];
     setMessages(newMessages);
     setInput("");
 
-    try {
-      const response = await fetch(
-        `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash-002:generateContent?key=${GOOGLE_AI_KEY}`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            contents: [
-              {
-                parts: [{ text: `Responde lo siguiente en español: ${input}` }],
-              },
-            ], //Puedes añadir texto al prompt que envia el usuario
-          }),
-        }
-      );
-      const data = await response.json();
-      const botResponse =
-        data.candidates[0].content.parts[0].text || "No entendí la pregunta.";
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        { text: botResponse, sender: "bot" },
-      ]);
-    } catch (error) {
-      setError(error.message);
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        { text: "Error al obtener respuesta.", sender: "bot" },
-      ]);
-    } finally {
-      setIsLoading(false);
+    const systemPrompt = "Eres un tutor académico virtual. Responde siempre en español, de forma clara, educativa y breve.";
+    
+    const history = newMessages
+        .slice(2)
+        .map((msg) => ({
+            role: msg.sender === "user" ? "user" : "model",
+            parts: [{ text: msg.text }],
+        }));
+        
+    let contentsToSend = [];
+    
+    // A) Si es la PRIMERA pregunta (history solo contiene el mensaje actual del usuario)
+    if (history.length === 1 && history[0].role === 'user') {
+        // Combinamos la personalidad y la pregunta del usuario en el primer (y único) mensaje.
+        contentsToSend = [
+            {
+                role: "user",
+                parts: [{ text: systemPrompt + "\n\n" + history[0].parts[0].text }],
+            }
+        ];
+    } 
+    // B) Si ya hay un historial de conversación (múltiples preguntas/respuestas)
+    else {
+        // En este caso, el primer mensaje del historial (la primera pregunta real)
+        // debe tener la instrucción del sistema adjunta para mantener la personalidad.
+        
+        // Adjuntamos el systemPrompt a la primera pregunta real de la conversación
+        history[0].parts[0].text = systemPrompt + "\n\n" + history[0].parts[0].text;
+        
+        // Enviamos todo el historial ya corregido.
+        contentsToSend = history;
     }
-  };
+
+
+    try {
+        const geminiResponse = await fetch(
+            `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${import.meta.env.VITE_GOOGLEAI_API_KEY}`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    contents: contentsToSend, 
+                }),
+            }
+        );
+
+        if (!geminiResponse.ok) {
+            const errorData = await geminiResponse.json();
+            console.error("Error de API:", errorData);
+            throw new Error(`Error ${geminiResponse.status}: ${errorData?.error?.message || 'Error desconocido'}`);
+        }
+
+        const data = await geminiResponse.json();
+
+        const botResponse =
+            data?.candidates?.[0]?.content?.parts?.[0]?.text ||
+            "No entendí la pregunta o hubo un error al procesar la respuesta.";
+
+        setMessages((prev) => [...prev, { text: botResponse, sender: "bot" }]);
+    } catch (error) {
+        console.error("Error:", error);
+        setError(error.message);
+        setMessages((prev) => [
+            ...prev,
+            { text: `Error al obtener respuesta de Gemini: ${error.message}`, sender: "bot" },
+        ]);
+    } finally {
+        setIsLoading(false);
+    }
+};
 
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
